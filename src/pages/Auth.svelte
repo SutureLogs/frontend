@@ -13,22 +13,23 @@
 
 <Layout>
   <div class="grid lg:grid-cols-2 w-full">
-    <div class="m-10 p-10 flex flex-col rounded-xl bg-slate-100">
-      <div class="flex gap-2">
+    <div class="m-10 flex flex-col rounded-xl bg-slate-100">
+      <div class="flex gap-2 p-10">
         <img src={logo} class="w-10 object-contain" alt="" />
         <div class="font-black text-2xl">
           Suture<span class="text-primary">Logs</span>
         </div>
       </div>
-      <div class="flex justify-center flex-col gap-7 mt-10 items-center h-full">
+      <div class="flex justify-center flex-col gap-7 my-2 items-center h-full">
         <img src={docs} class=" w-32 md:w-44 lg:w-52" alt="" />
-        <div class="flex-col md:mx-32 lg:mx-52 text-center">
-          <Heading>Collaborate, Learn, and Enhance Your Surgical Skills</Heading
-          >
-          <Subheading styleClass="pt-3"
-            >SutureLogs is a platform that allows you to track your surgeries
-            and learn from other surgeons.</Subheading
-          >
+        <div class="flex-col text-center mx-10 pb-5 md:mx-20">
+          <div class="font-bold text-2xl">
+            Collaborate, Learn, and Enhance Your Surgical Skills
+          </div>
+          <div class="pt-3">
+            SutureLogs is a platform that allows you to track your surgeries and
+            learn from other surgeons.
+          </div>
         </div>
       </div>
     </div>
