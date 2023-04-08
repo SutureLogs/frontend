@@ -1,4 +1,6 @@
 <script>
+  // @ts-nocheck
+
   import Layout from "../components/Layout.svelte";
   import logo from "../assets/logoblack.png";
   import Paragraph from "../components/design/titles/Paragraph.svelte";

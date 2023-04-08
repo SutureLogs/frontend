@@ -2,9 +2,6 @@
   export let label = "File";
   export let actionText = "Upload File";
   export let file;
-  $: {
-    console.log(file);
-  }
 </script>
 
 <div class="flex flex-col">
