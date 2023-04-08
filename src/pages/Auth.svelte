@@ -8,6 +8,7 @@
   import Subheading from "../components/design/titles/Subheading.svelte";
   import logo from "../assets/logoblack.png";
   import docs from "../assets/auth.png";
+
   let mode = "login";
 </script>
 
@@ -22,7 +23,7 @@
       </div>
       <div class="flex justify-center flex-col gap-7 my-2 items-center h-full">
         <img src={docs} class=" w-32 md:w-44 lg:w-52" alt="" />
-        <div class="flex-col text-center mx-10 pb-5 md:mx-20">
+        <div class="flex-col text-center mx-10 pb-5 md:mx-20 lg:mx-44">
           <div class="font-bold text-2xl">
             Collaborate, Learn, and Enhance Your Surgical Skills
           </div>
