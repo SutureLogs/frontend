@@ -1,5 +1,8 @@
 import Auth from "./pages/Auth.svelte";
 import Browse from "./pages/Browse.svelte";
+import LogBase from "./pages/LogBase.svelte";
+import LogDiscuss from "./pages/LogDiscuss.svelte";
+import LogLog from "./pages/LogLog.svelte";
 import Onboard from "./pages/Onboard.svelte";
 import Portfolio from "./pages/Portfolio.svelte";
 import Profile from "./pages/Profile.svelte";
@@ -10,5 +13,8 @@ const routes = {
   "/browse": Browse,
   "/profile": Profile,
   "/portfolio": Portfolio,
+  "/base/:id": LogBase,
+  "/log/:id": LogLog,
+  "/discuss/:id": LogDiscuss,
 };
 export default routes;

@@ -8,7 +8,7 @@
 {#if isActive}
   <a
     href={"/#" + link}
-    class="flex gap-3 items-center justify-center border-l-[10px] border-[#6990d8] w-full p-4 bg-gradient-to-r from-[#82aaf4] via-transparent to-white bg-opacity-0"
+    class="flex gap-3 items-center justify-center border-l-[10px] border-[#6990d8] w-full p-4 bg-gradient-to-r from-[#82aaf4] via-transparent to-slate-50 bg-opacity-0"
   >
     <div>
       {#if svg}
