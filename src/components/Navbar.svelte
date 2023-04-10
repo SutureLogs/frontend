@@ -8,6 +8,7 @@
   import learn from "../assets/icons/learn.png";
   import browse from "../assets/icons/browse.png";
   import search from "../assets/icons/search.png";
+  import create from "../assets/icons/plusblack.png";
 
   let navlinks = [
     {
@@ -29,6 +30,11 @@
       name: "Portfolio",
       icon: portfolio,
       link: "/portfolio",
+    },
+    {
+      name: "Create",
+      icon: create,
+      link: "/create",
     },
   ];
   let notmobilemenu;

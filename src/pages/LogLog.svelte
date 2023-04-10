@@ -78,7 +78,7 @@
 </script>
 
 <LayoutWithLogNav {params}>
-  <div class="grid grid-cols-3 h-full">
+  <div class="grid md:grid-cols-3 h-full">
     <div class="md:col-span-2 border-r-2 h-full">
       <div class="p-10 flex flex-col md:flex-row justify-between items-center">
         <LinkIconButton
@@ -123,7 +123,7 @@
       </div>
     </div>
     <div class="relative">
-      <div class="px-6 py-12 fixed h-full overflow-y-scroll">
+      <div class="px-6 py-12 md:fixed h-full overflow-y-scroll">
         <div class="">
           <Label styleClass="text-primary">Vitals</Label>
           <div class="flex flex-wrap justify-evenly mt-4">
