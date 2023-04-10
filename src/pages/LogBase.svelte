@@ -14,11 +14,11 @@
   let data = {
     likeCount: 0,
     isLiked: false,
-    orgName: "",
-    surgeonName: "",
-    surgeonTitle: "",
-    surgeryName: "",
-    date: "",
+    orgName: "Org Name",
+    surgeonName: "Surgeon Name",
+    surgeonTitle: "Surgeon Title",
+    surgeryName: "Surgery Name",
+    date: "22/3/12",
     patientDetails: {
       age: 45,
       gender: "Airplane",
@@ -83,20 +83,16 @@
         />
         <div class="flex gap-2 items-center">
           <Label styleClass="opacity-50">Conducted on</Label>
-          <Label>12 March,2022</Label>
+          <Label>{data.date}</Label>
         </div>
       </div>
       <div class="bg-slate-100 p-10">
-        <Label>Organization name</Label>
-        <Heading2 styleClass="mt-2"
-          >Hand‑assisted laparoscopic surgery for an esophageal hiatal hernia
-          with incarcerated transverse colon presenting after laparoscopic
-          gastrectomy</Heading2
-        >
+        <Label>{data.orgName}</Label>
+        <Heading2 styleClass="mt-2">{data.surgeonName}</Heading2>
         <div class="flex gap-3 items-center mt-3">
-          <Subheading>Johoin Doe</Subheading>
+          <Subheading>{data.surgeonName}</Subheading>
           <div class="w-2 h-2 bg-primary rounded-full" />
-          <Subheading>Cardio Thoracic Surgeon</Subheading>
+          <Subheading>{data.surgeonTitle}</Subheading>
         </div>
       </div>
       <PatientDetailsTable styleClass="p-10" {...data.patientDetails} />
