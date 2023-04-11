@@ -15,9 +15,6 @@
 
   let surgeryVideoFile = null;
   let surgeryThumbnailFile = null;
-  // get previous surgery notes from server
-  //add surgery notes to previous surgery notes in data object before sending to server
-  let surgeryNote = "";
   let data = {
     surgeryName: "",
     surgeryDate: "",
@@ -29,15 +26,7 @@
         memberRole: "Surgeon",
       },
     ],
-    surgeryNotes: [
-      {
-        surgeonName: "Yajat",
-        userID: "yajat",
-        note: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
-        logID: "tes",
-        logName: "tes",
-      },
-    ],
+    surgeryNote: "",
   };
 </script>
 
@@ -114,13 +103,12 @@
       </div>
       Notes Details</Label
     >
-    <NotesDetailsTable label="Previous Notes" bind:data={data.surgeryNotes} />
 
     <TextArea
       label="Your Note"
       placeholderText="Enter note here"
-      styleClass={"py-10"}
-      bind:value={surgeryNote}
+      styleClass={"py-2"}
+      bind:value={data.surgeryNote}
     />
 
     <Button buttonText="Create Log" styleClass="my-2" />
