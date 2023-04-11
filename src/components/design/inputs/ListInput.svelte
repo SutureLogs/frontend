@@ -7,8 +7,8 @@
   export let value = "";
 </script>
 
-<div class="flex flex-col gap-3 {styleClass}">
-  <Label styleClass="text-primary">{label}</Label>
+<div class="flex flex-col gap-2 {styleClass}">
+  <Label styleClass="text-primary ">{label}</Label>
   <select bind:value class="select select-bordered w-full bg-transparent">
     {#each options as option}
       <option>{option}</option>

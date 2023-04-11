@@ -10,6 +10,7 @@
   import DateInput from "../components/design/inputs/DateInput.svelte";
   import ListTextInput from "../components/design/inputs/ListTextInput.svelte";
   import SurgeryTeamTable from "../components/design/tables/SurgeryTeamTable.svelte";
+  import Button from "../components/design/buttons/Button.svelte";
 
   export let params = {};
 
@@ -26,8 +27,8 @@
 </script>
 
 <LayoutWithLogNav {params}>
-  <div class="grid grid-cols-3 h-full">
-    <div class="col-span-2 border-r-2 h-full">
+  <div class="">
+    <div class="">
       <div
         class="p-10 flex flex-col border-b-2 md:flex-row justify-between items-center"
       >
@@ -75,23 +76,40 @@
       <div class="flex flex-col px-10 py-4">
         <Label styleClass="py-4 text-primary">Surgery Team</Label>
         <SurgeryTeamTable />
+
+        <div class="flex gap-2 items-center py-5 flex-wrap">
+          <div>New</div>
+          <input
+            type="checkbox"
+            bind:checked={isPatientIDAvailable}
+            class="toggle"
+          />
+          <div>Existing</div>
+        </div>
         {#if isPatientIDAvailable}
           <TextInput
             label="Patient ID"
             placeholderText="Patient ID (if present)"
           />
         {:else}
-          <div class="flex gap-3">
+          <div class="flex gap-3 items-center flex-wrap">
             <TextInput
               label="Patient Age"
               placeholderText="Number only (eg. 77)"
             />
+
             <ListInput
               label="Patient Gender"
               options={["Male", "Female", "Transgenda"]}
             />
+            <TextInput
+              isDisabled={true}
+              label="Generated Patient ID"
+              placeholderText="Number only (eg. 77)"
+            />
           </div>
         {/if}
+        <Button buttonText="Edit logs" styleClass="mt-10" />
       </div>
     </div>
   </div>

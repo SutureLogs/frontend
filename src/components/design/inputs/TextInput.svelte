@@ -4,6 +4,7 @@
   export let placeholderText = "Placeholder";
   export let label = "Label";
   export let value = "";
+  export let isDisabled = false;
 </script>
 
 <div class="flex flex-col">
@@ -14,10 +15,13 @@
     {label}</label
   >
   <input
+    disabled={isDisabled}
     type="text"
     bind:value
     id="inpt"
-    class="input bg-transparent input-bordered w-full"
+    class="input bg-transparent input-bordered w-full {isDisabled
+      ? 'cursor-not-allowed disabled'
+      : ''}"
     placeholder={placeholderText}
   />
 </div>
