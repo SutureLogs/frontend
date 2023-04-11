@@ -8,7 +8,6 @@
   import ListInput from "../components/design/inputs/ListInput.svelte";
   import TextArea from "../components/design/inputs/TextArea.svelte";
   import TextInput from "../components/design/inputs/TextInput.svelte";
-  import NotesDetailsTable from "../components/design/tables/NotesDetailsTable.svelte";
   import SurgeryTeamTable from "../components/design/tables/SurgeryTeamTable.svelte";
   import Heading2 from "../components/design/titles/Heading2.svelte";
   import Label from "../components/design/titles/Label.svelte";
@@ -31,7 +30,7 @@
 </script>
 
 <LayoutWithNav>
-  <div class="p-10 mx-40">
+  <div class="p-10 md:mx-40">
     <Heading2>Create a Log</Heading2>
     <Label styleClass="text-lg pt-10 pb-5 flex gap-3 items-center">
       <div

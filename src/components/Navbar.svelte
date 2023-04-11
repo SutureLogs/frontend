@@ -69,7 +69,7 @@
   <!-- not mobile  -->
   <div
     bind:this={notmobilemenu}
-    class="flex flex-col bg-slate-50 min-h-screen h-full w-64 md:border-r-2 items-center pt-10 absolute md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out"
+    class="flex flex-col z-20 bg-slate-50 min-h-screen h-full w-64 md:border-r-2 items-center pt-10 absolute md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out"
   >
     <div class="flex gap-2 items-center">
       <img src={logo} class="w-10 object-contain" alt="" />
