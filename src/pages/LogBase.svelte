@@ -88,7 +88,7 @@
       </div>
       <div class="bg-slate-100 p-10">
         <Label>{data.orgName}</Label>
-        <Heading2 styleClass="mt-2">{data.surgeonName}</Heading2>
+        <Heading2 styleClass="mt-2">{data.surgeryName}</Heading2>
         <div class="flex gap-3 items-center mt-3">
           <Subheading>{data.surgeonName}</Subheading>
           <div class="w-2 h-2 bg-primary rounded-full" />

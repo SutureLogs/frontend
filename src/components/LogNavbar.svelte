@@ -7,6 +7,7 @@
   import home from "../assets/icons/home.png";
   import book from "../assets/icons/book.png";
   import people from "../assets/icons/people.png";
+  import pen from "../assets/icons/edit.png";
 
   export let params = {};
   let navlinks = [
@@ -24,6 +25,11 @@
       name: "Discuss",
       icon: people,
       link: "/discuss/" + params.id,
+    },
+    {
+      name: "Edit",
+      icon: pen,
+      link: "/edit/" + params.id,
     },
   ];
   let notmobilemenu;
@@ -58,9 +64,9 @@
   <!-- not mobile  -->
   <div
     bind:this={notmobilemenu}
-    class="flex flex-col bg-slate-50 z-10 min-h-screen h-full w-64 md:border-r-2 items-center pt-10 absolute md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out"
+    class=" fixed bg-slate-50 z-10 min-h-screen h-full w-64 md:border-r-2 items-center pt-10 inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out"
   >
-    <div class="flex gap-2 items-center">
+    <div class="flex gap-2 items-center justify-center">
       <img src={logo} class="w-10 object-contain" alt="" />
       <div class="font-black text-2xl">
         Suture<span class="text-primary">Logs</span>

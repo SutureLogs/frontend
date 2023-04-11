@@ -20,7 +20,7 @@
           Suture<span class="text-primary">Logs</span>
         </div>
       </div>
-      <Paragraph>Hello, Username</Paragraph>
+      <Paragraph>Hello, there</Paragraph>
     </div>
     <div class="flex justify-center items-center">
       <div class="p-5 m-3 rounded-xl flex flex-col max-w-4xl w-full">

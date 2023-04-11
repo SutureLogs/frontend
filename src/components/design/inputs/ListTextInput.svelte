@@ -8,6 +8,7 @@
     items = [...items];
   }
   export let label = "";
+  export let actionText = "Add Item";
   let newitem = "";
 </script>
 
@@ -44,11 +45,11 @@
     <input
       bind:value={newitem}
       class="px-3 py-2 rounded-full border bg-transparent outline-none"
-      placeholder="Add item"
+      placeholder={actionText}
       type="text"
       on:keydown={(e) => {
-        if (e.key === "Enter" && newitem !== "") {
-          addItem(newitem);
+        if (e.key === "Enter" && newitem !== "" && newitem.length > 3) {
+          addItem(newitem.trim());
           newitem = "";
         }
       }}

@@ -1,0 +1,62 @@
+<script>
+  import { push } from "svelte-spa-router";
+  import LinkButton from "../buttons/LinkButton.svelte";
+  import TextArea from "../inputs/TextArea.svelte";
+  import Button from "../buttons/Button.svelte";
+  export let comment = "";
+  export let memberName = "";
+  export let memberID = "";
+  export let dontClose = false;
+  export let showToggleReplies = false;
+  export let toggleReplies = () => {};
+  export let discussionID = "";
+  export let repliesCount = 0;
+  let isAddModalOpen = false;
+  let newComment = "";
+</script>
+
+<input type="checkbox" checked={isAddModalOpen} class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box relative">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div
+      on:click={() => (isAddModalOpen = false)}
+      class="btn btn-sm btn-circle absolute right-2 top-2"
+    >
+      ✕
+    </div>
+    <TextArea
+      label="Your Reply"
+      bind:value={newComment}
+      styleClass="py-3"
+      placeholderText="What are your thoughts?"
+    />
+    <Button
+      buttonText="Reply"
+      onClick={() => {
+        // server call with newComment and discussionID and memberID
+      }}
+    />
+  </div>
+</div>
+
+<div
+  class="flex flex-col gap-3 items-start {dontClose ? '' : 'border-b-2'}  py-4"
+>
+  <div>
+    {comment}
+  </div>
+  <div class="flex gap-7">
+    <LinkButton
+      buttonText={memberName}
+      onClick={() => push("/profile/" + memberID)}
+    />
+    <LinkButton buttonText={"Reply"} onClick={() => (isAddModalOpen = true)} />
+    {#if showToggleReplies}
+      <LinkButton
+        buttonText={`Toggle ${repliesCount} Replies`}
+        onClick={() => toggleReplies()}
+      />
+    {/if}
+  </div>
+</div>

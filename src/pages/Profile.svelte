@@ -1,7 +1,3 @@
-<script>
-  import LayoutWithNav from "../components/LayoutWithNav.svelte";
-</script>
-
-<LayoutWithNav>
-  <div>Welcome to profile</div>
-</LayoutWithNav>
+<div class="flex justify-center items-center bg-yellow-400 h-screen">
+  <div>hi</div>
+</div>

@@ -14,6 +14,8 @@
 
   let surgeryVideoFile = null;
   let surgeryThumbnailFile = null;
+
+  // get all orgs from backend
   let data = {
     surgeryName: "",
     surgeryDate: "",
