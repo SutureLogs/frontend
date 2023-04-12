@@ -1,4 +1,6 @@
 <script>
+  import { push } from "svelte-spa-router";
+
   export let value = "";
   export let onClick = () => {};
   export let styleClass = "";
@@ -9,10 +11,14 @@
   <label class="input-group w-full">
     <input
       type="text"
+      bind:value
       placeholder={placeholderText}
       class="input input-bordered w-full"
     />
-    <button class="btn" on:click={onClick}
+    <button
+      on:click={() => push("/search/" + value)}
+      class="btn"
+      on:click={onClick}
       ><svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"

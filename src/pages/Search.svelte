@@ -4,7 +4,8 @@
   import LayoutWithNav from "../components/LayoutWithNav.svelte";
   import SearchCard from "../components/design/cards/SearchCard.svelte";
   import SearchInput from "../components/design/inputs/SearchInput.svelte";
-  let searchText = "";
+  export let params = {};
+  export let searchText = params.searchText || "";
 
   let data = {
     searchResults: [
