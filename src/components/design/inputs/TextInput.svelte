@@ -7,7 +7,7 @@
   export let isDisabled = false;
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col {styleClass}">
   <label
     for="inpt"
     class="label-text-alt uppercase py-2 font-bold text-[#4669C1] tracking-widest"

@@ -8,8 +8,61 @@
   import Subheading from "../components/design/titles/Subheading.svelte";
   import logo from "../assets/logoblack.png";
   import docs from "../assets/auth.png";
+  import axios from "axios";
+  import toast from "svelte-french-toast";
+  import { store } from "../stores/store";
+  import { push } from "svelte-spa-router";
+  let BASEURL = import.meta.env.VITE_BASEURL;
+
+  let username = "";
+  let password = "";
+  let retypedPassword = "";
 
   let mode = "login";
+
+  const signup = async () => {
+    if (username === "" || password === "" || retypedPassword === "") {
+      toast.error("Please fill in all the fields");
+      return;
+    }
+    if (password !== retypedPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+    const response = await axios.post(BASEURL + "/auth/signup", {
+      username: username,
+      password: password,
+    });
+    if (response.data.status === "success") {
+      $store.jwt = response.data.token;
+      push("/onboard");
+    } else {
+      toast.error(response.data.message);
+    }
+    // username = "";
+    // password = "";
+    // retypedPassword = "";
+  };
+
+  const login = async () => {
+    if (username === "" || password === "") {
+      toast.error("Please fill in all the fields");
+      return;
+    }
+    const response = await axios.post(BASEURL + "/auth/login", {
+      username: username,
+      password: password,
+    });
+    if (response.data.status === "success") {
+      $store.jwt = response.data.token;
+      push("/browse");
+    } else {
+      toast.error(response.data.message);
+    }
+    // username = "";
+    // password = "";
+    // retypedPassword = "";
+  };
 </script>
 
 <Layout>
@@ -47,9 +100,19 @@
       </div>
       {#if mode === "login"}
         <div class="flex gap-3 mt-10 flex-col">
-          <TextInput placeholderText="Johndoe..." label="Username" />
-          <PasswordInput placeholderText="******" label="Password" />
-          <div class="py-4 w-full"><Button buttonText="Sign in " /></div>
+          <TextInput
+            placeholderText="Johndoe..."
+            bind:value={username}
+            label="Username"
+          />
+          <PasswordInput
+            placeholderText="******"
+            bind:value={password}
+            label="Password"
+          />
+          <div class="py-4 w-full">
+            <Button onClick={login} buttonText="Sign in " />
+          </div>
           <LinkButton
             styleClass="mb-5"
             onClick={() => (mode = "signup")}
@@ -58,10 +121,24 @@
         </div>
       {:else}
         <div class="flex gap-3 mt-10 flex-col">
-          <TextInput placeholderText="Johndoe..." label="Username" />
-          <PasswordInput placeholderText="******" label="Password" />
-          <PasswordInput placeholderText="******" label="Confirm Password" />
-          <div class="py-4 w-full"><Button buttonText="Sign up" /></div>
+          <TextInput
+            bind:value={username}
+            placeholderText="Johndoe..."
+            label="Username"
+          />
+          <PasswordInput
+            bind:value={password}
+            placeholderText="******"
+            label="Password"
+          />
+          <PasswordInput
+            bind:value={retypedPassword}
+            placeholderText="******"
+            label="Confirm Password"
+          />
+          <div class="py-4 w-full">
+            <Button buttonText="Sign up" onClick={() => signup()} />
+          </div>
 
           <LinkButton
             styleClass="mb-5"

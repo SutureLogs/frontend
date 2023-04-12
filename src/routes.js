@@ -8,6 +8,7 @@ import LogLog from "./pages/LogLog.svelte";
 import Onboard from "./pages/Onboard.svelte";
 import Portfolio from "./pages/Portfolio.svelte";
 import Profile from "./pages/Profile.svelte";
+import Search from "./pages/Search.svelte";
 
 const routes = {
   "/auth": Auth,
@@ -16,6 +17,7 @@ const routes = {
   "/profile": Profile,
   "/portfolio": Portfolio,
   "/create": CreateLog,
+  "/search": Search,
   "/base/:id": LogBase,
   "/log/:id": LogLog,
   "/discuss/:id": LogDiscuss,

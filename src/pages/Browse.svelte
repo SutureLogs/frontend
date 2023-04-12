@@ -58,7 +58,7 @@
     discover: [
       {
         surgeryName:
-          "Hand‑assisted laparoscopic surgery for an esophageal hiatal hernia with incarcerated transverse colon presenting after laparoscopic gastrectomy",
+          "Hand-assisted laparoscopic surgery for an esophageal hiatal hernia with incarcerated transverse colon presenting after laparoscopic gastrectomy",
         doctorName: "Dr. John Doe",
         doctorTitle: "General Surgeon",
         doctorImage:
@@ -69,7 +69,7 @@
       },
       {
         surgeryName:
-          "Hand‑assisted laparoscopic surgery for an esophageal hiatal hernia with incarcerated transverse colon presenting after laparoscopic gastrectomy",
+          "Hand-assisted laparoscopic surgery for an esophageal hiatal hernia with incarcerated transverse colon presenting after laparoscopic gastrectomy",
         doctorName: "Dr. John Doe",
         doctorTitle: "General Surgeon",
         doctorImage:

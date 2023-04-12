@@ -1,15 +1,18 @@
 <script>
   export let value = "";
+  export let onClick = () => {};
+  export let styleClass = "";
+  export let placeholderText = "Search for surgeries";
 </script>
 
-<div class="form-control">
-  <label class="input-group input-group-md">
+<div class="form-control {styleClass}">
+  <label class="input-group w-full">
     <input
       type="text"
-      placeholder="Search for surgeries"
-      class="input input-bordered input-md"
+      placeholder={placeholderText}
+      class="input input-bordered w-full"
     />
-    <button class="btn"
+    <button class="btn" on:click={onClick}
       ><svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"

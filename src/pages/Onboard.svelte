@@ -9,6 +9,43 @@
   import ListTextInput from "../components/design/inputs/ListTextInput.svelte";
   import FileInput from "../components/design/inputs/FileInput.svelte";
   import Button from "../components/design/buttons/Button.svelte";
+  import { toast } from "svelte-french-toast";
+  import { store } from "../stores/store";
+  import axios from "axios";
+  import { push } from "svelte-spa-router";
+
+  let BASEURL = import.meta.env.VITE_BASEURL;
+  let profilepicfiles;
+  let verificationfiles;
+  let fullname = "";
+  let qualification = "";
+  let organizations = [];
+  $: {
+    console.log(organizations);
+  }
+
+  async function submit() {
+    const fd = new FormData();
+    fd.append("profilePicture", profilepicfiles[0]);
+    fd.append("verificationDocument", verificationfiles[0]);
+
+    fd.append("name", fullname);
+    fd.append("qualification", qualification);
+    fd.append("organisation", organizations);
+
+    const res = await axios.post(BASEURL + "/auth/onboard", fd, {
+      headers: {
+        token: $store.jwt,
+      },
+    });
+    console.log(res);
+    if (res.data.status === "success") {
+      toast.success("Onboarded successfully");
+      push("/browse");
+    } else {
+      toast.error(res.data.message);
+    }
+  }
 </script>
 
 <Layout>
@@ -31,15 +68,28 @@
           We need a little more information to get you started.
         </Paragraph>
         <div class="flex flex-col gap-3 mt-2">
-          <TextInput placeholderText="John Doe" label="Full Name" />
-          <TextInput placeholderText="John Doe" label="Qualification" />
-          <ListTextInput label="Organization" />
+          <TextInput
+            placeholderText="John Doe"
+            bind:value={fullname}
+            label="Full Name"
+          />
+          <TextInput
+            placeholderText="John Doe"
+            bind:value={qualification}
+            label="Qualification"
+          />
+          <ListTextInput label="Organization" bind:items={organizations} />
           <FileInput
+            bind:file={profilepicfiles}
             label="Profile Picture"
             actionText="Upload Profile Picture"
           />
-          <FileInput label="Verification" actionText="Upload ID/Verification" />
-          <Button buttonText="Continue" />
+          <FileInput
+            label="Verification"
+            actionText="Upload ID/Verification"
+            bind:file={verificationfiles}
+          />
+          <Button buttonText="Continue" onClick={submit} />
         </div>
       </div>
     </div>

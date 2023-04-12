@@ -20,6 +20,7 @@
     surgeryName: "",
     surgeryDate: "",
     surgeryOrg: "",
+    availsurgeryOrg: [],
     surgeryVisibility: "",
     surgeryTeam: [
       {
@@ -52,7 +53,7 @@
         <ListInput
           bind:value={data.surgeryOrg}
           label="Organization"
-          options={["Org 1", "Org 2"]}
+          options={data.availsurgeryOrg}
           styleClass="flex-1"
         />
         <DateInput

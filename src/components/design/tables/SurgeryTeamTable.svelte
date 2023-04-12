@@ -3,6 +3,7 @@
   import plus from "../../../assets/icons/plusblack.png";
   import TextInput from "../inputs/TextInput.svelte";
   import LinkButton from "../buttons/LinkButton.svelte";
+  import toast from "svelte-french-toast";
 
   export let data = [
     {
@@ -41,11 +42,18 @@
         buttonText="Save"
         onClick={() => {
           if (
+            currentMember.memberUsername === "" ||
+            currentMember.memberRole === ""
+          ) {
+            toast.error("Please fill in all fields");
+            return;
+          }
+          if (
             data.find(
               (member) => member.memberUsername === currentMember.memberUsername
             )
           ) {
-            alert("Username already exists");
+            toast.error("Username already exists");
             return;
           }
           // server call to check if username exists
@@ -101,7 +109,14 @@
                 />
               </svg>
             </div>
-            <div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <div
+              on:click={() => {
+                data = data.filter(
+                  (m) => m.memberUsername !== member.memberUsername
+                );
+              }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

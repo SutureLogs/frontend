@@ -53,16 +53,12 @@
         surgeonName: "Yajat",
         userID: "yajat",
         note: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
-        logID: "tes",
-        logName: "tes",
       },
 
       {
         surgeonName: "Danny Boi",
         userID: "danyy",
         note: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
-        logID: "tes",
-        logName: "tes",
       },
     ],
   };
