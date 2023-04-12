@@ -9,6 +9,7 @@
   import browse from "../assets/icons/browse.png";
   import search from "../assets/icons/search.png";
   import create from "../assets/icons/plusblack.png";
+  import profile from "../assets/icons/profile.png";
 
   let navlinks = [
     {
@@ -69,9 +70,9 @@
   <!-- not mobile  -->
   <div
     bind:this={notmobilemenu}
-    class="flex flex-col z-20 bg-slate-50 min-h-screen h-full w-64 md:border-r-2 items-center pt-10 absolute md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out"
+    class="flex flex-col fixed bg-slate-50 z-20 min-h-screen h-full w-64 md:border-r-2 items-center pt-10 inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out"
   >
-    <div class="flex gap-2 items-center">
+    <div class="flex gap-2 items-center justify-center">
       <img src={logo} class="w-10 object-contain" alt="" />
       <div class="font-black text-2xl">
         Suture<span class="text-primary">Logs</span>
@@ -86,6 +87,14 @@
           isActive={$location === link.link}
         />
       {/each}
+    </nav>
+    <nav class="flex flex-col w-full gap-3 py-5 mt-auto border-t-2">
+      <NavigationButton
+        svg={profile}
+        link={"/profile"}
+        label={"Profile"}
+        isActive={$location === "/profile"}
+      />
     </nav>
   </div>
 </div>
