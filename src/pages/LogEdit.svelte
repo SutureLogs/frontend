@@ -13,29 +13,53 @@
   import Button from "../components/design/buttons/Button.svelte";
   import NotesDetailsTable from "../components/design/tables/NotesDetailsTable.svelte";
   import TextArea from "../components/design/inputs/TextArea.svelte";
+  import axios from "axios";
+  import { onMount } from "svelte";
+  import { store } from "../stores/store";
+  let BASEURL = import.meta.env.VITE_BASEURL;
+
+  onMount(async () => {
+    await dataload();
+  });
+  // async function dataload() {
+  //     let response = await axios.get(
+  //     BASEURL + "/surgery/?id=" + params.id,
+  //     {
+  //         headers: {
+  //         token: $store.jwt,
+  //         },
+  //     }
+  //     );
+  // }
 
   export let params = {};
   let newNote = "";
-  let data = {
+  let surgeryData = {
     logID: "",
     surgeryName: "",
     surgeryOrg: "",
     surgeryDate: "",
     surgeryVisibility: "",
     privateList: [],
+    surgeryTeam: [
+      {
+        memberUsername: "",
+        memberRole: "",
+        memberStatus: "",
+      },
+    ],
     notes: [
       {
-        surgeonName: "Yajat",
-        userID: "yajat",
-        note: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
-      },
-
-      {
-        surgeonName: "Danny Boi",
-        userID: "danyy",
+        doctorName: "Yajat",
+        doctorId: "yajat",
         note: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
       },
     ],
+  };
+  let patientData = {
+    patientID: "",
+    patientGender: "",
+    patientAge: "",
   };
   // get all orgs from backend
   let isPatientIDAvailable = false;
@@ -62,22 +86,22 @@
       <TextInput
         label="Surgery Name"
         placeholderText="Heart Surgery"
-        bind:value={data.surgeryName}
+        bind:value={surgeryData.surgeryName}
       />
       <div class="flex gap-3 flex-wrap">
         <ListInput
-          bind:value={data.surgeryOrg}
+          bind:value={surgeryData.surgeryOrg}
           label="Organization"
           options={["Org 1", "Org 2"]}
           styleClass="flex-1"
         />
         <DateInput
-          bind:date={data.surgeryDate}
+          bind:date={surgeryData.surgeryDate}
           label="Date"
           styleClass="flex-1"
         />
         <ListInput
-          bind:value={data.surgeryVisibility}
+          bind:value={surgeryData.surgeryVisibility}
           label="Visibility"
           styleClass="flex-1"
           options={["Private", "Public"]}
@@ -88,7 +112,7 @@
       <ListTextInput
         label="Private List"
         actionText="Add Username"
-        bind:items={data.privateList}
+        bind:items={surgeryData.privateList}
       />
     </div>
     <div class="flex flex-col px-10 py-4">
@@ -96,50 +120,12 @@
         Surgery Team Details</Label
       >
       <Label styleClass="py-4 text-primary">Surgery Team</Label>
-      <SurgeryTeamTable />
+      <SurgeryTeamTable data={surgeryData.surgeryTeam} />
 
-      <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center">
-        Patient Details</Label
-      >
-      <div class="flex gap-2 items-center py-5 flex-wrap">
-        <div>New</div>
-        <input
-          type="checkbox"
-          bind:checked={isPatientIDAvailable}
-          class="toggle"
-        />
-        <div>Existing</div>
-      </div>
-      {#if isPatientIDAvailable}
-        <TextInput
-          label="Patient ID"
-          placeholderText="Patient ID (if present)"
-        />
-      {:else}
-        <div class="flex gap-3 w-full items-center flex-wrap">
-          <TextInput
-            label="Patient Age"
-            placeholderText="Number only (eg. 77)"
-            styleClass="flex-1"
-          />
-
-          <ListInput
-            label="Patient Gender"
-            options={["Male", "Female", "Transgenda"]}
-            styleClass="flex-1"
-          />
-          <TextInput
-            isDisabled={true}
-            label="Generated Patient ID"
-            placeholderText="Number only (eg. 77)"
-            styleClass="flex-1"
-          />
-        </div>
-      {/if}
       <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center">
         Notes</Label
       >
-      <NotesDetailsTable data={data.notes} editable={true} />
+      <NotesDetailsTable bind:data={surgeryData.notes} editable={true} />
       <TextArea
         label="Add a note"
         placeholderText="Add a note"
@@ -151,14 +137,15 @@
         buttonText="Edit logs"
         styleClass="mt-10"
         onClick={() => {
-          data = {
-            ...data,
+          // check
+          surgeryData = {
+            ...surgeryData,
             notes: [
-              ...data.notes,
+              ...surgeryData.notes,
               {
-                surgeonName: "Yajat",
-                userID: "yajat",
-                note: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
+                doctorName: "Yajat",
+                doctorId: "yajat",
+                note: newNote,
               },
             ],
           };
@@ -166,6 +153,56 @@
           // server call
         }}
       />
+
+      <div class="divider py-7" />
+      <Label styleClass="text-lg  pb-5 flex gap-3 items-center">
+        Patient Details</Label
+      >
+      <div class="flex gap-2 items-center py-5 flex-wrap">
+        <div>New</div>
+        <input
+          type="checkbox"
+          bind:checked={isPatientIDAvailable}
+          class="toggle"
+        />
+        <div>Existing</div>
+      </div>
+      <div class="mb-24">
+        {#if isPatientIDAvailable}
+          <TextInput
+            label="Patient ID"
+            placeholderText="Patient ID (if present)"
+          />
+        {:else}
+          <div class="flex gap-3 w-full items-center flex-wrap">
+            <TextInput
+              bind:value={patientData.patientID}
+              label="Patient Age"
+              placeholderText="Number only (eg. 77)"
+              styleClass="flex-1"
+            />
+            <ListInput
+              bind:value={patientData.patientGender}
+              label="Patient Gender"
+              options={["Male", "Female", "Transgenda"]}
+              styleClass="flex-1"
+            />
+            <TextInput
+              bind:value={patientData.patientAge}
+              label="Patient ID"
+              placeholderText="Number only (eg. 77)"
+              styleClass="flex-1"
+            />
+          </div>
+        {/if}
+        <Button
+          buttonText="Add Patient"
+          styleClass="mt-10"
+          onClick={() => {
+            // server call
+          }}
+        />
+      </div>
     </div>
   </div>
 </LayoutWithLogNav>
