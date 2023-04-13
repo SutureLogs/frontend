@@ -4,17 +4,22 @@
   import TextInput from "../inputs/TextInput.svelte";
   import LinkButton from "../buttons/LinkButton.svelte";
   import toast from "svelte-french-toast";
+  import { store } from "../../../stores/store";
+  import axios from "axios";
+  let BASEURL = import.meta.env.VITE_BASEURL;
 
   export let data = [
     {
       memberUsername: "Dr. John Doe",
       memberRole: "Surgeon",
+      memberStatus: "",
     },
   ];
   let isEditModalOpen = false;
   let currentMember = {
     memberUsername: "",
     memberRole: "",
+    memberStatus: "",
   };
 </script>
 
@@ -40,7 +45,7 @@
       <LinkButton
         styleClass="text-primary py-0 border px-3 rounded-full"
         buttonText="Save"
-        onClick={() => {
+        onClick={async () => {
           if (
             currentMember.memberUsername === "" ||
             currentMember.memberRole === ""
@@ -57,17 +62,27 @@
             return;
           }
           // server call to check if username exists
+          const response = await axios.get(
+            BASEURL +
+              `/doctor/username-exists?username=${currentMember.memberUsername}`
+          );
+          if (response.data.exists === false) {
+            toast.error("Username does not exist");
+            return;
+          }
 
           data = [
             ...data,
             {
               memberUsername: currentMember.memberUsername,
               memberRole: currentMember.memberRole,
+              memberStatus: "Invited",
             },
           ];
           currentMember = {
             memberUsername: "",
             memberRole: "",
+            memberStatus: "",
           };
           isEditModalOpen = false;
         }}
@@ -95,7 +110,7 @@
           <td>{i + 1}</td>
           <td>{member.memberUsername}</td>
           <td>{member.memberRole}</td>
-          <td> <div>Invited</div></td>
+          <td> {member.memberStatus}</td>
           <td class="flex gap-4 items-center">
             <div>
               <svg
@@ -112,9 +127,13 @@
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <div
               on:click={() => {
-                data = data.filter(
-                  (m) => m.memberUsername !== member.memberUsername
-                );
+                if ($store.username === member.memberUsername) {
+                  toast.error("You cannot remove yourself");
+                  return;
+                }
+                data = data.filter((m) => {
+                  return m.memberUsername !== member.memberUsername;
+                });
               }}
             >
               <svg

@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from "svelte";
+
   // @ts-nocheck
 
   import LayoutWithNav from "../components/LayoutWithNav.svelte";
@@ -11,28 +13,77 @@
   import SurgeryTeamTable from "../components/design/tables/SurgeryTeamTable.svelte";
   import Heading2 from "../components/design/titles/Heading2.svelte";
   import Label from "../components/design/titles/Label.svelte";
+  import axios from "axios";
+  import { store } from "../stores/store";
+  import { toast } from "svelte-french-toast";
+  import { push } from "svelte-spa-router";
 
   let surgeryVideoFile = null;
   let surgeryThumbnailFile = null;
+  let vitalsFile = null;
+  let BASEURL = import.meta.env.VITE_BASEURL;
+  let loading = false;
 
-  // get all orgs from backend
+  onMount(async () => {
+    loading = true;
+    const response = await axios.get(BASEURL + "/doctor/getorgs", {
+      headers: {
+        token: $store.jwt,
+      },
+    });
+    if (response.data.status === "success") {
+      data.availsurgeryOrg = response.data.organisations;
+      data.surgeryTeam.push({
+        memberUsername: $store.username,
+        memberRole: "Log Creator",
+        memberStatus: "Accepted",
+      });
+      loading = false;
+    } else {
+      toast.error("Something went wrong");
+    }
+  });
+
   let data = {
     surgeryName: "",
     surgeryDate: "",
     surgeryOrg: "",
     availsurgeryOrg: [],
     surgeryVisibility: "",
-    surgeryTeam: [
-      {
-        memberUsername: "Dr. John Doe",
-        memberRole: "Surgeon",
-      },
-    ],
+    surgeryTeam: [],
     surgeryNote: "",
   };
+
+  async function submit() {
+    loading = true;
+    let fd = new FormData();
+    fd.append("operationVideo", surgeryVideoFile[0]);
+    fd.append("vital", vitalsFile[0]);
+    fd.append("thumbnail", surgeryThumbnailFile[0]);
+    fd.append("surgeryName", data.surgeryName);
+    fd.append("surgeryDate", data.surgeryDate);
+    fd.append("surgeryOrg", data.surgeryOrg);
+    fd.append("surgeryVisibility", data.surgeryVisibility);
+    fd.append("surgeryNote", data.surgeryNote);
+    fd.append("surgeryTeam", JSON.stringify(data.surgeryTeam));
+
+    const response = await axios.post(BASEURL + "/surgery/create-surgery", fd, {
+      headers: {
+        token: $store.jwt,
+      },
+    });
+    loading = false;
+    console.log(response.data);
+    if (response.data.status === "success") {
+      toast.success("Surgery Log Created");
+      push("/base/" + response.data.surgeryLog._id);
+    } else {
+      toast.error("Something went wrong");
+    }
+  }
 </script>
 
-<LayoutWithNav>
+<LayoutWithNav bind:loading>
   <div class="p-10 md:mx-40">
     <Heading2>Create a Log</Heading2>
     <Label styleClass="text-lg pt-10 pb-5 flex gap-3 items-center">
@@ -87,14 +138,19 @@
       Surgery Video Details</Label
     >
     <FileInput
-      label=""
+      label="Upload Surgery Video"
       bind:file={surgeryVideoFile}
-      actionText="Upload Surgery Video"
+      actionText="Video of Surgery only (mp4)"
     />
     <FileInput
-      label=""
+      label="Upload Thumbnail"
       bind:file={surgeryThumbnailFile}
-      actionText="Upload Thumbnail"
+      actionText="Thumbnail of Surgery (jpg,png,jpeg,webp)"
+    />
+    <FileInput
+      label="Upload Vitals File"
+      bind:file={vitalsFile}
+      actionText="Vitals File (csv)"
     />
 
     <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center "
@@ -113,6 +169,6 @@
       bind:value={data.surgeryNote}
     />
 
-    <Button buttonText="Create Log" styleClass="my-2" />
+    <Button buttonText="Create Log" styleClass="my-2" onClick={submit} />
   </div>
 </LayoutWithNav>

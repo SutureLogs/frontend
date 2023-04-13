@@ -10,7 +10,7 @@
   <div class="flex flex-col">
     <div class="p-5 flex justify-between border-b-2">
       <Label styleClass="opacity-50">Age</Label>
-      <Label>{age} years old</Label>
+      <Label>{age}</Label>
     </div>
     <div class="p-5 flex justify-between border-b-2">
       <Label styleClass="opacity-50">Gender</Label>

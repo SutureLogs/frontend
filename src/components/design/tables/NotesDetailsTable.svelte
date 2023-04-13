@@ -8,8 +8,8 @@
   export let editable = false;
   export let data = [
     {
-      surgeonName: "Yajat",
-      userID: "yajat",
+      doctorName: "Yajat",
+      doctorId: "yajat",
       note: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
     },
   ];
@@ -18,14 +18,14 @@
 <div class={`${styleClass}`}>
   <Label styleClass="text-primary border-b-2 pb-3">{label}</Label>
   <div class={`flex flex-col gap-3 pt-2 `}>
-    {#each data as { surgeonName, userID, note }, i}
+    {#each data as { doctorName, doctorId, note }, i}
       <div class="flex flex-col gap-3 border-b-2 py-3">
         <Paragraph>{note}</Paragraph>
         <div class="flex justify-between items-center">
           <LinkButton
             styleClass="text-amber-600 py-0"
-            buttonText={surgeonName}
-            onClick={() => push(`/profile/` + userID)}
+            buttonText={doctorName}
+            onClick={() => push(`/profile/` + doctorId)}
           />
           <!-- svelte-ignore a11y-click-events-have-key-events -->
 

@@ -6,8 +6,8 @@
   export let styleClass = "";
   export let team = [
     {
-      userID: "1",
-      name: "Dr. John Doe",
+      doctorId: "1",
+      doctorName: "Dr. John Doe",
       role: "Surgeon",
     },
   ];
@@ -25,8 +25,8 @@
         <Label styleClass="opacity-50">{member.role}</Label>
         <LinkButton
           styleClass="text-primary py-0"
-          buttonText={member.name}
-          onClick={() => push(`/profile/` + member.userID)}
+          buttonText={member.doctorName}
+          onClick={() => push(`/profile/` + member.doctorId)}
         />
       </div>
     {/each}

@@ -34,7 +34,9 @@
       password: password,
     });
     if (response.data.status === "success") {
+      console.log(response.data);
       $store.jwt = response.data.token;
+      $store.username = username;
       push("/onboard");
     } else {
       toast.error(response.data.message);
@@ -55,6 +57,8 @@
     });
     if (response.data.status === "success") {
       $store.jwt = response.data.token;
+      $store.username = username;
+
       push("/browse");
     } else {
       toast.error(response.data.message);
