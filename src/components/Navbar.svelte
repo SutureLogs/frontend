@@ -17,11 +17,7 @@
       icon: browse,
       link: "/browse",
     },
-    {
-      name: "Learn",
-      icon: learn,
-      link: "/learn",
-    },
+
     {
       name: "Search",
       icon: search,

@@ -50,7 +50,7 @@
   <div class="flex gap-4 items-center">
     <div>
       <img
-        src={doctorImage}
+        src={BASEURL + "/surgery/img/" + doctorImage}
         alt=""
         class="w-12 h-12 rounded-full border-2 border-blue-400"
       />
@@ -71,7 +71,7 @@
   </div>
   <div class="mt-4">
     <img
-      src={surgeryImage}
+      src={BASEURL + "/surgery/img/" + surgeryImage}
       alt=""
       class="aspect-video w-full object-cover rounded-xl"
     />

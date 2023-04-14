@@ -78,7 +78,7 @@
               orgName={invite.orgName}
               status={invite.status}
               inviteUser={invite.inviteUser}
-              logID={invite.logID}
+              logID={invite.logId}
             />
           {/each}
         </div>

@@ -48,6 +48,20 @@
 
       console.log(res.data);
 
+      data.discover = res.data.discover.map((item) => {
+        let leadsurgeon = item.surgeryTeam.find(
+          (member) => member.role === "Lead Surgeon"
+        );
+        return {
+          surgeryName: item.surgeryTitle,
+          doctorName: leadsurgeon.doctorName,
+          doctorTitle: leadsurgeon.doctorTitle,
+          doctorImage: leadsurgeon.doctorProfilePic,
+          surgeryImage: item.thumbnailLink,
+          orgName: item.surgeryOrg,
+          logID: item._id,
+        };
+      });
       data.trending = res.data.trending.map((item) => {
         let leadsurgeon = item.surgeryTeam.find(
           (member) => member.role === "Lead Surgeon"

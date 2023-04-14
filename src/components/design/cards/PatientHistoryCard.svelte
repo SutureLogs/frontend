@@ -29,7 +29,12 @@
       {moment(date).format("DD MMMM YYYY")}</Label
     >
     {#if logID}
-      <button on:click={() => push("/base/" + logID)}>></button>
+      <button
+        on:click={() => {
+          window.location.href = `/#/base/${logID}`;
+          location.reload();
+        }}>></button
+      >
     {:else}
       <div class="text-sm px-2 opacity-50 rounded-full border">No record</div>
     {/if}
