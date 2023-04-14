@@ -4,6 +4,20 @@
   import Heading2 from "../components/design/titles/Heading2.svelte";
   import Label from "../components/design/titles/Label.svelte";
   import Paragraph from "../components/design/titles/Paragraph.svelte";
+  let BASEURL = import.meta.env.VITE_BASEURL;
+  let data = {
+    doctorFullName: "John Doe",
+    doctorQualification: "MBBS, MD",
+    doctorOrganisation: "Organisation Name",
+    doctorImg: "https://via.placeholder.com/123",
+    surgeries: [
+      {
+        surgeryName: "surgeryName",
+        img: "img",
+        logID: "logID",
+      },
+    ],
+  };
 </script>
 
 <LayoutWithNav>
@@ -13,30 +27,26 @@
       <div class="max-w-4xl">
         <div class="flex items-center justify-between gap-3 border-b-2 pb-7">
           <div class="flex flex-col">
-            <Heading2>Yajat Vinod Vishwakarma</Heading2>
-            <Paragraph>Doctor</Paragraph>
-            <Paragraph>@ Organization</Paragraph>
+            <Heading2>{data.doctorFullName}</Heading2>
+            <Paragraph>{data.doctorQualification}</Paragraph>
+            <Paragraph>@ {data.doctorOrganisation}</Paragraph>
           </div>
           <img
-            src="https://via.placeholder.com/300"
+            src={BASEURL + "/surgery/img" + data.doctorOrganisation}
             class="rounded-full object-cover w-24 h-24"
             alt=""
           />
         </div>
         <Label styleClass="mt-10 text-primary">Surgeries on SutureLogs</Label>
         <div class="grid grid-cols-2 gap-10 mt-4">
-          <PortfolioCard
-            editable={false}
-            surgeryName={"Surgery Name"}
-            img={"https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg"}
-            logID={"123"}
-          />
-          <PortfolioCard
-            editable={false}
-            surgeryName={"Surgery Name"}
-            img={"https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg"}
-            logID={"123"}
-          />
+          {#each data.surgeries as surgery}
+            <PortfolioCard
+              editable={false}
+              surgeryName={surgery.surgeryName}
+              img={surgery.img}
+              logID={surgery.logID}
+            />
+          {/each}
         </div>
       </div>
     </div>
