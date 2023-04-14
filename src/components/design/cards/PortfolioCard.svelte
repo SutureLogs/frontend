@@ -6,6 +6,7 @@
   export let styleClass = "";
   export let surgeryName = "";
   export let editable = true;
+  let BASEURL = import.meta.env.VITE_BASEURL;
 </script>
 
 <div class=" flex flex-col {styleClass}">
@@ -48,7 +49,7 @@
 
     <img
       class="aspect-video w-full h-full object-cover rounded-xl"
-      src={img}
+      src={BASEURL + "/surgery/img/" + img}
       alt=""
       srcset=""
     />

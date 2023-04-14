@@ -7,6 +7,7 @@
   export let surgeonTitle = "Doctor Title";
   export let orgName = "Org Name";
   export let date = "22/3/12";
+  import moment from "moment";
   export let logID = "";
 </script>
 
@@ -23,7 +24,10 @@
   </div>
 
   <div class="flex justify-between items-center">
-    <Label><span class="opacity-50">Conducted on </span> {date}</Label>
+    <Label
+      ><span class="opacity-50">Conducted on </span>
+      {moment(date).format("DD MMMM YYYY")}</Label
+    >
     {#if logID}
       <button on:click={() => push("/base/" + logID)}>></button>
     {:else}

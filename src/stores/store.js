@@ -4,4 +4,6 @@ export const store = persisted("store", {
   jwt: "",
   blurSurgeryFilter: false,
   username: "",
+  doctorName: "",
+  doctorID: "",
 });

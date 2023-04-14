@@ -37,6 +37,7 @@
       console.log(response.data);
       $store.jwt = response.data.token;
       $store.username = username;
+      $store.doctorID = response.data.id;
       push("/onboard");
     } else {
       toast.error(response.data.message);
@@ -58,6 +59,8 @@
     if (response.data.status === "success") {
       $store.jwt = response.data.token;
       $store.username = username;
+      $store.doctorName = response.data.name;
+      $store.doctorID = response.data.id;
 
       push("/browse");
     } else {

@@ -45,7 +45,7 @@
     surgeonTitle: "Surgeon Title",
     surgeryName: "Surgery Name",
     date: "22/3/12",
-    vidLink:
+    videoLink:
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     videoTimestamps: [0, 10, 20, 30],
     vitalTimestamps: [0, 10, 20, 30],
@@ -149,7 +149,7 @@
             bind:currentTime={time}
             class="rounded-xl {$store.blurSurgeryFilter ? 'blur-lg' : ''} "
             controls
-            src=""
+            src={BASEURL + "/surgery/video/" + data.videoLink}
           />
           <div class="flex justify-end py-3">
             {#if !$store.blurSurgeryFilter}

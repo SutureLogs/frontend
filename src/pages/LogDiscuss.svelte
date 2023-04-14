@@ -79,8 +79,8 @@
 </div>
 
 <LayoutWithLogNav {params}>
-  <div class="grid grid-cols-3">
-    <div class="col-span-2">
+  <div class="grid md:grid-cols-3">
+    <div class="md:col-span-2">
       <div class="p-10 flex flex-col md:flex-row justify-between items-center">
         <LinkIconButton
           buttonText={"Go back to browse"}

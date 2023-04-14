@@ -31,7 +31,7 @@
 
     fd.append("name", fullname);
     fd.append("qualification", qualification);
-    fd.append("organisation", organizations);
+    fd.append("organisation", JSON.stringify(organizations));
 
     const res = await axios.post(BASEURL + "/auth/onboard", fd, {
       headers: {
@@ -41,6 +41,7 @@
     console.log(res);
     if (res.data.status === "success") {
       toast.success("Onboarded successfully");
+      $store.doctorName = fullname;
       push("/browse");
     } else {
       toast.error(res.data.message);

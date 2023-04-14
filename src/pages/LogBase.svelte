@@ -139,7 +139,14 @@
             </div>
           {/if}
           {#each data.patientHistory as history}
-            <PatientHistoryCard {...history} />
+            <PatientHistoryCard
+              logID={history.surgeryId}
+              date={history.surgeryDate}
+              surgeryName={history.surgeryName}
+              surgeonName={history.surgeonName}
+              surgeonTitle={history.surgeonTitle}
+              orgName={history.surgeryOrg}
+            />
           {/each}
         </div>
       </div>

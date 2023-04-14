@@ -5,7 +5,11 @@
   import compass from "../assets/icons/compass.png";
   import plus from "../assets/icons/plus.png";
   import IconButton from "../components/design/buttons/IconButton.svelte";
-
+  import axios from "axios";
+  import toast from "svelte-french-toast";
+  import { onMount } from "svelte";
+  import { store } from "../stores/store";
+  let BASEURL = import.meta.env.VITE_BASEURL;
   let data = {
     trending: [
       {
@@ -31,55 +35,37 @@
         orgName: "Aster Hospital",
       },
     ],
-    continuewatching: [
-      {
-        surgeryName:
-          "Hand‑assisted laparoscopic surgery for an esophageal hiatal hernia with incarcerated transverse colon presenting after laparoscopic gastrectomy",
-        doctorName: "Dr. John Doe",
-        doctorTitle: "General Surgeon",
-        doctorImage:
-          "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-        surgeryImage:
-          "  https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg",
-        orgName: "Aster Hospital",
-      },
-      {
-        surgeryName:
-          "Hand‑assisted laparoscopic surgery for an esophageal hiatal hernia with incarcerated transverse colon presenting after laparoscopic gastrectomy",
-        doctorName: "Dr. John Doe",
-        doctorTitle: "General Surgeon",
-        doctorImage:
-          "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-        surgeryImage:
-          "  https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg",
-        orgName: "Aster Hospital",
-      },
-    ],
-    discover: [
-      {
-        surgeryName:
-          "Hand-assisted laparoscopic surgery for an esophageal hiatal hernia with incarcerated transverse colon presenting after laparoscopic gastrectomy",
-        doctorName: "Dr. John Doe",
-        doctorTitle: "General Surgeon",
-        doctorImage:
-          "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-        surgeryImage:
-          "  https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg",
-        orgName: "Aster Hospital",
-      },
-      {
-        surgeryName:
-          "Hand-assisted laparoscopic surgery for an esophageal hiatal hernia with incarcerated transverse colon presenting after laparoscopic gastrectomy",
-        doctorName: "Dr. John Doe",
-        doctorTitle: "General Surgeon",
-        doctorImage:
-          "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
-        surgeryImage:
-          "  https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg",
-        orgName: "Aster Hospital",
-      },
-    ],
+    discover: [],
   };
+
+  onMount(async () => {
+    try {
+      const res = await axios.get(BASEURL + "/surgery/browse", {
+        headers: {
+          token: $store.jwt,
+        },
+      });
+
+      console.log(res.data);
+
+      data.trending = res.data.trending.map((item) => {
+        let leadsurgeon = item.surgeryTeam.find(
+          (member) => member.role === "Lead Surgeon"
+        );
+        return {
+          surgeryName: item.surgeryTitle,
+          doctorName: leadsurgeon.doctorName,
+          doctorTitle: leadsurgeon.doctorTitle,
+          doctorImage: leadsurgeon.doctorProfilePic,
+          surgeryImage: item.thumbnailLink,
+          orgName: item.surgeryOrg,
+          logID: item._id,
+        };
+      });
+    } catch (err) {
+      toast.error("Error fetching data");
+    }
+  });
 </script>
 
 <LayoutWithNav>
@@ -112,12 +98,12 @@
     </div>
     <div class="grid md:grid-cols-2 grid-cols-1 gap-10">
       {#each data.trending as item}
-        <BrowseCard {...item} />
+        <BrowseCard {...item} logID={item.logID} />
       {/each}
     </div>
 
     <!-- continue watching -->
-    <div
+    <!-- <div
       class="label-text-alt flex gap-3 items-center uppercase py-6 pt-20 font-bold text-[#4669C1] tracking-widest"
     >
       <svg
@@ -137,7 +123,7 @@
       {#each data.continuewatching as item}
         <BrowseCard {...item} />
       {/each}
-    </div>
+    </div> -->
     <!-- discover -->
     <div
       class="label-text-alt flex gap-3 items-center uppercase py-6 pt-20 font-bold text-[#4669C1] tracking-widest"
@@ -148,7 +134,7 @@
     </div>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-10">
       {#each data.discover as item}
-        <BrowseCard {...item} />
+        <BrowseCard {...item} logID={item.logID} />
       {/each}
     </div>
   </div>

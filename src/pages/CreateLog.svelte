@@ -35,7 +35,7 @@
       data.availsurgeryOrg = response.data.organisations;
       data.surgeryTeam.push({
         memberUsername: $store.username,
-        memberRole: "Log Creator",
+        memberRole: "Lead Surgeon",
         memberStatus: "Accepted",
       });
       loading = false;
