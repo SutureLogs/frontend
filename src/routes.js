@@ -1,6 +1,7 @@
 import Auth from "./pages/Auth.svelte";
 import Browse from "./pages/Browse.svelte";
 import CreateLog from "./pages/CreateLog.svelte";
+import Learn from "./pages/Learn.svelte";
 import LogBase from "./pages/LogBase.svelte";
 import LogDiscuss from "./pages/LogDiscuss.svelte";
 import LogEdit from "./pages/LogEdit.svelte";
@@ -14,11 +15,12 @@ const routes = {
   "/auth": Auth,
   "/onboard": Onboard,
   "/browse": Browse,
-  "/profile": Profile,
+  "/profile/:id?": Profile,
   "/portfolio": Portfolio,
   "/create": CreateLog,
   "/search/:searchText?": Search,
   "/base/:id": LogBase,
+  "/learn/:id": Learn,
   "/log/:id": LogLog,
   "/discuss/:id": LogDiscuss,
   "/edit/:id": LogEdit,

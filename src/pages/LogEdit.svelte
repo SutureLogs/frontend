@@ -20,12 +20,17 @@
   import { store } from "../stores/store";
   import Loading from "../components/Loading.svelte";
   import { toast } from "svelte-french-toast";
+  import moment from "moment";
+  import SurgeryTeamTableForEdit from "../components/design/tables/SurgeryTeamTableForEdit.svelte";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
 
   onMount(async () => {
     await dataload();
   });
+  $: {
+    console.log(surgeryData.surgeryTeam);
+  }
   async function dataload() {
     let response = await axios.get(
       BASEURL + "/surgery/editpage-data?id=" + params.id,
@@ -35,26 +40,20 @@
         },
       }
     );
+    console.log(response.data);
     surgeryData = {
       surgeryName: response.data.surgery.surgeryName,
       surgeryOrg: response.data.surgery.surgeryOrg,
       availableOrgs: response.data.surgery.availableOrgs,
       surgeryTeam: response.data.surgery.surgeryTeam,
-      surgeryDate: response.data.surgery.surgeryDate,
+      surgeryDate: moment(response.data.surgery.surgeryDate).format(
+        "YYYY-MM-DD"
+      ),
       surgeryVisibility: response.data.surgery.surgeryVisibility,
       privateList: response.data.surgery.privateList,
       notes: response.data.surgery.notes,
     };
-    let formattedTeam = surgeryData.surgeryTeam.map((member) => {
-      return {
-        memberUsername: member.doctorusername,
-        memberRole: member.role,
-        memberStatus: member.status,
-        memberName: member.doctorName,
-        memberID: member.doctorId,
-      };
-    });
-    surgeryData.surgeryTeam = formattedTeam;
+
     patientData = {
       patientAge: response.data.surgery.patientAge,
       patientGender: response.data.surgery.patientGender,
@@ -71,13 +70,7 @@
     surgeryDate: "",
     surgeryVisibility: "",
     privateList: [],
-    surgeryTeam: [
-      {
-        memberUsername: "",
-        memberRole: "",
-        memberStatus: "",
-      },
-    ],
+    surgeryTeam: [],
     notes: [
       {
         doctorName: "Yajat",
@@ -153,7 +146,7 @@
           Surgery Team Details</Label
         >
         <Label styleClass="py-4 text-primary">Surgery Team</Label>
-        <SurgeryTeamTable data={surgeryData.surgeryTeam} />
+        <SurgeryTeamTableForEdit bind:data={surgeryData.surgeryTeam} />
 
         <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center">
           Notes</Label
@@ -170,19 +163,10 @@
           buttonText="Edit logs"
           styleClass="mt-10"
           onClick={async () => {
-            let formattedTeam = surgeryData.surgeryTeam.map((member) => {
-              return {
-                doctorusername: member.memberUsername,
-                role: member.memberRole,
-                status: member.memberStatus,
-                doctorName: member.memberName,
-                doctorId: member.memberID,
-              };
-            });
             let surgeryData1 = {
               ...surgeryData,
               logId: params.id,
-              surgeryTeam: formattedTeam,
+
               newNote: {
                 doctorName: $store.doctorName,
                 doctorId: $store.doctorID,
@@ -200,7 +184,12 @@
                 },
               }
             );
-            console.log(response);
+            console.log(response.data);
+            if (response.data.status === "success") {
+              toast.success("Surgery edited successfully");
+            } else {
+              toast.error("Surgery edit failed");
+            }
           }}
         />
 
