@@ -1,9 +1,12 @@
 <script>
+  import { onMount } from "svelte";
   import LayoutWithNav from "../components/LayoutWithNav.svelte";
   import PortfolioCard from "../components/design/cards/PortfolioCard.svelte";
   import Heading2 from "../components/design/titles/Heading2.svelte";
   import Label from "../components/design/titles/Label.svelte";
   import Paragraph from "../components/design/titles/Paragraph.svelte";
+  import { store } from "../stores/store";
+  import axios from "axios";
   let BASEURL = import.meta.env.VITE_BASEURL;
   let data = {
     doctorFullName: "John Doe",
@@ -18,6 +21,18 @@
       },
     ],
   };
+  onMount(async () => {
+    await dataload();
+  });
+  async function dataload() {
+    let response = await axios.get(BASEURL + "/doctor/profile", {
+      headers: {
+        token: $store.jwt,
+      },
+    });
+    console.log(response.data);
+    data = response.data.doctor;
+  }
 </script>
 
 <LayoutWithNav>
@@ -32,7 +47,7 @@
             <Paragraph>@ {data.doctorOrganisation}</Paragraph>
           </div>
           <img
-            src={BASEURL + "/surgery/img" + data.doctorOrganisation}
+            src={BASEURL + "/surgery/img/" + data.doctorImg}
             class="rounded-full object-cover w-24 h-24"
             alt=""
           />
@@ -42,9 +57,9 @@
           {#each data.surgeries as surgery}
             <PortfolioCard
               editable={false}
-              surgeryName={surgery.surgeryName}
-              img={surgery.img}
-              logID={surgery.logID}
+              surgeryName={surgery.surgeryTitle}
+              img={surgery.thumbnailLink}
+              logID={surgery._id}
             />
           {/each}
         </div>
