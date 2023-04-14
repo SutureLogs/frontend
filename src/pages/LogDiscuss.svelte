@@ -16,6 +16,9 @@
   import { store } from "../stores/store";
   import { onMount } from "svelte";
   import Loading from "../components/Loading.svelte";
+  import axios from "axios";
+  import empty from "../assets/icons/empty.png";
+  import moment from "moment";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
   let loading = false;
@@ -24,7 +27,20 @@
     await dataload();
   });
   async function dataload() {
+    console.log("dataload");
     loading = true;
+    const res = await axios.get(
+      BASEURL + "/surgery/get-discuss?id=" + params.id,
+      {
+        headers: {
+          token: $store.jwt,
+        },
+      }
+    );
+    loading = false;
+    data = res.data.surgery;
+    // data.surgeryID = surgeryID;
+    // console.log(data);
   }
 
   let data = {
@@ -43,8 +59,8 @@
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
         replies: [
           {
-            userID: "1",
-            memberName: "Dr. Jane Doe",
+            doctorId: "1",
+            doctorName: "Dr. Jane Doe",
             comment:
               "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
           },
@@ -83,8 +99,23 @@
     />
     <Button
       buttonText="Reply"
-      onClick={() => {
-        // server call with newComment and memberID
+      onClick={async () => {
+        loading = true;
+        await axios.post(
+          BASEURL + "/surgery/add-discussion",
+          {
+            surgeryId: params.id,
+            comment: newComment,
+          },
+          {
+            headers: {
+              token: $store.jwt,
+            },
+          }
+        );
+        await dataload();
+        loading = false;
+        isAddModalOpen = false;
       }}
     />
   </div>
@@ -92,7 +123,9 @@
 
 <LayoutWithLogNav {params}>
   {#if loading}
-    <Loading />
+    <div class="h-screen">
+      <Loading />
+    </div>
   {:else}
     <div class="grid md:grid-cols-3">
       <div class="md:col-span-2">
@@ -108,7 +141,7 @@
           />
           <div class="flex gap-2 items-center">
             <Label styleClass="opacity-50">Conducted on</Label>
-            <Label>{data.date}</Label>
+            <Label>{moment(data.date).format("DD MMMM, YYYY")}</Label>
           </div>
         </div>
         <div class="bg-slate-100 p-10">
@@ -188,6 +221,14 @@
           />
         </div>
         <div class="flex flex-col gap-3 mt-7">
+          {#if data.discussions.length == 0}
+            <div
+              class="flex flex-col gap-3 opacity-30 justify-center items-center"
+            >
+              <img src={empty} alt="" />
+              <Label styleClass="text-primary">No discussions yet</Label>
+            </div>
+          {/if}
           {#each data.discussions as discussion}
             {#if discussion.replies && discussion.replies.length > 0}
               <DiscussionCard
@@ -205,13 +246,19 @@
                   {#each discussion.replies as reply, i}
                     {#if i == discussion.replies.length - 1}
                       <DiscussionCard
+                        surgeryID={discussion.surgeryID}
                         {...reply}
+                        memberID={reply.doctorId}
+                        memberName={reply.doctorName}
                         dontClose={false}
                         discussionID={discussion.discussionID}
                       />
                     {:else}
                       <DiscussionCard
+                        surgeryID={discussion.surgeryID}
                         {...reply}
+                        memberID={reply.doctorId}
+                        memberName={reply.doctorName}
                         dontClose={true}
                         discussionID={discussion.discussionID}
                       />

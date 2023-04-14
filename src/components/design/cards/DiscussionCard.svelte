@@ -3,6 +3,9 @@
   import LinkButton from "../buttons/LinkButton.svelte";
   import TextArea from "../inputs/TextArea.svelte";
   import Button from "../buttons/Button.svelte";
+  import axios from "axios";
+  import { store } from "../../../stores/store";
+  let BASEURL = import.meta.env.VITE_BASEURL;
   export let comment = "";
   export let memberName = "";
   export let memberID = "";
@@ -11,6 +14,9 @@
   export let toggleReplies = () => {};
   export let discussionID = "";
   export let repliesCount = 0;
+  export let surgeryID = "";
+  console.log("surgeyID", surgeryID);
+
   let isAddModalOpen = false;
   let newComment = "";
 </script>
@@ -33,8 +39,24 @@
     />
     <Button
       buttonText="Reply"
-      onClick={() => {
+      onClick={async () => {
         // server call with newComment and discussionID and memberID
+        console.log("newComment", newComment);
+        await axios.post(
+          BASEURL + "/surgery/add-reply",
+          {
+            discussionId: discussionID,
+            reply: newComment,
+            surgeryId: surgeryID,
+          },
+          {
+            headers: {
+              token: $store.jwt,
+            },
+          }
+        );
+
+        location.reload();
       }}
     />
   </div>
