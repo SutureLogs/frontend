@@ -13,9 +13,9 @@
       type="text"
       bind:value
       placeholder={placeholderText}
-      class="input input-bordered w-full"
+      class="input input-bordered w-full bg-transparent text-white"
     />
-    <button type="submit" class="btn"
+    <button type="submit" class="btn text-white"
       ><svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"

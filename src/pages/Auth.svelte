@@ -33,8 +33,8 @@
     }
     loading = true;
     const response = await axios.post(BASEURL + "/auth/signup", {
-      username: username,
-      password: password,
+      username: username.toLowerCase(),
+      password: password.toLowerCase(),
     });
     loading = false;
     if (response.data.status === "success") {
@@ -57,8 +57,8 @@
     }
     loading = true;
     const response = await axios.post(BASEURL + "/auth/login", {
-      username: username,
-      password: password,
+      username: username.toLowerCase(),
+      password: password.toLowerCase(),
     });
     loading = false;
     if (response.data.status === "success") {

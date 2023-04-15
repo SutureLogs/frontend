@@ -82,7 +82,7 @@
 </script>
 
 <input type="checkbox" checked={isAddModalOpen} class="modal-toggle" />
-<div class="modal">
+<div class="modal bg-white text-white">
   <div class="modal-box relative">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div

@@ -73,7 +73,6 @@
       },
     });
     loading = false;
-    console.log(response.data);
     if (response.data.status === "success") {
       toast.success("Surgery Log Created");
       push("/base/" + response.data.surgeryLog._id);

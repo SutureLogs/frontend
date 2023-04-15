@@ -10,7 +10,9 @@
 </script>
 
 <LayoutWithLogNav {params}>
-  <div class="flex w- flex-col gap-2 w-full h-full items-center justify-center">
+  <div
+    class="flex p-10 flex-col gap-2 w-full h-full items-center justify-center"
+  >
     <div class="flex flex-col h-full items-center mt-10 w-full">
       <div class="max-w-4xl w-full">
         <div class="p-2 flex flex-col md:flex-row justify-between items-center">
@@ -31,8 +33,8 @@
           class="flex p-7 hover:scale-95 transition cursor-pointer gap-2 rounded-lg border my-5 items-center"
         >
           <div class="">
-            <div class="text-4xl font-black">Take a Quiz</div>
-            <div class="text-xl opacity-50">
+            <div class="text-2xl font-black">Take a Quiz</div>
+            <div class=" opacity-50">
               Check your understanding of this surgery
             </div>
           </div>
@@ -57,8 +59,8 @@
           class="flex p-7 hover:scale-95 cursor-pointer transition gap-2 rounded-lg border my-5 items-center"
         >
           <div class="">
-            <div class="text-4xl font-black">Flash Cards</div>
-            <div class="text-xl opacity-50">
+            <div class="text-2xl font-black">Flash Cards</div>
+            <div class=" opacity-50">
               Quick revision of concepts from the surgery
             </div>
           </div>

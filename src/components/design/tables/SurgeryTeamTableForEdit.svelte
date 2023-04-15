@@ -111,8 +111,8 @@
   </div>
 </div>
 
-<div class="overflow-x-auto">
-  <table class="table w-full">
+<div class="overflow-x-auto bg-transparent">
+  <table class="table w-full bg-transparent">
     <!-- head -->
     <thead>
       <tr>

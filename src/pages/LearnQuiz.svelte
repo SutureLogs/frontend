@@ -30,7 +30,7 @@
         token: $store.jwt,
       },
     });
-    console.log(res.data);
+
     if (res) data = res.data;
     loading = false;
   }
