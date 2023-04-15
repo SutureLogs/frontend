@@ -8,6 +8,7 @@
   import { store } from "../stores/store";
   import axios from "axios";
   import Loading from "../components/Loading.svelte";
+  import nosurgery from "../assets/icons/nosurgery.png";
   let BASEURL = import.meta.env.VITE_BASEURL;
   let data = {
     doctorFullName: "John Doe",
@@ -64,7 +65,7 @@
     {:else}
       <Heading2>Profile</Heading2>
       <div class="flex flex-col h-full items-center mt-10">
-        <div class="max-w-4xl">
+        <div class="max-w-4xl w-full">
           <div class="flex items-center justify-between gap-3 border-b-2 pb-7">
             <div class="flex flex-col">
               <Heading2>{data.doctorFullName}</Heading2>
@@ -78,6 +79,14 @@
             />
           </div>
           <Label styleClass="mt-10 text-primary">Surgeries on SutureLogs</Label>
+          {#if data.surgeries.length === 0}
+            <div
+              class="text-center opacity-30 h-full flex flex-col justify-center gap-4 items-center"
+            >
+              <img src={nosurgery} class="w-20 h-20" alt="" />
+              <Paragraph>No surgeries found on SutureLogs</Paragraph>
+            </div>
+          {/if}
           <div class="grid grid-cols-2 gap-10 mt-4">
             {#each data.surgeries as surgery}
               <PortfolioCard

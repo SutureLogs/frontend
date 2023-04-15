@@ -8,43 +8,7 @@
   export let searchText = params.searchText || "";
 
   let data = {
-    searchResults: [
-      {
-        logID: "1",
-        surgeryName: "Heart Surgery",
-        img: "https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg",
-        surgeonName: "Dr. John Doe",
-        orgName: "Org 1",
-      },
-      {
-        logID: "1",
-        surgeryName: "Heart Surgery",
-        img: "https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg",
-        surgeonName: "Dr. John Doe",
-        orgName: "Org 1",
-      },
-      {
-        logID: "1",
-        surgeryName: "Heart Surgery",
-        img: "https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg",
-        surgeonName: "Dr. John Doe",
-        orgName: "Org 1",
-      },
-      {
-        logID: "1",
-        surgeryName: "Heart Surgery",
-        img: "https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg",
-        surgeonName: "Dr. John Doe",
-        orgName: "Org 1",
-      },
-      {
-        logID: "1",
-        surgeryName: "Heart Surgery",
-        img: "https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/1968EA5E-28A1-49D1-A27CC556F7B8DF3C/C3E67292-300A-4B3F-AF06F349CDFBB918/WebsiteJpg_XL-FSURG_Main%20Visual_Cyan_Website.jpg",
-        surgeonName: "Dr. John Doe",
-        orgName: "Org 1",
-      },
-    ],
+    searchResults: [],
   };
 </script>
 
@@ -56,6 +20,12 @@
       styleClass="w-full"
       bind:value={searchText}
     />
+    {#if data.searchResults.length === 0}
+      <div class="text-center flex flex-col h-full w-full">
+        <h1 class="text-2xl font-bold">No results found</h1>
+        <p class="text-gray-500">Try searching for something else</p>
+      </div>
+    {/if}
     <div class="grid grid-cols-3 gap-10">
       {#each data.searchResults as result}
         <SearchCard
