@@ -7,11 +7,11 @@
 
   import left from "../assets/icons/left.png";
   import Label from "../components/design/titles/Label.svelte";
+  import noentry from "../assets/icons/noentry.png";
   import TextInput from "../components/design/inputs/TextInput.svelte";
   import ListInput from "../components/design/inputs/ListInput.svelte";
   import DateInput from "../components/design/inputs/DateInput.svelte";
   import ListTextInput from "../components/design/inputs/ListTextInput.svelte";
-  import SurgeryTeamTable from "../components/design/tables/SurgeryTeamTable.svelte";
   import Button from "../components/design/buttons/Button.svelte";
   import NotesDetailsTable from "../components/design/tables/NotesDetailsTable.svelte";
   import TextArea from "../components/design/inputs/TextArea.svelte";
@@ -22,15 +22,14 @@
   import { toast } from "svelte-french-toast";
   import moment from "moment";
   import SurgeryTeamTableForEdit from "../components/design/tables/SurgeryTeamTableForEdit.svelte";
+  import Heading2 from "../components/design/titles/Heading2.svelte";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
 
   onMount(async () => {
     await dataload();
   });
-  $: {
-    console.log(surgeryData.surgeryTeam);
-  }
+  let unauthorized = true;
   async function dataload() {
     loading = true;
     let response = await axios.get(
@@ -93,6 +92,16 @@
 <LayoutWithLogNav {params}>
   {#if loading}
     <Loading />
+  {:else if unauthorized === true}
+    <div
+      class="flex justify-center flex-col items-center h-full max-w-xs mx-auto"
+    >
+      <img src={noentry} alt="" />
+      <div class="text-center">
+        You do not have access to this page. Please contact someone from the
+        surgical team to give you access.
+      </div>
+    </div>
   {:else}
     <div class="">
       <div
@@ -108,7 +117,11 @@
       </div>
 
       <div class="flex flex-col gap-5 p-10 pb-4">
-        <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center">
+        <Heading2 styleClass="text-lg py-0 flex gap-3 items-center">
+          Edit this surgery log</Heading2
+        >
+
+        <Label styleClass="text-lg pt-5 pb-5 flex gap-3 items-center">
           Surgery Details</Label
         >
         <TextInput
@@ -137,11 +150,13 @@
         </div>
       </div>
       <div class="flex px-10">
-        <ListTextInput
-          label="Private List"
-          actionText="Add Username"
-          bind:items={surgeryData.privateList}
-        />
+        {#if surgeryData.surgeryVisibility == "Private"}
+          <ListTextInput
+            label="Private List"
+            actionText="Add Username"
+            bind:items={surgeryData.privateList}
+          />
+        {/if}
       </div>
       <div class="flex flex-col px-10 py-4">
         <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center">
@@ -151,12 +166,12 @@
         <SurgeryTeamTableForEdit bind:data={surgeryData.surgeryTeam} />
 
         <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center">
-          Notes</Label
+          Notes Details</Label
         >
         <NotesDetailsTable bind:data={surgeryData.notes} editable={true} />
         <TextArea
-          label="Add a note"
-          placeholderText="Add a note"
+          label="Add a new note"
+          placeholderText="Use this space to add a note about the surgery or patient development that you want to share with other doctors. Eg. Patient is allergic to penicillin. or Eg. Use of a specific drug is contraindicated in this patient."
           styleClass="mt-10"
           bind:value={newNote}
         />
@@ -237,6 +252,8 @@
               />
             </div>
           {/if}
+          <div class="my-3">*Can be edited only once.</div>
+
           <Button
             buttonText="Edit Patient"
             styleClass="mt-10"

@@ -6,6 +6,7 @@
   import toast from "svelte-french-toast";
   import { store } from "../../../stores/store";
   import axios from "axios";
+  import Paragraph from "../titles/Paragraph.svelte";
   let BASEURL = import.meta.env.VITE_BASEURL;
 
   export let data = [
@@ -33,6 +34,7 @@
       class="btn btn-sm btn-circle absolute right-2 top-2">✕</button
     >
     <TextInput label="Username" bind:value={currentMember.memberUsername} />
+    <div>The username must exist on SutureLogs</div>
     <TextInput label="Role" bind:value={currentMember.memberRole} />
     <div class="flex justify-end mt-4 gap-2">
       <LinkButton

@@ -55,8 +55,7 @@
             },
           }
         );
-
-        location.reload();
+        isAddModalOpen = false;
       }}
     />
   </div>
