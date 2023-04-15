@@ -2,6 +2,7 @@ import Auth from "./pages/Auth.svelte";
 import Browse from "./pages/Browse.svelte";
 import CreateLog from "./pages/CreateLog.svelte";
 import Learn from "./pages/Learn.svelte";
+import LearnQuiz from "./pages/LearnQuiz.svelte";
 import LogBase from "./pages/LogBase.svelte";
 import LogDiscuss from "./pages/LogDiscuss.svelte";
 import LogEdit from "./pages/LogEdit.svelte";
@@ -21,6 +22,7 @@ const routes = {
   "/search/:searchText?": Search,
   "/base/:id": LogBase,
   "/learn/:id": Learn,
+  "/learn/quiz/:id": LearnQuiz,
   "/log/:id": LogLog,
   "/discuss/:id": LogDiscuss,
   "/edit/:id": LogEdit,
