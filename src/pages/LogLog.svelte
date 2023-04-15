@@ -234,7 +234,7 @@
                 </Loading>
               </div>
             {:else}
-              <div class="flex justify-between">
+              <div class="flex justify-between flex-wrap gap-5 items-center">
                 <div class="">
                   <div class="opacity-30 text-xl">
                     {currentPara == 0 ? "" : data.transcript[currentPara - 1]}

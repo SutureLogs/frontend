@@ -13,7 +13,7 @@
       type="text"
       bind:value
       placeholder={placeholderText}
-      class="input input-bordered w-full bg-transparent text-white"
+      class="input input-bordered w-full bg-transparent text-black"
     />
     <button type="submit" class="btn text-white"
       ><svg
