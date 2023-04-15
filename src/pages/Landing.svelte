@@ -8,7 +8,9 @@
   import gcp from "../assets/gcp.png";
 </script>
 
-<div class="flex h-full min-h-screen justify-center items-center p-7">
+<div
+  class="flex h-full min-h-screen justify-center items-center p-7 bg-slate-50 text-black"
+>
   <div class="flex flex-col w-full max-w-screen-md gap-7">
     <div class="grid md:grid-cols-2">
       <div class="flex gap-2 items-center">

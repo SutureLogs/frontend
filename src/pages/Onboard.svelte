@@ -109,11 +109,11 @@
           <FileInput
             bind:file={profilepicfiles}
             label="Profile Picture"
-            actionText="Upload Profile Picture"
+            actionText="Upload Profile Picture (.jpg, .jpeg, .png)"
           />
           <FileInput
             label="Verification"
-            actionText="Upload ID/Verification"
+            actionText="Upload ID/Verification (.pdf only)"
             bind:file={verificationfiles}
           />
           {#if loading}

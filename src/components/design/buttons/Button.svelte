@@ -6,7 +6,7 @@
 </script>
 
 <button
-  class={`btn m-0 bg-[#4669C1] border-0 w-full   ${styleClass}`}
+  class={`btn m-0 bg-[#4669C1] border-0 w-full text-white   ${styleClass}`}
   on:click={onClick}
 >
   {buttonText}

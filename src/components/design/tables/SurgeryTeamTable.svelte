@@ -93,27 +93,27 @@
   </div>
 </div>
 
-<div class="overflow-x-auto bg-transparent">
-  <table class="table w-full bg-transparent">
+<div class="overflow-x-auto">
+  <table class="table w-full">
     <!-- head -->
-    <thead>
-      <tr>
-        <th />
-        <th>Username</th>
-        <th>Role</th>
-        <th>Status</th>
-        <th>Action</th>
+    <thead class="bg-transparent border">
+      <tr class="bg-transparent border">
+        <th class="bg-transparent border" />
+        <th class="bg-transparent border">Username</th>
+        <th class="bg-transparent border">Role</th>
+        <th class="bg-transparent border">Status</th>
+        <th class="bg-transparent border">Action</th>
       </tr>
     </thead>
     <tbody>
       <!-- row 1 -->
       {#each data as member, i}
         <tr>
-          <td>{i + 1}</td>
-          <td>{member.memberUsername}</td>
-          <td>{member.memberRole}</td>
-          <td> {member.memberStatus}</td>
-          <td class="flex gap-4 items-center">
+          <td class="bg-transparent border">{i + 1}</td>
+          <td class="bg-transparent border">{member.memberUsername}</td>
+          <td class="bg-transparent border">{member.memberRole}</td>
+          <td class="bg-transparent border"> {member.memberStatus}</td>
+          <td class="flex gap-4 bg-transparent border items-center">
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
