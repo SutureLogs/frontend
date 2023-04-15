@@ -72,6 +72,7 @@
       },
     ],
   };
+  let isViewFullModalOpen = false;
 
   $: {
     if (data.videoTimestamps) {
@@ -110,6 +111,33 @@
     }
   }
 </script>
+
+<input
+  type="checkbox"
+  bind:checked={isViewFullModalOpen}
+  class="modal-toggle"
+/>
+<div class="modal">
+  <div class="modal-box">
+    <button
+      on:click={() => {
+        isViewFullModalOpen = false;
+      }}
+      class="btn btn-sm btn-circle absolute right-2 top-2">✕</button
+    >
+    <h3 class="font-bold text-lg">Full Video Transcript</h3>
+    <div class="py-4">
+      {#each data.transcript as para, i}
+        <div
+          id={"para" + i}
+          class={`${currentPara === i ? "opacity-100" : "opacity-30"}`}
+        >
+          <p>{para}</p>
+        </div>
+      {/each}
+    </div>
+  </div>
+</div>
 
 <LayoutWithLogNav {params}>
   {#if loading}
@@ -198,7 +226,7 @@
               </div>
             {/if}
           </div>
-          <div class="h-96 overflow-auto mt-4">
+          <div class=" mt-4">
             {#if data.transcript.length === 0}
               <div class="flex justify-center items-center">
                 <Loading
@@ -206,16 +234,42 @@
                 </Loading>
               </div>
             {:else}
-              {#each data.transcript as para, i}
-                <div
-                  id={"para" + i}
-                  class={`p-2 ${
-                    currentPara === i ? "opacity-100" : "opacity-30"
-                  }`}
-                >
-                  <p>{para}</p>
+              <div class="flex justify-between">
+                <div class="">
+                  <div class="opacity-30 text-xl">
+                    {currentPara == 0 ? "" : data.transcript[currentPara - 1]}
+                  </div>
+                  <div class="text-xl font-semibold">
+                    {data.transcript[currentPara]}
+                  </div>
+                  <div class="opacity-30 text-xl">
+                    {currentPara == data.transcript.length - 1
+                      ? ""
+                      : data.transcript[currentPara + 1]}
+                  </div>
                 </div>
-              {/each}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <div
+                  on:click={() => (isViewFullModalOpen = true)}
+                  class=" hover:scale-95 transition-all cursor-pointer flex gap-3 items-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                    />
+                  </svg>
+                  <div>Full transcript</div>
+                </div>
+              </div>
             {/if}
           </div>
         </div>
@@ -235,8 +289,8 @@
                     >
                     <Label styleClass="opacity-50">{vital.name}</Label>
                   {:else}
-                    <Label>{vital.name}</Label>
                     <Label>- {vital.unit}</Label>
+                    <Label>{vital.name}</Label>
                   {/if}
                 </div>
               {/each}

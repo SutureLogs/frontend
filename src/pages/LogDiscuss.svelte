@@ -40,7 +40,6 @@
     data = res.data.surgery;
 
     // data.surgeryID = surgeryID;
-    console.log(data);
   }
 
   let data = {

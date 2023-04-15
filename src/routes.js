@@ -1,6 +1,8 @@
 import Auth from "./pages/Auth.svelte";
+import Broken from "./pages/Broken.svelte";
 import Browse from "./pages/Browse.svelte";
 import CreateLog from "./pages/CreateLog.svelte";
+import Landing from "./pages/Landing.svelte";
 import Learn from "./pages/Learn.svelte";
 import LearnQuiz from "./pages/LearnQuiz.svelte";
 import LogBase from "./pages/LogBase.svelte";
@@ -26,5 +28,7 @@ const routes = {
   "/log/:id": LogLog,
   "/discuss/:id": LogDiscuss,
   "/edit/:id": LogEdit,
+  "/": Landing,
+  "*": Broken,
 };
 export default routes;

@@ -26,6 +26,32 @@
   async function submit() {
     loading = true;
     const fd = new FormData();
+    if (profilepicfiles.length === 0) {
+      toast.error("Please upload a profile picture");
+      loading = false;
+      return;
+    }
+    if (verificationfiles.length === 0) {
+      toast.error("Please upload a verification document (.pdf)");
+      loading = false;
+      return;
+    }
+    if (fullname === "") {
+      toast.error("Please enter your full name");
+      loading = false;
+      return;
+    }
+    if (qualification === "") {
+      toast.error("Please enter your qualification");
+      loading = false;
+      return;
+    }
+    if (organizations.length === 0) {
+      toast.error("Please enter your organization");
+      loading = false;
+      return;
+    }
+
     fd.append("profilePicture", profilepicfiles[0]);
     fd.append("verificationDocument", verificationfiles[0]);
 

@@ -1,4 +1,6 @@
 <script>
+  // @ts-nocheck
+
   import { onMount } from "svelte";
 
   // @ts-nocheck
@@ -34,7 +36,7 @@
         },
       }
     );
-    console.log(response.data);
+
     data.searchResults = response.data.surgeries;
     loading = false;
   }
