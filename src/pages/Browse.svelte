@@ -9,6 +9,7 @@
   import toast from "svelte-french-toast";
   import { onMount } from "svelte";
   import { store } from "../stores/store";
+  import Loading from "../components/Loading.svelte";
   let BASEURL = import.meta.env.VITE_BASEURL;
   let data = {
     trending: [
@@ -37,8 +38,9 @@
     ],
     discover: [],
   };
-
+  let loading = true;
   onMount(async () => {
+    loading = true;
     try {
       const res = await axios.get(BASEURL + "/surgery/browse", {
         headers: {
@@ -76,6 +78,7 @@
           logID: item._id,
         };
       });
+      loading = false;
     } catch (err) {
       toast.error("Error fetching data");
     }
@@ -83,41 +86,44 @@
 </script>
 
 <LayoutWithNav>
-  <div
-    class="flex md:justify-between justify-center items-center gap-3 p-5 border-b-2"
-  >
-    <SearchInput />
-    <div class="hidden md:block">
-      <IconButton icon={plus} />
-    </div>
-  </div>
-  <div class="p-10 w-full h-full">
+  {#if loading}
+    <Loading />
+  {:else}
     <div
-      class="label-text-alt flex gap-3 items-center uppercase py-6 font-bold text-[#4669C1] tracking-widest"
+      class="flex md:justify-between justify-center items-center gap-3 p-5 border-b-2"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        class="w-6 h-6"
+      <SearchInput />
+      <div class="hidden md:block">
+        <IconButton icon={plus} />
+      </div>
+    </div>
+    <div class="p-10 w-full h-full">
+      <div
+        class="label-text-alt flex gap-3 items-center uppercase py-6 font-bold text-[#4669C1] tracking-widest"
       >
-        <path
-          fill-rule="evenodd"
-          d="M15.22 6.268a.75.75 0 01.968-.432l5.942 2.28a.75.75 0 01.431.97l-2.28 5.941a.75.75 0 11-1.4-.537l1.63-4.251-1.086.483a11.2 11.2 0 00-5.45 5.174.75.75 0 01-1.199.19L9 12.31l-6.22 6.22a.75.75 0 11-1.06-1.06l6.75-6.75a.75.75 0 011.06 0l3.606 3.605a12.694 12.694 0 015.68-4.973l1.086-.484-4.251-1.631a.75.75 0 01-.432-.97z"
-          clip-rule="evenodd"
-        />
-      </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M15.22 6.268a.75.75 0 01.968-.432l5.942 2.28a.75.75 0 01.431.97l-2.28 5.941a.75.75 0 11-1.4-.537l1.63-4.251-1.086.483a11.2 11.2 0 00-5.45 5.174.75.75 0 01-1.199.19L9 12.31l-6.22 6.22a.75.75 0 11-1.06-1.06l6.75-6.75a.75.75 0 011.06 0l3.606 3.605a12.694 12.694 0 015.68-4.973l1.086-.484-4.251-1.631a.75.75 0 01-.432-.97z"
+            clip-rule="evenodd"
+          />
+        </svg>
 
-      <div>trending</div>
-    </div>
-    <div class="grid md:grid-cols-2 grid-cols-1 gap-10">
-      {#each data.trending as item}
-        <BrowseCard {...item} logID={item.logID} />
-      {/each}
-    </div>
+        <div>trending</div>
+      </div>
+      <div class="grid md:grid-cols-2 grid-cols-1 gap-10">
+        {#each data.trending as item}
+          <BrowseCard {...item} logID={item.logID} />
+        {/each}
+      </div>
 
-    <!-- continue watching -->
-    <!-- <div
+      <!-- continue watching -->
+      <!-- <div
       class="label-text-alt flex gap-3 items-center uppercase py-6 pt-20 font-bold text-[#4669C1] tracking-widest"
     >
       <svg
@@ -138,18 +144,19 @@
         <BrowseCard {...item} />
       {/each}
     </div> -->
-    <!-- discover -->
-    <div
-      class="label-text-alt flex gap-3 items-center uppercase py-6 pt-20 font-bold text-[#4669C1] tracking-widest"
-    >
-      <img src={compass} class="w-6 h-6" alt="" srcset="" />
+      <!-- discover -->
+      <div
+        class="label-text-alt flex gap-3 items-center uppercase py-6 pt-20 font-bold text-[#4669C1] tracking-widest"
+      >
+        <img src={compass} class="w-6 h-6" alt="" srcset="" />
 
-      <div>discover</div>
+        <div>discover</div>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-10">
+        {#each data.discover as item}
+          <BrowseCard {...item} logID={item.logID} />
+        {/each}
+      </div>
     </div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-10">
-      {#each data.discover as item}
-        <BrowseCard {...item} logID={item.logID} />
-      {/each}
-    </div>
-  </div>
+  {/if}
 </LayoutWithNav>

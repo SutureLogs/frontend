@@ -8,6 +8,7 @@
   import book from "../assets/icons/book.png";
   import people from "../assets/icons/people.png";
   import pen from "../assets/icons/edit.png";
+  import learn from "../assets/icons/learn.png";
 
   export let params = {};
   let navlinks = [
@@ -25,6 +26,11 @@
       name: "Discuss",
       icon: people,
       link: "/discuss/" + params.id,
+    },
+    {
+      name: "Learn",
+      icon: learn,
+      link: "/learn/" + params.id,
     },
     {
       name: "Edit",

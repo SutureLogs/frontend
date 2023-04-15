@@ -20,6 +20,8 @@
 
   let mode = "login";
 
+  let loading = false;
+
   const signup = async () => {
     if (username === "" || password === "" || retypedPassword === "") {
       toast.error("Please fill in all the fields");
@@ -29,10 +31,12 @@
       toast.error("Passwords do not match");
       return;
     }
+    loading = true;
     const response = await axios.post(BASEURL + "/auth/signup", {
       username: username,
       password: password,
     });
+    loading = false;
     if (response.data.status === "success") {
       console.log(response.data);
       $store.jwt = response.data.token;
@@ -52,10 +56,12 @@
       toast.error("Please fill in all the fields");
       return;
     }
+    loading = true;
     const response = await axios.post(BASEURL + "/auth/login", {
       username: username,
       password: password,
     });
+    loading = false;
     if (response.data.status === "success") {
       $store.jwt = response.data.token;
       $store.username = username;
@@ -118,7 +124,11 @@
             label="Password"
           />
           <div class="py-4 w-full">
-            <Button onClick={login} buttonText="Sign in " />
+            {#if loading}
+              <Button buttonText="Signing in..." />
+            {:else}
+              <Button buttonText="Sign in" onClick={() => login()} />
+            {/if}
           </div>
           <LinkButton
             styleClass="mb-5"
@@ -144,7 +154,11 @@
             label="Confirm Password"
           />
           <div class="py-4 w-full">
-            <Button buttonText="Sign up" onClick={() => signup()} />
+            {#if loading}
+              <Button buttonText="Signing up..." />
+            {:else}
+              <Button buttonText="Sign up" onClick={() => signup()} />
+            {/if}
           </div>
 
           <LinkButton

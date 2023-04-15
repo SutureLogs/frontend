@@ -32,6 +32,7 @@
     console.log(surgeryData.surgeryTeam);
   }
   async function dataload() {
+    loading = true;
     let response = await axios.get(
       BASEURL + "/surgery/editpage-data?id=" + params.id,
       {
@@ -40,6 +41,7 @@
         },
       }
     );
+    loading = false;
     console.log(response.data);
     surgeryData = {
       surgeryName: response.data.surgery.surgeryName,

@@ -13,6 +13,7 @@
   import { store } from "../stores/store";
   import axios from "axios";
   import { push } from "svelte-spa-router";
+  import Loading from "../components/Loading.svelte";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
   let profilepicfiles;
@@ -20,11 +21,10 @@
   let fullname = "";
   let qualification = "";
   let organizations = [];
-  $: {
-    console.log(organizations);
-  }
+  let loading = false;
 
   async function submit() {
+    loading = true;
     const fd = new FormData();
     fd.append("profilePicture", profilepicfiles[0]);
     fd.append("verificationDocument", verificationfiles[0]);
@@ -38,7 +38,7 @@
         token: $store.jwt,
       },
     });
-    console.log(res);
+    loading = false;
     if (res.data.status === "success") {
       toast.success("Onboarded successfully");
       $store.doctorName = fullname;
@@ -90,7 +90,13 @@
             actionText="Upload ID/Verification"
             bind:file={verificationfiles}
           />
-          <Button buttonText="Continue" onClick={submit} />
+          {#if loading}
+            <div class="w-full">
+              <Loading />
+            </div>
+          {:else}
+            <Button buttonText="Continue" onClick={submit} />
+          {/if}
         </div>
       </div>
     </div>
