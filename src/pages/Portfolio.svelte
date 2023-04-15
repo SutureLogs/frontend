@@ -8,6 +8,7 @@
   import { store } from "../stores/store";
   import { onMount } from "svelte";
   import Loading from "../components/Loading.svelte";
+  import empty from "../assets/icons/empty.png";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
   async function dataload() {
@@ -17,7 +18,6 @@
         token: $store.jwt,
       },
     });
-    console.log(response.data);
     data.invites = response.data.invites;
     data.surgeries = response.data.surgeries;
     loading = false;
@@ -59,19 +59,36 @@
     <div class="grid md:grid-cols-3 h-full">
       <div class="md:col-span-2 border-r-2 h-full p-10 px-5">
         <Heading2>Portfolio</Heading2>
-        <div class="grid md:grid-cols-2 gap-6 mt-4">
-          {#each data.surgeries as surgery}
-            <PortfolioCard
-              surgeryName={surgery.surgeryName}
-              img={surgery.surgeryImage}
-              logID={surgery.logId}
-            />
-          {/each}
-        </div>
+        {#if data.surgeries.length == 0}
+          <div
+            class="flex flex-col items-center opacity-25 h-full justify-center w-full"
+          >
+            <img src={empty} alt="empty" class="" />
+            <Subheading>You have no surgeries</Subheading>
+          </div>
+        {:else}
+          <div class="grid md:grid-cols-2 gap-6 mt-4">
+            {#each data.surgeries as surgery}
+              <PortfolioCard
+                surgeryName={surgery.surgeryName}
+                img={surgery.surgeryImage}
+                logID={surgery.logId}
+              />
+            {/each}
+          </div>
+        {/if}
       </div>
       <div class=" border-r-2 h-full p-10 px-5">
         <Heading2>Surgery Team Invites</Heading2>
-        <div class="flex flex-col gap-3 mt-5">
+        <div class="flex flex-col gap-3 mt-5 h-full">
+          {#if data.invites.length == 0}
+            <div
+              class="flex flex-col items-center opacity-25 h-full justify-center"
+            >
+              <img src={empty} alt="empty" class="" />
+              <Subheading>You have no invitations</Subheading>
+            </div>
+          {/if}
           {#each data.invites as invite}
             <InvitationCard
               surgeryName={invite.surgeryName}

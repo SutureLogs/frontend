@@ -27,7 +27,6 @@
     await dataload();
   });
   async function dataload() {
-    console.log("dataload");
     loading = true;
     const res = await axios.get(
       BASEURL + "/surgery/get-discuss?id=" + params.id,
@@ -165,7 +164,6 @@
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <div
                 on:click={() => {
-                  console.log("clicked");
                   $store.blurSurgeryFilter = true;
                 }}
               >

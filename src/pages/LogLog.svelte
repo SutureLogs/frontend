@@ -28,7 +28,6 @@
       }
     );
     loading = false;
-    console.log(response.data.surgery);
     data = response.data.surgery;
   }
   onMount(async () => {
@@ -156,7 +155,6 @@
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <div
                 on:click={() => {
-                  console.log("clicked");
                   $store.blurSurgeryFilter = true;
                 }}
               >

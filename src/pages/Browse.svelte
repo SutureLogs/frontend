@@ -10,6 +10,7 @@
   import { onMount } from "svelte";
   import { store } from "../stores/store";
   import Loading from "../components/Loading.svelte";
+  import { push } from "svelte-spa-router";
   let BASEURL = import.meta.env.VITE_BASEURL;
   let data = {
     trending: [
@@ -47,8 +48,6 @@
           token: $store.jwt,
         },
       });
-
-      console.log(res.data);
 
       data.discover = res.data.discover.map((item) => {
         let leadsurgeon = item.surgeryTeam.find(
@@ -94,7 +93,12 @@
     >
       <SearchInput />
       <div class="hidden md:block">
-        <IconButton icon={plus} />
+        <IconButton
+          icon={plus}
+          onClick={() => {
+            push("/create");
+          }}
+        />
       </div>
     </div>
     <div class="p-10 w-full h-full">

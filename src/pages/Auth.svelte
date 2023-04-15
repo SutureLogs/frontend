@@ -38,7 +38,6 @@
     });
     loading = false;
     if (response.data.status === "success") {
-      console.log(response.data);
       $store.jwt = response.data.token;
       $store.username = username;
       $store.doctorID = response.data.id;

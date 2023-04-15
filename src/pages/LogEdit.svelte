@@ -41,7 +41,6 @@
       }
     );
     loading = false;
-    console.log(response.data);
     surgeryData = {
       surgeryName: response.data.surgery.surgeryName,
       surgeryOrg: response.data.surgery.surgeryOrg,
@@ -190,7 +189,6 @@
                 note: newNote,
               },
             };
-            console.log(surgeryData);
             const response = await axios.post(
               BASEURL + "/surgery/edit-surgery",
               { surgeryData: surgeryData1 },
@@ -201,7 +199,6 @@
                 },
               }
             );
-            console.log(response.data);
             if (response.data.status === "success") {
               toast.success("Surgery edited successfully");
             } else {
@@ -304,7 +301,6 @@
                     },
                   }
                 );
-                console.log(response);
                 if (response.data.status === "success")
                   toast.success("Added Patient");
                 else toast.error("Error adding patient");

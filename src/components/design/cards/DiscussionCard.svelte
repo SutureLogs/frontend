@@ -15,7 +15,6 @@
   export let discussionID = "";
   export let repliesCount = 0;
   export let surgeryID = "";
-  console.log("surgeyID", surgeryID);
 
   let isAddModalOpen = false;
   let newComment = "";
@@ -41,7 +40,7 @@
       buttonText="Reply"
       onClick={async () => {
         // server call with newComment and discussionID and memberID
-        console.log("newComment", newComment);
+
         await axios.post(
           BASEURL + "/surgery/add-reply",
           {
