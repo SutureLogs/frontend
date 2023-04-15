@@ -29,7 +29,7 @@
   onMount(async () => {
     await dataload();
   });
-  let unauthorized = true;
+  let unauthorized = false;
   async function dataload() {
     loading = true;
     let response = await axios.get(
@@ -40,6 +40,11 @@
         },
       }
     );
+    if (response.data.message === "Unauthorized") {
+      unauthorized = true;
+      loading = false;
+      return;
+    }
     loading = false;
     surgeryData = {
       surgeryName: response.data.surgery.surgeryName,

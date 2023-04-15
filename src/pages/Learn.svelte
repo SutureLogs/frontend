@@ -9,7 +9,7 @@
   export let params = {};
 </script>
 
-<LayoutWithLogNav>
+<LayoutWithLogNav {params}>
   <div class="flex w- flex-col gap-2 w-full h-full items-center justify-center">
     <div class="flex flex-col h-full items-center mt-10 w-full">
       <div class="max-w-4xl w-full">

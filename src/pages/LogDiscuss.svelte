@@ -38,8 +38,9 @@
     );
     loading = false;
     data = res.data.surgery;
+
     // data.surgeryID = surgeryID;
-    // console.log(data);
+    console.log(data);
   }
 
   let data = {
@@ -48,6 +49,7 @@
     surgeonName: "Surgeon Name",
     surgeonTitle: "Surgeon Title",
     surgeryName: "Surgery Name",
+    videoLink: "",
     discussions: [
       {
         discussionID: "asd",
@@ -157,7 +159,7 @@
           <video
             class="rounded-xl {$store.blurSurgeryFilter ? 'blur-lg' : ''} "
             controls
-            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+            src={BASEURL + "/surgery/video/" + data.videoLink}
           />
           <div class="flex justify-end py-3">
             {#if !$store.blurSurgeryFilter}

@@ -2,6 +2,8 @@
   import { push } from "svelte-spa-router";
   import Paragraph from "../titles/Paragraph.svelte";
   import Subheading from "../titles/Subheading.svelte";
+
+  let BASEURL = import.meta.env.VITE_BASEURL;
   export let styleClass;
   export let img;
   export let surgeryName;
@@ -18,7 +20,7 @@
   <div class="relative group">
     <img
       class="aspect-video w-full h-full object-cover rounded-xl"
-      src={img}
+      src={BASEURL + "/surgery/img/" + img}
       alt=""
       srcset=""
     />

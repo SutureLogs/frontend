@@ -2,12 +2,12 @@
   import { push } from "svelte-spa-router";
 
   export let value = "";
-  export let onClick = () => {};
+  export let onClick = () => push("/search/" + value);
   export let styleClass = "";
   export let placeholderText = "Search for surgeries";
 </script>
 
-<div class="form-control {styleClass}">
+<form on:submit|preventDefault={onClick} class="form-control {styleClass}">
   <label class="input-group w-full">
     <input
       type="text"
@@ -15,10 +15,7 @@
       placeholder={placeholderText}
       class="input input-bordered w-full"
     />
-    <button
-      on:click={() => push("/search/" + value)}
-      class="btn"
-      on:click={onClick}
+    <button type="submit" class="btn"
       ><svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -33,4 +30,4 @@
       </svg>
     </button>
   </label>
-</div>
+</form>
