@@ -6,6 +6,7 @@
   import gfg from "../assets/gfg.png";
   import amd from "../assets/amd.png";
   import gcp from "../assets/gcp.png";
+  import gh from "../assets/github.png";
 </script>
 
 <div
@@ -30,10 +31,11 @@
     <div>
       <div class="text-xl font-bold">What is Suture Logs?</div>
       <div>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-        laudantium est velit mollitia corporis expedita exercitationem accusamus
-        nisi ipsa suscipit laborum architecto minus error dolorum iusto incidunt
-        beatae, reprehenderit veritatis!
+        SutureLogs is a platform designed for surgeons to easily record, share
+        and analyze detailed surgical logs and outcomes. The platform promotes
+        collaboration and knowledge sharing among surgeons, allowing them to
+        learn from each other's experiences and stay up-to-date with the latest
+        advancements in surgery.
       </div>
     </div>
     <div>
@@ -95,9 +97,19 @@
       </div>
     </div>
 
-    <div class="italic">
-      This is a prototype. Please do not use it for real surgery and use the
-      platform responsibly.
+    <div class="italic flex justify-between items-center">
+      <div>
+        This is a prototype. Please do not use it for real surgery and use the
+        platform responsibly.
+      </div>
+      <a target="_blank" href="https://github.com/SutureLogs">
+        <img
+          src={gh}
+          alt=""
+          class="w-10 h-10 opacity-30 hover:opacity-100 transition-all"
+          srcset=""
+        />
+      </a>
     </div>
     <Button buttonText="Continue" onClick={() => push("/auth")} />
 

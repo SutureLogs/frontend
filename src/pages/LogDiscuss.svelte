@@ -82,8 +82,8 @@
 </script>
 
 <input type="checkbox" checked={isAddModalOpen} class="modal-toggle" />
-<div class="modal bg-white text-white">
-  <div class="modal-box relative">
+<div class="modal">
+  <div class="modal-box relative bg-white">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
       on:click={() => (isAddModalOpen = false)}
