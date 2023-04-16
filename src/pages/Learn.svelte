@@ -55,7 +55,11 @@
             </svg>
           </div>
         </div>
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
+          on:click={() => {
+            push("/learn/flash/" + params.id);
+          }}
           class="flex p-7 hover:scale-95 cursor-pointer transition gap-2 rounded-lg border my-5 items-center"
         >
           <div class="">

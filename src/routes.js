@@ -4,6 +4,7 @@ import Browse from "./pages/Browse.svelte";
 import CreateLog from "./pages/CreateLog.svelte";
 import Landing from "./pages/Landing.svelte";
 import Learn from "./pages/Learn.svelte";
+import LearnFlash from "./pages/LearnFlash.svelte";
 import LearnQuiz from "./pages/LearnQuiz.svelte";
 import LogBase from "./pages/LogBase.svelte";
 import LogDiscuss from "./pages/LogDiscuss.svelte";
@@ -25,6 +26,7 @@ const routes = {
   "/base/:id": LogBase,
   "/learn/:id": Learn,
   "/learn/quiz/:id": LearnQuiz,
+  "/learn/flash/:id": LearnFlash,
   "/log/:id": LogLog,
   "/discuss/:id": LogDiscuss,
   "/edit/:id": LogEdit,
