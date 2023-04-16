@@ -23,6 +23,9 @@
   let organizations = [];
   let loading = false;
 
+  $: {
+    console.log(organizations);
+  }
   async function submit() {
     loading = true;
     const fd = new FormData();

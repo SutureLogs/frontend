@@ -243,7 +243,7 @@
               <ListInput
                 bind:value={patientData.patientGender}
                 label="Patient Gender"
-                options={["Male", "Female", "Transgenda"]}
+                options={["Male", "Female"]}
                 styleClass="flex-1"
               />
               <TextInput
