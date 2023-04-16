@@ -117,7 +117,7 @@
   bind:checked={isViewFullModalOpen}
   class="modal-toggle"
 />
-<div class="modal bg-white">
+<div class="modal">
   <div class="modal-box bg-white text-black">
     <button
       on:click={() => {
