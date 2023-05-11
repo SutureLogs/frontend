@@ -56,7 +56,7 @@ To get started with the project, follow these steps:
 
 ## Backend Repository
 
-The backend code for the project is hosted here [https://github.com/SutureLogs/backend](https://github.com/SutureLogs/backend) , check it out for more details
+The backend code for the project is hosted here [https://github.com/SutureLogs/backend](https://github.com/SutureLogs/backend), check it out for more details
 
 ## Transcribe Server
 
