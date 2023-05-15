@@ -32,7 +32,7 @@
         },
       }
     );
-    console.log(response.data);
+
     if (response.data.status === "success") {
       toast.success("Invitation " + status + " successfully");
       location.reload();

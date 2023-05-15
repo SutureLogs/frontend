@@ -137,20 +137,27 @@
       Surgery Video Details</Label
     >
     <FileInput
-      label="Upload Surgery Video"
+      label="Upload Surgery Video*"
       bind:file={surgeryVideoFile}
       actionText="Video of Surgery only (mp4)"
     />
     <FileInput
-      label="Upload Thumbnail"
+      label="Upload Thumbnail*"
       bind:file={surgeryThumbnailFile}
       actionText="Thumbnail of Surgery (jpg,png,jpeg,webp)"
     />
     <FileInput
-      label="Upload Vitals File"
+      label="Upload Vitals File*"
       bind:file={vitalsFile}
       actionText="Vitals File (csv)"
     />
+    <div class="label-text-alt mt-5">
+      Video files must contain the "vitalStartTime" metadata tag <a
+        class="text-primary"
+        href="https://gist.github.com/yajatvishwak/b5e8f904dd3e9a72687f39fa3e7c0090"
+        >Refer here.</a
+      >
+    </div>
 
     <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center "
       ><div
