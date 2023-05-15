@@ -9,7 +9,7 @@
 
   let navlinks = [
     {
-      name: "Orgainsations",
+      name: "Depts",
       icon: home,
       link: "/admin/",
     },

@@ -15,6 +15,7 @@
   let BASEURL = import.meta.env.VITE_BASEURL;
 
   let username = "";
+  let orgName = "";
   let password = "";
   let retypedPassword = "";
 
@@ -23,7 +24,12 @@
   let loading = false;
 
   const signup = async () => {
-    if (username === "" || password === "" || retypedPassword === "") {
+    if (
+      username === "" ||
+      password === "" ||
+      retypedPassword === "" ||
+      orgName === ""
+    ) {
       toast.error("Please fill in all the fields");
       return;
     }
@@ -32,22 +38,19 @@
       return;
     }
     loading = true;
-    const response = await axios.post(BASEURL + "/auth/signup", {
+    const response = await axios.post(BASEURL + "/admin/admin-signup", {
       username: username.toLowerCase(),
       password: password.toLowerCase(),
+      orgName: orgName,
     });
     loading = false;
     if (response.data.status === "success") {
       $store.jwt = response.data.token;
       $store.username = username;
-      $store.doctorID = response.data.id;
-      push("/onboard");
+      push("/admin");
     } else {
       toast.error(response.data.message);
     }
-    // username = "";
-    // password = "";
-    // retypedPassword = "";
   };
 
   const login = async () => {
@@ -56,7 +59,7 @@
       return;
     }
     loading = true;
-    const response = await axios.post(BASEURL + "/auth/login", {
+    const response = await axios.post(BASEURL + "/admin/admin-login", {
       username: username.toLowerCase(),
       password: password.toLowerCase(),
     });
@@ -64,10 +67,7 @@
     if (response.data.status === "success") {
       $store.jwt = response.data.token;
       $store.username = username;
-      $store.doctorName = response.data.name;
-      $store.doctorID = response.data.id;
-
-      push("/browse");
+      push("/admin/");
     } else {
       toast.error(response.data.message);
     }
@@ -102,34 +102,78 @@
     <div class="flex flex-col justify-center m-10">
       <div>
         <Heading>Administrator Login</Heading>
-        <Subheading styleClass="pt-3"
-          >Login to your Admin dashboard on SutureLogs
-        </Subheading>
+        {#if mode === "login"}
+          <Subheading styleClass="pt-3"
+            >Login to your SutureLogs Admin account</Subheading
+          >
+        {:else}
+          <Subheading styleClass="pt-3"
+            >Create a SutureLogs Admin account</Subheading
+          >
+        {/if}
       </div>
-      <div class="flex gap-3 mt-10 flex-col">
-        <TextInput
-          placeholderText="Johndoe..."
-          bind:value={username}
-          label="Username"
-        />
-        <PasswordInput
-          placeholderText="******"
-          bind:value={password}
-          label="Password"
-        />
-        <div class="py-4 w-full">
-          {#if loading}
-            <Button buttonText="Signing in..." />
-          {:else}
-            <Button buttonText="Sign in" onClick={() => login()} />
-          {/if}
+      {#if mode === "login"}
+        <div class="flex gap-3 mt-10 flex-col">
+          <TextInput
+            placeholderText="Johndoe..."
+            bind:value={username}
+            label="Username"
+          />
+          <PasswordInput
+            placeholderText="******"
+            bind:value={password}
+            label="Password"
+          />
+          <div class="py-4 w-full">
+            {#if loading}
+              <Button buttonText="Signing in..." />
+            {:else}
+              <Button buttonText="Sign in" onClick={() => login()} />
+            {/if}
+          </div>
+          <LinkButton
+            styleClass="mb-5"
+            onClick={() => (mode = "signup")}
+            buttonText="New here?"
+          />
         </div>
-        <LinkButton
-          styleClass="mb-5"
-          onClick={() => push("/auth")}
-          buttonText="Non-admin? This way please "
-        />
-      </div>
+      {:else}
+        <div class="flex gap-3 mt-10 flex-col">
+          <TextInput
+            bind:value={username}
+            placeholderText="Johndoe..."
+            label="Username"
+          />
+          <TextInput
+            bind:value={orgName}
+            placeholderText="Jayadeva Hospital"
+            label="Organization Name"
+          />
+          <PasswordInput
+            bind:value={password}
+            placeholderText="******"
+            label="Password"
+          />
+          <PasswordInput
+            bind:value={retypedPassword}
+            placeholderText="******"
+            label="Confirm Password"
+          />
+          <div class="py-4 w-full">
+            {#if loading}
+              <Button buttonText="Signing up..." />
+            {:else}
+              <Button buttonText="Sign up" onClick={() => signup()} />
+            {/if}
+          </div>
+
+          <LinkButton
+            styleClass="mb-5"
+            onClick={() => (mode = "login")}
+            buttonText="Already have an account?"
+          />
+        </div>
+      {/if}
     </div>
   </div>
 </Layout>
