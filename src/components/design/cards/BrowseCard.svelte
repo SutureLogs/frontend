@@ -47,28 +47,6 @@
   on:click={navigate}
   class="hidden lg:flex flex-col hover:scale-[98%] cursor-pointer transition-all duration-200"
 >
-  <div class="flex gap-4 items-center">
-    <div>
-      <img
-        src={BASEURL + "/surgery/img/" + doctorImage}
-        alt=""
-        class="w-12 h-12 rounded-full border-2 border-blue-400"
-      />
-    </div>
-    <div>
-      <div class="flex gap-3 items-center">
-        <div class="text- font-bold">{doctorName}</div>
-        <div class="w-2 h-2 bg-primary rounded-full" />
-        <div class="">{doctorTitle}</div>
-      </div>
-      <!-- svelte-ignore a11y-label-has-associated-control -->
-      <label
-        class="label-text-alt capitalize py-2 font-bold text-[#4669C1] tracking-wider"
-      >
-        {orgName}</label
-      >
-    </div>
-  </div>
   <div class="mt-4">
     <img
       src={BASEURL + "/surgery/img/" + surgeryImage}
@@ -77,6 +55,23 @@
     />
     <div class="p-2 text-lg font-semibold">
       {surgeryName}
+    </div>
+  </div>
+  <div class="flex gap-4 items-center mt-2">
+    <div>
+      <img
+        src={BASEURL + "/surgery/img/" + doctorImage}
+        alt=""
+        class="w-12 h-12 rounded-full object-cover border-2 border-blue-400"
+      />
+    </div>
+    <div class="flex flex-col">
+      <div class="font-semibold text-lg">{doctorName}</div>
+      <div
+        class="label-text-alt mt-0.5 capitalize font-bold text-[#4669C1] tracking-wider"
+      >
+        {doctorTitle},{orgName.toUpperCase()}
+      </div>
     </div>
   </div>
 </div>

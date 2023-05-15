@@ -139,6 +139,7 @@
             label="Organization"
             options={surgeryData.availableOrgs}
             styleClass="flex-1"
+            isDisabled={true}
           />
           <DateInput
             bind:date={surgeryData.surgeryDate}
