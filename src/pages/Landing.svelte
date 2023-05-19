@@ -67,7 +67,7 @@
     </div>
 
     <div
-      class="flex p-3 rounded-lg bg-red-400 font-bold text-white gap-3 items-center"
+      class="flex fl p-3 rounded-lg bg-red-400 font-bold text-white gap-3 items-center"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@
         />
       </svg>
       <div class="w-full">
-        The platform has been populated with open surgerical videos being
+        The platform has been populated with open surgical videos being
         performed. If you do not wish to see them, turn on the blur filter
       </div>
       <div class="">
@@ -97,7 +97,7 @@
       </div>
     </div>
 
-    <div class="italic flex justify-between items-center">
+    <div class="italic justify-between items-center flex flex-wrap gap-3">
       <div>
         This is a prototype. Please do not use it for real surgery and use the
         platform responsibly.

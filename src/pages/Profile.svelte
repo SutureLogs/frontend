@@ -10,6 +10,11 @@
   import Loading from "../components/Loading.svelte";
   import nosurgery from "../assets/icons/nosurgery.png";
   import { push } from "svelte-spa-router";
+  import TextInput from "../components/design/inputs/TextInput.svelte";
+  import FileInput from "../components/design/inputs/FileInput.svelte";
+  import Button from "../components/design/buttons/Button.svelte";
+  import toast from "svelte-french-toast";
+  import PasswordInput from "../components/design/inputs/PasswordInput.svelte";
   let BASEURL = import.meta.env.VITE_BASEURL;
   let isSettingModalOpen = false;
   let data = {
@@ -25,6 +30,8 @@
       },
     ],
   };
+  let newDP = null;
+  let newPassword = "";
   export let params = {};
   onMount(async () => {
     await dataload();
@@ -56,6 +63,34 @@
 
     loading = false;
   }
+
+  async function updateDoctor() {
+    loading = true;
+    let fd = new FormData();
+    if (newDP) {
+      fd.append("profilePicture", newDP[0]);
+    }
+    if (newPassword !== "") {
+      fd.append("password", newPassword);
+    }
+
+    fd.append("name", data.doctorFullName);
+    fd.append("qualification", data.doctorQualification);
+
+    let response = await axios.post(BASEURL + "/admin/edit-doctor", fd, {
+      headers: {
+        token: $store.jwt,
+      },
+    });
+    if (response.data.status === "success") {
+      toast.success("Profile Updated");
+      isSettingModalOpen = false;
+      await dataload();
+    } else {
+      toast.error("Something went wrong");
+    }
+    loading = false;
+  }
 </script>
 
 <input type="checkbox" checked={isSettingModalOpen} class="modal-toggle" />
@@ -67,13 +102,25 @@
     >
     <h3 class="text-lg font-bold">Settings</h3>
     <div class="py-4">
-      <div>Username</div>
-      <div>profile</div>
-      <div>password</div>
-      <div>qualification</div>
-      <div>name</div>
+      <TextInput
+        placeholderText="Name"
+        label="Name"
+        bind:value={data.doctorFullName}
+      />
+      <TextInput
+        placeholderText="Qualification"
+        label="Qualification"
+        bind:value={data.doctorQualification}
+      />
+      <PasswordInput
+        placeholderText="Leave blank, if you don't want to change password"
+        label="New Password"
+        bind:value={newPassword}
+      />
+      <FileInput label="Profile Image" bind:file={newDP} />
     </div>
-    <div class="py-2">
+    <div class="py-2 flex flex-col gap-2">
+      <Button buttonText="Make Changes" onClick={updateDoctor} />
       <button
         on:click={() => {
           localStorage.clear();

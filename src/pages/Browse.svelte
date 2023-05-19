@@ -69,9 +69,9 @@
         );
         return {
           surgeryName: item.surgeryTitle,
-          doctorName: leadsurgeon.doctorName,
-          doctorTitle: leadsurgeon.doctorTitle,
-          doctorImage: leadsurgeon.doctorProfilePic,
+          doctorName: leadsurgeon.doctorId.name,
+          doctorTitle: leadsurgeon.doctorId.qualification,
+          doctorImage: leadsurgeon.doctorId.profilePicture,
           surgeryImage: item.thumbnailLink,
           orgName: item.surgeryOrg,
           logID: item._id,

@@ -62,9 +62,9 @@
     fd.append("thumbnail", surgeryThumbnailFile[0]);
     fd.append("surgeryName", data.surgeryName);
     fd.append("surgeryDate", data.surgeryDate);
-    fd.append("surgeryOrg", data.surgeryOrg);
+    fd.append("surgeryOrg", data.availsurgeryOrg[0]);
     fd.append("surgeryVisibility", data.surgeryVisibility);
-    fd.append("surgeryNote", data.surgeryNote);
+    if (data.surgeryNote) fd.append("surgeryNote", data.surgeryNote);
     fd.append("surgeryTeam", JSON.stringify(data.surgeryTeam));
 
     const response = await axios.post(BASEURL + "/surgery/create-surgery", fd, {
@@ -159,7 +159,7 @@
       >
     </div>
 
-    <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center "
+    <!-- <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center "
       ><div
         class="w-5 h-5 rounded-full bg-primary p-3 text-sm text-white flex items-center justify-center"
       >
@@ -173,8 +173,8 @@
       placeholderText="Enter note here"
       styleClass={"py-2"}
       bind:value={data.surgeryNote}
-    />
+    /> -->
 
-    <Button buttonText="Create Log" styleClass="my-2" onClick={submit} />
+    <Button buttonText="Create Log" styleClass="my-2 mt-10" onClick={submit} />
   </div>
 </LayoutWithNav>

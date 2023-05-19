@@ -7,7 +7,7 @@
   import Heading from "../components/design/titles/Heading.svelte";
   import Subheading from "../components/design/titles/Subheading.svelte";
   import logo from "../assets/logoblack.png";
-  import docs from "../assets/auth.png";
+  import admins from "../assets/admin.png";
   import axios from "axios";
   import toast from "svelte-french-toast";
   import { store } from "../stores/store";
@@ -87,7 +87,7 @@
         </div>
       </div>
       <div class="flex justify-center flex-col gap-7 my-2 items-center h-full">
-        <img src={docs} class=" w-32 md:w-44 lg:w-52" alt="" />
+        <img src={admins} class=" w-32 md:w-44 lg:w-64" alt="" />
         <div class="flex-col text-center mx-10 pb-5 md:mx-20 lg:mx-44">
           <div class="font-bold text-2xl">
             Collaborate, Learn, and Enhance Your Surgical Skills
@@ -131,11 +131,21 @@
               <Button buttonText="Sign in" onClick={() => login()} />
             {/if}
           </div>
-          <LinkButton
-            styleClass="mb-5"
-            onClick={() => (mode = "signup")}
-            buttonText="New here?"
-          />
+
+          <div class="flex justify-between">
+            <LinkButton
+              styleClass="mb-5"
+              onClick={() => (mode = "signup")}
+              buttonText="New here?"
+            />
+            <LinkButton
+              onClick={() => {
+                push("/auth");
+              }}
+              styleClass="mb-5"
+              buttonText="Doctor? Login here"
+            />
+          </div>
         </div>
       {:else}
         <div class="flex gap-3 mt-10 flex-col">
@@ -166,12 +176,20 @@
               <Button buttonText="Sign up" onClick={() => signup()} />
             {/if}
           </div>
-
-          <LinkButton
-            styleClass="mb-5"
-            onClick={() => (mode = "login")}
-            buttonText="Already have an account?"
-          />
+          <div class="flex justify-between">
+            <LinkButton
+              styleClass="mb-5"
+              onClick={() => (mode = "login")}
+              buttonText="Already have an account?"
+            />
+            <LinkButton
+              onClick={() => {
+                push("/auth");
+              }}
+              styleClass="mb-5"
+              buttonText="Doctor? Login here"
+            />
+          </div>
         </div>
       {/if}
     </div>

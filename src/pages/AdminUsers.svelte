@@ -15,6 +15,7 @@
   let newName = "";
   let newPassword = "";
   let newQualification = "";
+  let loading = false;
 
   let data = {
     availableDepartments: [{ departmentID: "", departmentName: "" }],
@@ -36,7 +37,7 @@
     if (newPassword === "") return toast.error("Please enter a password");
     if (newQualification === "")
       return toast.error("Please enter a qualification");
-
+    loading = true;
     const response = await axios.post(
       BASEURL + "/admin/add-doctor",
       {
@@ -54,22 +55,15 @@
     );
     if (response.data.status === "success") {
       toast.success("User added successfully");
-      data.users = [
-        ...data.users,
-        {
-          name: newName,
-          username: newUsername,
-          department: newDepartmentID,
-          qualification: newQualification,
-          doctorID: response.data.doctor._id,
-        },
-      ];
+      await getData();
       isAddUserModalOpen = false;
     } else {
       toast.error(response.data.message);
     }
+    loading = false;
   }
   async function deleteUser(id) {
+    loading = true;
     const response = await axios.post(
       BASEURL + "/admin/delete-doctor",
       {
@@ -89,9 +83,11 @@
     } else {
       toast.error(response.data.message);
     }
+    loading = false;
   }
 
-  onMount(async () => {
+  async function getData() {
+    loading = true;
     const response = await axios.get(BASEURL + "/admin/get-doctors", {
       headers: {
         token: $store.jwt,
@@ -131,6 +127,11 @@
     } else {
       toast.error(responseDepartments.data.message);
     }
+    loading = false;
+  }
+
+  onMount(async () => {
+    await getData();
   });
 </script>
 
@@ -165,7 +166,7 @@
       </div>
       <div class="flex flex-col gap-2">
         <!-- svelte-ignore a11y-label-has-associated-control -->
-        <label class="label-text-alt">Username</label>
+        <label class="label-text-alt">Password</label>
         <input
           bind:value={newPassword}
           placeholder="Password"
@@ -198,7 +199,7 @@
       </div>
 
       <button on:click={addUser} class="btn bg-primary border-0 mt-4"
-        >Add Department</button
+        >Add User</button
       >
     </div>
   </div>
@@ -236,38 +237,50 @@
         <thead>
           <tr>
             <th />
+            <th>Name</th>
             <th>Username</th>
             <th>Department</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {#each data.users as { name, username, doctorID }, i}
+          {#if loading}
             <tr>
-              <th>{i + 1}</th>
-              <td>{name}</td>
-              <td>{username}</td>
-              <td class="flex items-center">
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <div on:click={() => deleteUser(doctorID)}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                    />
-                  </svg>
-                </div>
-              </td>
+              <td colspan="5" class="text-center">Loading...</td>
             </tr>
-          {/each}
+          {:else if data.users.length === 0}
+            <tr>
+              <td colspan="5" class="text-center">No users found</td>
+            </tr>
+          {:else}
+            {#each data.users as { username, name, department, doctorID }, i}
+              <tr>
+                <th>{i + 1}</th>
+                <td>{name}</td>
+                <td>{username}</td>
+                <td>{department.name ?? department}</td>
+                <td class="flex items-center">
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <div on:click={() => deleteUser(doctorID)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                      />
+                    </svg>
+                  </div>
+                </td>
+              </tr>
+            {/each}
+          {/if}
         </tbody>
       </table>
     </div>

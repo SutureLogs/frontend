@@ -129,11 +129,29 @@
               <Button buttonText="Sign in" onClick={() => login()} />
             {/if}
           </div>
-          <LinkButton
+          <!-- <LinkButton
             styleClass="mb-5"
             onClick={() => (mode = "signup")}
             buttonText="New here?"
-          />
+          /> -->
+          <div class="flex justify-between">
+            <LinkButton
+              onClick={() =>
+                toast("Contact your administrator to create an account", {
+                  duration: 5000,
+                  icon: "👨‍💻",
+                })}
+              styleClass="mb-5"
+              buttonText="New here?"
+            />
+            <LinkButton
+              onClick={() => {
+                push("/admin/auth");
+              }}
+              styleClass="mb-5"
+              buttonText="Admin? Login here"
+            />
+          </div>
         </div>
       {:else}
         <div class="flex gap-3 mt-10 flex-col">

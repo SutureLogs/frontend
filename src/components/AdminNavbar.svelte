@@ -6,6 +6,7 @@
   // icons import
   import home from "../assets/icons/home.png";
   import people from "../assets/icons/people.png";
+  import profile from "../assets/icons/profile.png";
 
   let navlinks = [
     {
@@ -51,7 +52,7 @@
   <!-- not mobile  -->
   <div
     bind:this={notmobilemenu}
-    class=" fixed bg-slate-50 z-10 min-h-screen h-full w-64 md:border-r-2 items-center pt-10 inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out"
+    class="flex flex-col fixed bg-slate-50 z-20 min-h-screen h-full w-64 md:border-r-2 items-center pt-10 inset-y-0 left-0 transform -translate-x-full md:translate-x-0 transition duration-200 ease-in-out"
   >
     <div class="flex gap-2 items-center justify-center">
       <img src={logo} class="w-10 object-contain" alt="" />
@@ -68,6 +69,14 @@
           isActive={$location === link.link}
         />
       {/each}
+    </nav>
+    <nav class="flex flex-col w-full gap-3 py-5 mt-auto border-t-2">
+      <NavigationButton
+        svg={profile}
+        link={"/admin/profile"}
+        label={"Profile"}
+        isActive={$location === "/admin/profile"}
+      />
     </nav>
   </div>
 </div>
