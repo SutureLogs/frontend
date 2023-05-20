@@ -191,7 +191,7 @@
           <tr>
             <th />
             <th>Department Name</th>
-            <th>Department Strength</th>
+            <!-- <th>Department Strength</th> -->
             <th>Actions</th>
           </tr>
         </thead>
@@ -209,7 +209,7 @@
               <tr>
                 <th>{index + 1}</th>
                 <td>{department.departmentName}</td>
-                <td>0</td>
+                <!-- <td>0</td> -->
                 <td class="flex items-center gap-2">
                   <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <div
