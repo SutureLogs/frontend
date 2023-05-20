@@ -124,6 +124,11 @@
       <button
         on:click={() => {
           localStorage.clear();
+          $store.jwt = null;
+          $store.doctorID = null;
+          $store.doctorName = null;
+          $store.username = null;
+
           push("/auth");
         }}
         class="w-full btn border-0 bg-red-500">Logout</button

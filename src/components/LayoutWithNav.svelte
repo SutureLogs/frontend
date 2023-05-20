@@ -1,6 +1,17 @@
 <script>
   export let loading = false;
   import Navbar from "./Navbar.svelte";
+  import { onMount } from "svelte";
+  import { store } from "../stores/store";
+  import { replace } from "svelte-spa-router";
+  import toast from "svelte-french-toast";
+
+  onMount(() => {
+    if (!$store.jwt) {
+      toast.error("You must be logged in to access this page");
+      replace("/auth");
+    }
+  });
 </script>
 
 <section

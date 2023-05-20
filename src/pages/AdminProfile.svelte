@@ -8,8 +8,18 @@
   import { store } from "../stores/store";
   import axios from "axios";
   import { push } from "svelte-spa-router";
+  import { onMount } from "svelte";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
+
+  onMount(async () => {
+    let res = await axios.get(BASEURL + "/admin/getOrganisation", {
+      headers: {
+        token: $store.jwt,
+      },
+    });
+    updateObj.orgName = res.data.organisation;
+  });
 
   let updateObj = {
     orgName: "",
@@ -19,31 +29,25 @@
   };
   let loading = false;
   async function updateDetails() {
-    if (
-      updateObj.orgName === "" ||
-      updateObj.password === "" ||
-      updateObj.newPassword === "" ||
-      updateObj.newPasswordAgain === ""
-    ) {
-      toast.error("Please fill in all the fields");
-      return;
-    }
     if (updateObj.newPassword !== updateObj.newPasswordAgain) {
       toast.error("Passwords do not match");
       return;
     }
     loading = true;
-    const response = await axios.post(BASEURL + "/admin/update-admin-details", {
-      username: $store.username,
-      orgName: updateObj.orgName,
-      password: updateObj.password,
-      newPassword: updateObj.newPassword,
-    });
+    const response = await axios.post(
+      BASEURL + "/admin/update-admin-details",
+      {
+        username: $store.username,
+        orgName: updateObj.orgName,
+        newPassword: updateObj.newPassword,
+      },
+      { headers: { token: $store.jwt } }
+    );
     loading = false;
     if (response.data.status === "success") {
       toast.success("Details updated successfully");
     } else {
-      toast.error(response.data.message);
+      toast.error("Something went wrong");
     }
   }
 </script>
@@ -54,11 +58,22 @@
     <div class="flex flex-col mx-auto w-full max-w-screen-md mt-10">
       <div>Logged in as {$store.username}</div>
       <div class="divider">Settings</div>
-      <form on:submit={updateDetails} class="flex flex-col gap-2">
-        <TextInput label="Organisation" />
-        <PasswordInput placeholderText="Current Password" label="Password" />
-        <PasswordInput placeholderText="New Password" label="" />
-        <PasswordInput placeholderText="New Password Again" label="" />
+      <form
+        on:submit|preventDefault={updateDetails}
+        class="flex flex-col gap-2"
+      >
+        <TextInput label="Organisation" bind:value={updateObj.orgName} />
+        <!-- <PasswordInput placeholderText="Current Password" label="Password" /> -->
+        <PasswordInput
+          placeholderText="New Password"
+          label="Password"
+          bind:value={updateObj.newPassword}
+        />
+        <PasswordInput
+          placeholderText="New Password Again"
+          label=""
+          bind:value={updateObj.newPasswordAgain}
+        />
         <div class="my-2" />
         {#if loading}
           <button
@@ -81,6 +96,11 @@
         buttonText="Logout"
         onClick={() => {
           localStorage.clear();
+          localStorage.clear();
+          $store.jwt = null;
+          $store.doctorID = null;
+          $store.doctorName = null;
+          $store.username = null;
           push("/auth");
         }}
       />
