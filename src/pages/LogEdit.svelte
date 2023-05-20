@@ -139,6 +139,7 @@
             label="Organization"
             options={surgeryData.availableOrgs}
             styleClass="flex-1"
+            isDisabled={true}
           />
           <DateInput
             bind:date={surgeryData.surgeryDate}
@@ -172,7 +173,13 @@
         <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center">
           Notes Details</Label
         >
+
         <NotesDetailsTable bind:data={surgeryData.notes} editable={true} />
+        {#if surgeryData.notes.length === 0}
+          <div class="text-center text-gray-500">
+            No notes have been added yet.
+          </div>
+        {/if}
         <TextArea
           label="Add a new note"
           placeholderText="Use this space to add a note about the surgery or patient development that you want to share with other doctors. Eg. Patient is allergic to penicillin. or Eg. Use of a specific drug is contraindicated in this patient."

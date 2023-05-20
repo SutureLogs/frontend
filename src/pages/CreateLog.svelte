@@ -62,9 +62,9 @@
     fd.append("thumbnail", surgeryThumbnailFile[0]);
     fd.append("surgeryName", data.surgeryName);
     fd.append("surgeryDate", data.surgeryDate);
-    fd.append("surgeryOrg", data.surgeryOrg);
+    fd.append("surgeryOrg", data.availsurgeryOrg[0]);
     fd.append("surgeryVisibility", data.surgeryVisibility);
-    fd.append("surgeryNote", data.surgeryNote);
+    if (data.surgeryNote) fd.append("surgeryNote", data.surgeryNote);
     fd.append("surgeryTeam", JSON.stringify(data.surgeryTeam));
 
     const response = await axios.post(BASEURL + "/surgery/create-surgery", fd, {
@@ -137,22 +137,29 @@
       Surgery Video Details</Label
     >
     <FileInput
-      label="Upload Surgery Video"
+      label="Upload Surgery Video*"
       bind:file={surgeryVideoFile}
       actionText="Video of Surgery only (mp4)"
     />
     <FileInput
-      label="Upload Thumbnail"
+      label="Upload Thumbnail*"
       bind:file={surgeryThumbnailFile}
       actionText="Thumbnail of Surgery (jpg,png,jpeg,webp)"
     />
     <FileInput
-      label="Upload Vitals File"
+      label="Upload Vitals File*"
       bind:file={vitalsFile}
       actionText="Vitals File (csv)"
     />
+    <div class="label-text-alt mt-5">
+      Video files must contain the "vitalStartTime" metadata tag <a
+        class="text-primary"
+        href="https://gist.github.com/yajatvishwak/b5e8f904dd3e9a72687f39fa3e7c0090"
+        >Refer here.</a
+      >
+    </div>
 
-    <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center "
+    <!-- <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center "
       ><div
         class="w-5 h-5 rounded-full bg-primary p-3 text-sm text-white flex items-center justify-center"
       >
@@ -166,8 +173,8 @@
       placeholderText="Enter note here"
       styleClass={"py-2"}
       bind:value={data.surgeryNote}
-    />
+    /> -->
 
-    <Button buttonText="Create Log" styleClass="my-2" onClick={submit} />
+    <Button buttonText="Create Log" styleClass="my-2 mt-10" onClick={submit} />
   </div>
 </LayoutWithNav>

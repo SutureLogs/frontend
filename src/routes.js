@@ -1,3 +1,7 @@
+import AdminLogin from "./pages/AdminLogin.svelte";
+import AdminProfile from "./pages/AdminProfile.svelte";
+import AdminUsers from "./pages/AdminUsers.svelte";
+import AdminDepartment from "./pages/AdminDepartment.svelte";
 import Auth from "./pages/Auth.svelte";
 import Broken from "./pages/Broken.svelte";
 import Browse from "./pages/Browse.svelte";
@@ -17,6 +21,10 @@ import Search from "./pages/Search.svelte";
 
 const routes = {
   "/auth": Auth,
+  "/admin/auth": AdminLogin,
+  "/admin/": AdminDepartment,
+  "/admin/profile": AdminProfile,
+  "/admin/users": AdminUsers,
   "/onboard": Onboard,
   "/browse": Browse,
   "/profile/:id?": Profile,

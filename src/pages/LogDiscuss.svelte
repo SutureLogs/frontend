@@ -37,6 +37,7 @@
       }
     );
     loading = false;
+    console.log(res.data);
     data = res.data.surgery;
 
     // data.surgeryID = surgeryID;
@@ -237,31 +238,20 @@
                 toggleReplies={() => {
                   discussion.toggleReplies = !discussion.toggleReplies;
                 }}
+                bind:replyState={discussion.toggleReplies}
                 repliesCount={discussion.replies.length}
               />
 
-              <div class="pl-5">
+              <div class="pl-5 flex flex-col gap-3">
                 {#if discussion.toggleReplies}
                   {#each discussion.replies as reply, i}
-                    {#if i == discussion.replies.length - 1}
-                      <DiscussionCard
-                        surgeryID={discussion.surgeryID}
-                        {...reply}
-                        memberID={reply.doctorId}
-                        memberName={reply.doctorName}
-                        dontClose={false}
-                        discussionID={discussion.discussionID}
-                      />
-                    {:else}
-                      <DiscussionCard
-                        surgeryID={discussion.surgeryID}
-                        {...reply}
-                        memberID={reply.doctorId}
-                        memberName={reply.doctorName}
-                        dontClose={true}
-                        discussionID={discussion.discussionID}
-                      />
-                    {/if}
+                    <DiscussionCard
+                      surgeryID={discussion.surgeryID}
+                      {...reply}
+                      memberID={reply.doctorId}
+                      memberName={reply.doctorName}
+                      discussionID={discussion.discussionID}
+                    />
                   {/each}
                 {/if}
               </div>

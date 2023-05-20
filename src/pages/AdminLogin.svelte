@@ -7,7 +7,7 @@
   import Heading from "../components/design/titles/Heading.svelte";
   import Subheading from "../components/design/titles/Subheading.svelte";
   import logo from "../assets/logoblack.png";
-  import docs from "../assets/auth.png";
+  import admins from "../assets/admin.png";
   import axios from "axios";
   import toast from "svelte-french-toast";
   import { store } from "../stores/store";
@@ -15,6 +15,7 @@
   let BASEURL = import.meta.env.VITE_BASEURL;
 
   let username = "";
+  let orgName = "";
   let password = "";
   let retypedPassword = "";
 
@@ -23,7 +24,12 @@
   let loading = false;
 
   const signup = async () => {
-    if (username === "" || password === "" || retypedPassword === "") {
+    if (
+      username === "" ||
+      password === "" ||
+      retypedPassword === "" ||
+      orgName === ""
+    ) {
       toast.error("Please fill in all the fields");
       return;
     }
@@ -32,22 +38,19 @@
       return;
     }
     loading = true;
-    const response = await axios.post(BASEURL + "/auth/signup", {
+    const response = await axios.post(BASEURL + "/admin/admin-signup", {
       username: username.toLowerCase(),
       password: password.toLowerCase(),
+      orgName: orgName,
     });
     loading = false;
     if (response.data.status === "success") {
       $store.jwt = response.data.token;
       $store.username = username;
-      $store.doctorID = response.data.id;
-      push("/onboard");
+      push("/admin");
     } else {
       toast.error(response.data.message);
     }
-    // username = "";
-    // password = "";
-    // retypedPassword = "";
   };
 
   const login = async () => {
@@ -56,7 +59,7 @@
       return;
     }
     loading = true;
-    const response = await axios.post(BASEURL + "/auth/login", {
+    const response = await axios.post(BASEURL + "/admin/admin-login", {
       username: username.toLowerCase(),
       password: password.toLowerCase(),
     });
@@ -64,10 +67,7 @@
     if (response.data.status === "success") {
       $store.jwt = response.data.token;
       $store.username = username;
-      $store.doctorName = response.data.name;
-      $store.doctorID = response.data.id;
-
-      push("/browse");
+      push("/admin/");
     } else {
       toast.error(response.data.message);
     }
@@ -87,7 +87,7 @@
         </div>
       </div>
       <div class="flex justify-center flex-col gap-7 my-2 items-center h-full">
-        <img src={docs} class=" w-32 md:w-44 lg:w-52" alt="" />
+        <img src={admins} class=" w-32 md:w-44 lg:w-64" alt="" />
         <div class="flex-col text-center mx-10 pb-5 md:mx-20 lg:mx-44">
           <div class="font-bold text-2xl">
             Collaborate, Learn, and Enhance Your Surgical Skills
@@ -101,13 +101,15 @@
     </div>
     <div class="flex flex-col justify-center m-10">
       <div>
-        <Heading>Get Started</Heading>
+        <Heading>Administrator Login</Heading>
         {#if mode === "login"}
           <Subheading styleClass="pt-3"
-            >Login to your SutureLogs account</Subheading
+            >Login to your SutureLogs Admin account</Subheading
           >
         {:else}
-          <Subheading styleClass="pt-3">Create a SutureLogs account</Subheading>
+          <Subheading styleClass="pt-3"
+            >Create a SutureLogs Admin account</Subheading
+          >
         {/if}
       </div>
       {#if mode === "login"}
@@ -129,27 +131,19 @@
               <Button buttonText="Sign in" onClick={() => login()} />
             {/if}
           </div>
-          <!-- <LinkButton
-            styleClass="mb-5"
-            onClick={() => (mode = "signup")}
-            buttonText="New here?"
-          /> -->
+
           <div class="flex justify-between">
             <LinkButton
-              onClick={() =>
-                toast("Contact your administrator to create an account", {
-                  duration: 5000,
-                  icon: "👨‍💻",
-                })}
               styleClass="mb-5"
+              onClick={() => (mode = "signup")}
               buttonText="New here?"
             />
             <LinkButton
               onClick={() => {
-                push("/admin/auth");
+                push("/auth");
               }}
               styleClass="mb-5"
-              buttonText="Admin? Login here"
+              buttonText="Doctor? Login here"
             />
           </div>
         </div>
@@ -159,6 +153,11 @@
             bind:value={username}
             placeholderText="Johndoe..."
             label="Username"
+          />
+          <TextInput
+            bind:value={orgName}
+            placeholderText="Jayadeva Hospital"
+            label="Organization Name"
           />
           <PasswordInput
             bind:value={password}
@@ -177,12 +176,20 @@
               <Button buttonText="Sign up" onClick={() => signup()} />
             {/if}
           </div>
-
-          <LinkButton
-            styleClass="mb-5"
-            onClick={() => (mode = "login")}
-            buttonText="Already have an account?"
-          />
+          <div class="flex justify-between">
+            <LinkButton
+              styleClass="mb-5"
+              onClick={() => (mode = "login")}
+              buttonText="Already have an account?"
+            />
+            <LinkButton
+              onClick={() => {
+                push("/auth");
+              }}
+              styleClass="mb-5"
+              buttonText="Doctor? Login here"
+            />
+          </div>
         </div>
       {/if}
     </div>

@@ -127,7 +127,16 @@
           duration={data.surgeryDetails.surgeryDurationInMins}
           team={data.surgeryDetails.team}
         />
-        <NotesDetailsTable styleClass="p-10" data={data.notes} />
+        {#if data.notes && data.notes.length > 0}
+          <NotesDetailsTable styleClass="p-10" data={data.notes} />
+        {:else}
+          <div class="p-10">
+            <Label styleClass="text-primary border-b-2 pb-3">Notes</Label>
+            <div class="text-center py-5 opacity-50">
+              <Label>No notes added yet.</Label>
+            </div>
+          </div>
+        {/if}
       </div>
       <div class="py-12 px-6">
         <Label styleClass="text-primary">Patient history</Label>
