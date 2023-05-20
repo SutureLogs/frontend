@@ -18,11 +18,22 @@ import Onboard from "./pages/Onboard.svelte";
 import Portfolio from "./pages/Portfolio.svelte";
 import Profile from "./pages/Profile.svelte";
 import Search from "./pages/Search.svelte";
+import { replace } from "svelte-spa-router";
+import { wrap } from "svelte-spa-router/wrap";
+import { store } from "./stores/store";
+import { get } from "svelte/store";
+
+function isLoggedInMiddleWare() {
+  return get(store).jwt ? true : false;
+}
 
 const routes = {
   "/auth": Auth,
   "/admin/auth": AdminLogin,
-  "/admin/": AdminDepartment,
+  "/admin/": wrap({
+    component: AdminDepartment,
+    conditions: [isLoggedInMiddleWare],
+  }),
   "/admin/profile": AdminProfile,
   "/admin/users": AdminUsers,
   "/onboard": Onboard,

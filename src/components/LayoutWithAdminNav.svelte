@@ -1,6 +1,16 @@
 <script>
   import AdminNavbar from "./AdminNavbar.svelte";
+  import { onMount } from "svelte";
+  import { store } from "../stores/store";
+  import { push, replace } from "svelte-spa-router";
+  import toast from "svelte-french-toast";
 
+  onMount(() => {
+    if (!$store.jwt) {
+      toast.error("You must be logged in to access this page");
+      push("/auth");
+    }
+  });
   export let loading = false;
 </script>
 
