@@ -90,7 +90,6 @@
     patientAge: "",
   };
   // get all orgs from backend
-  let isPatientIDAvailable = false;
 </script>
 
 <LayoutWithLogNav {params}>
@@ -221,91 +220,39 @@
 
         <div class="divider py-7" />
         <Label styleClass="text-lg  pb-5 flex gap-3 items-center">
-          Patient Details</Label
+          Patient Link</Label
         >
-        <div class="flex gap-2 items-center py-5 flex-wrap">
-          <div>New</div>
-          <input
-            type="checkbox"
-            bind:checked={isPatientIDAvailable}
-            class="toggle"
-          />
-          <div>Existing</div>
-        </div>
+
         <div class="mb-24">
-          {#if isPatientIDAvailable}
-            <TextInput
-              bind:value={patientData.patientID}
-              label="Patient ID"
-              placeholderText="Patient ID (if present)"
-            />
-          {:else}
-            <div class="flex gap-3 w-full items-center flex-wrap">
-              <TextInput
-                bind:value={patientData.patientAge}
-                label="Patient Age"
-                placeholderText="Number only (eg. 77)"
-                styleClass="flex-1"
-              />
-              <ListInput
-                bind:value={patientData.patientGender}
-                label="Patient Gender"
-                options={["Male", "Female"]}
-                styleClass="flex-1"
-              />
-              <TextInput
-                bind:value={patientData.patientID}
-                label="Patient ID"
-                placeholderText="Number only (eg. 77)"
-                styleClass="flex-1"
-              />
-            </div>
-          {/if}
-          <div class="my-3">*Can be edited only once.</div>
+          <TextInput
+            bind:value={patientData.patientID}
+            label="Patient ID"
+            placeholderText="Patient ID"
+          />
 
           <Button
-            buttonText="Edit Patient"
+            buttonText="Link Patient"
             styleClass="mt-10"
             onClick={async () => {
               // server call
-              if (isPatientIDAvailable) {
-                const existResponse = await axios.get(
-                  BASEURL +
-                    "/patient/check-patient-exists?patientId=" +
-                    patientData.patientID,
-                  {
-                    headers: {
-                      token: $store.jwt,
-                    },
-                  }
-                );
-                if (!existResponse.data.patientExists)
-                  return toast.error("Patient does not exist");
-                else {
-                  const response = await axios.post(
-                    BASEURL + "/patient/add-surgery",
-                    {
-                      patientId: patientData.patientID,
-                      surgeryId: params.id,
-                    },
-                    {
-                      headers: {
-                        token: $store.jwt,
-                      },
-                    }
-                  );
-                  if (response.data.status === "success")
-                    toast.success("Updated Patient");
-                  else toast.error("Error updating patient");
+              const existResponse = await axios.get(
+                BASEURL +
+                  "/patient/check-patient-exists?patientId=" +
+                  patientData.patientID,
+                {
+                  headers: {
+                    token: $store.jwt,
+                  },
                 }
-              } else {
+              );
+              if (!existResponse.data.patientExists)
+                return toast.error("Patient does not exist");
+              else {
                 const response = await axios.post(
-                  BASEURL + "/patient/create-patient",
+                  BASEURL + "/patient/link-patient-surgery",
                   {
                     patientId: patientData.patientID,
-                    patientAge: patientData.patientAge,
-                    patientGender: patientData.patientGender,
-                    logId: params.id,
+                    surgeryId: params.id,
                   },
                   {
                     headers: {
@@ -314,8 +261,8 @@
                   }
                 );
                 if (response.data.status === "success")
-                  toast.success("Added Patient");
-                else toast.error("Error adding patient");
+                  toast.success("Updated Patient");
+                else toast.error("Error updating patient");
               }
             }}
           />

@@ -38,11 +38,6 @@
       icon: pen,
       link: "/edit/" + params.id,
     },
-    {
-      name: "Note",
-      icon: library,
-      link: "/edit/" + params.id,
-    },
   ];
   let notmobilemenu;
 </script>

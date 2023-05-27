@@ -1,7 +1,12 @@
 <script>
+  import axios from "axios";
   import LayoutWithAdminNav from "../components/LayoutWithAdminNav.svelte";
   import TextInput from "../components/design/inputs/TextInput.svelte";
   import Heading2 from "../components/design/titles/Heading2.svelte";
+  import { store } from "../stores/store";
+  import { onMount } from "svelte";
+  import toast from "svelte-french-toast";
+  const BASEURL = import.meta.env.VITE_BASEURL;
   let isAddPatientModalOpen = false;
   let loading = false;
   let data = [];
@@ -10,11 +15,90 @@
   let editPatientID;
   let editPatientGender;
   let isEditPatientModalOpen = false;
-
+  let newPatient = {
+    age: "",
+    gender: "",
+    customID: "",
+  };
+  onMount(async () => {
+    await getPatient();
+  });
+  async function getPatient() {
+    const response = await axios.get(BASEURL + "/admin/get-patients", {
+      headers: {
+        token: $store.jwt,
+      },
+    });
+    if (response.data.status === "success") {
+      data = response.data.patients.map((item) => {
+        return {
+          age: item.age,
+          customPatientId: item.customPatientId,
+          gender: item.gender,
+          id: item._id,
+        };
+      });
+    } else {
+      toast.error(response.data.message);
+    }
+  }
   async function deletePatient() {}
-  async function editPatient() {}
+  async function editPatient() {
+    loading = true;
+    const response = await axios.post(
+      BASEURL + "/admin/edit-patient",
+      {
+        patientId: editPatientID,
+        patientAge: editPatientAge,
+        patientGender: editPatientGender,
+        customPatientId: editPatientCustomID,
+      },
+      {
+        headers: {
+          token: $store.jwt,
+        },
+      }
+    );
+    if (response.data.status === "success") {
+      toast.success("Patient edited successfully");
+      await getPatient();
+      isEditPatientModalOpen = false;
+    } else {
+      toast.error(response.data.message);
+    }
+    loading = false;
+  }
+  async function addPatient() {
+    loading = true;
+    const response = await axios.post(
+      BASEURL + "/admin/create-patient",
+      {
+        patientId: newPatient.customID,
+        patientAge: newPatient.age,
+        patientGender: newPatient.gender,
+      },
+      {
+        headers: {
+          token: $store.jwt,
+        },
+      }
+    );
+    if (response.data.status === "success") {
+      toast.success("Patient added successfully");
+      await getPatient();
+      isAddPatientModalOpen = false;
+    } else {
+      toast.error(response.data.message);
+    }
+    loading = false;
+  }
 </script>
 
+<input
+  type="checkbox"
+  bind:checked={isEditPatientModalOpen}
+  class="modal-toggle"
+/>
 <div class="modal">
   <div class="modal-box relative">
     <button
@@ -23,9 +107,33 @@
     >
     <h3 class="text-lg font-bold">Editing {editPatientCustomID}</h3>
     <div class="py-4 flex flex-col">
+      <TextInput label="Patient ID" bind:value={editPatientCustomID} />
       <TextInput label="Age" bind:value={editPatientAge} />
       <TextInput label="Gender" bind:value={editPatientGender} />
       <button on:click={editPatient} class="btn bg-primary border-0 mt-4"
+        >Make Changes</button
+      >
+    </div>
+  </div>
+</div>
+
+<input
+  type="checkbox"
+  bind:checked={isAddPatientModalOpen}
+  class="modal-toggle"
+/>
+<div class="modal">
+  <div class="modal-box relative">
+    <button
+      on:click={() => (isAddPatientModalOpen = false)}
+      class="btn btn-sm btn-circle absolute right-2 top-2">✕</button
+    >
+    <h3 class="text-lg font-bold">Add Patient</h3>
+    <div class="py-4 flex flex-col">
+      <TextInput label="Patient ID" bind:value={newPatient.customID} />
+      <TextInput label="Age" bind:value={newPatient.age} />
+      <TextInput label="Gender" bind:value={newPatient.gender} />
+      <button on:click={addPatient} class="btn bg-primary border-0 mt-4"
         >Make Changes</button
       >
     </div>
@@ -92,7 +200,7 @@
                   <div
                     on:click={() => {
                       editPatientCustomID = patient.customPatientId;
-                      editPatientID = patient._id;
+                      editPatientID = patient.id;
                       editPatientAge = patient.age;
                       editPatientGender = patient.gender;
                       isEditPatientModalOpen = true;
