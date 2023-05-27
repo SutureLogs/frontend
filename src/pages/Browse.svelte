@@ -59,7 +59,7 @@
           doctorTitle: leadsurgeon.doctorId.qualification,
           doctorImage: leadsurgeon.doctorId.profilePicture,
           surgeryImage: item.thumbnailLink,
-          orgName: item.surgeryOrg,
+          orgName: item.belongsTo.organisation,
           logID: item._id,
         };
       });
@@ -73,7 +73,7 @@
           doctorTitle: leadsurgeon.doctorId.qualification,
           doctorImage: leadsurgeon.doctorId.profilePicture,
           surgeryImage: item.thumbnailLink,
-          orgName: item.surgeryOrg,
+          orgName: item.belongsTo.organisation,
           logID: item._id,
         };
       });
