@@ -9,6 +9,7 @@
   import people from "../assets/icons/people.png";
   import pen from "../assets/icons/edit.png";
   import learn from "../assets/icons/learn.png";
+  import library from "../assets/icons/library.png";
 
   export let params = {};
   let navlinks = [
@@ -35,6 +36,11 @@
     {
       name: "Edit",
       icon: pen,
+      link: "/edit/" + params.id,
+    },
+    {
+      name: "Note",
+      icon: library,
       link: "/edit/" + params.id,
     },
   ];

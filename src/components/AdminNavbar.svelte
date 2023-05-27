@@ -7,6 +7,7 @@
   import home from "../assets/icons/home.png";
   import people from "../assets/icons/people.png";
   import profile from "../assets/icons/profile.png";
+  import patient from "../assets/icons/patient.png";
 
   let navlinks = [
     {
@@ -18,6 +19,11 @@
       name: "Users",
       icon: people,
       link: "/admin/users",
+    },
+    {
+      name: "Patients",
+      icon: patient,
+      link: "/admin/patient",
     },
   ];
   let notmobilemenu;

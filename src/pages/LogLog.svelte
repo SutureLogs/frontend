@@ -298,9 +298,17 @@
             <div class="flex flex-col mt-10">
               {#each data.vitals as vital}
                 <Line
+                  options={{
+                    animation: false,
+                  }}
                   data={{
                     labels: data.vitalTimestamps,
-                    datasets: [{ label: vital.name, data: vital.values }],
+                    datasets: [
+                      {
+                        label: vital.name,
+                        data: vital.values.slice(0, currentVital),
+                      },
+                    ],
                   }}
                 />
               {/each}
