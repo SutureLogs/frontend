@@ -57,7 +57,7 @@
     </div>
   {:else}
     <div class="grid md:grid-cols-3 h-full">
-      <div class="md:col-span-2 border-r-2 h-full p-10 px-5">
+      <div class="md:col-span-2 border-r-2 h-full p-10">
         <Heading2>Portfolio</Heading2>
         {#if data.surgeries.length == 0}
           <div

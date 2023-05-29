@@ -23,6 +23,7 @@ import { wrap } from "svelte-spa-router/wrap";
 import { store } from "./stores/store";
 import { get } from "svelte/store";
 import AdminPatient from "./pages/AdminPatient.svelte";
+import Patient from "./pages/Patient.svelte";
 
 function isLoggedInMiddleWare() {
   return get(store).jwt ? true : false;
@@ -51,6 +52,7 @@ const routes = {
   "/log/:id": LogLog,
   "/discuss/:id": LogDiscuss,
   "/edit/:id": LogEdit,
+  "/patient/:id": Patient,
   "/": Landing,
   "*": Broken,
 };

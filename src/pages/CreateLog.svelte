@@ -83,7 +83,7 @@
 </script>
 
 <LayoutWithNav bind:loading>
-  <div class="p-10 md:mx-40">
+  <div class="p-10">
     <Heading2>Create a Log</Heading2>
     <Label styleClass="text-lg pt-10 pb-5 flex gap-3 items-center">
       <div
