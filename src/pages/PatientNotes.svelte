@@ -106,7 +106,7 @@
         />
       {/each}
     </div>
-    <div class="relative">
+    <div class="relative pt-10">
       <NotesDetailsBar />
     </div>
   </div>
