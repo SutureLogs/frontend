@@ -106,6 +106,8 @@
         />
       {/each}
     </div>
-    <NotesDetailsBar />
+    <div class="relative">
+      <NotesDetailsBar />
+    </div>
   </div>
 </LayoutForPatientNotes>

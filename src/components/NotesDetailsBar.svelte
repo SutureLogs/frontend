@@ -4,7 +4,7 @@
   import PatientDetailsTable from "../components/design/tables/PatientDetailsTable.svelte";
 </script>
 
-<div class="p-10 px-5 hidden xl:flex flex-col gap-2 fixed right-10">
+<div class="p-10 px-5 hidden xl:flex flex-col gap-2 fixed mx-auto w-full">
   <Label styleClass="my-3">Surgery Details</Label>
   <Heading2>Belsey fundoplication</Heading2>
   <Label>conducted at Aster Hospital</Label>
