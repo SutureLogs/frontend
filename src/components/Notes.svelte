@@ -10,7 +10,7 @@
 </script>
 
 <div
-  class="flex w-full flex-col p-2 max-w-2xl xl:max-w-none xl:px-48 col-span-3 xl:border-r-2"
+  class="flex w-full flex-col p-2 max-w-2xl xl:max-w-none xl:px-48 col-span-3"
 >
   {#each notes as note}
     {#if note.elementType === "text"}
@@ -26,7 +26,7 @@
   <div class="flex gap-3 items-center my-8 mb-0">
     <div class="border w-full" />
 
-    <div class="flex items-center gap-3 w-full">
+    <div class="flex items-center gap-3 w-full last:mb-10">
       <div class="flex flex-col items-end ml-auto">
         <b>{doctorName},</b>
         <span class="text-xs text-right opacity-50"

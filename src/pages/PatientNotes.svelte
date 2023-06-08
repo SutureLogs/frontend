@@ -8,7 +8,8 @@
   import Notes from "../components/Notes.svelte";
   import NotesNav from "../components/NotesNav.svelte";
   import NotesDetailsBar from "../components/NotesDetailsBar.svelte";
-
+  import AddNoteModal from "../components/AddNoteModal.svelte";
+  let isAddNoteModalOpen = false;
   let data = {
     surgeries: [
       {
@@ -89,14 +90,36 @@
 </script>
 
 <LayoutForPatientNotes>
+  <AddNoteModal bind:isModalOpen={isAddNoteModalOpen} />
   <div class="xl:grid xl:grid-cols-5 h-full">
     <NotesNav
       currentSurgeryDetail={data.currentSurgeryDetail}
       surgeries={data.surgeries}
     />
     <div
-      class="flex flex-col justify-center items-center xl:col-start-2 xl:col-span-3"
+      class="flex flex-col justify-center items-center xl:col-start-2 xl:col-span-3 xl:border-r-2"
     >
+      <div class="self-end xl:px-48 pt-10 px-3">
+        <button
+          on:click={() => (isAddNoteModalOpen = true)}
+          class="btn flex gap-3 items-center rounded-2xl bg-primary border-0"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+          Add Note
+        </button>
+      </div>
       {#each data.notes as notes}
         <Notes
           notes={notes.note}
