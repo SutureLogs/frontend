@@ -3,6 +3,7 @@
   import logo from "../assets/logoblack.png";
   export let surgeries = [];
   export let currentSurgeryDetail = {};
+  export let patientId = "";
 </script>
 
 <div
@@ -17,6 +18,7 @@
   <div class="w-full mt-4">
     {#each surgeries as surgery, index}
       <PatientSurgeryButton
+        {patientId}
         surgeryName={surgery.surgeryName}
         surgeryId={surgery.surgeryId}
         index={index + 1}

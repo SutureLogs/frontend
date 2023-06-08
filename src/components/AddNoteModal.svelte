@@ -8,6 +8,12 @@
   let imgURL = "";
   let video;
   let picture;
+  let pictureAltText = "";
+
+  function saveNote() {
+    // upload note to backend
+    isModalOpen = false;
+  }
 
   function addVideoElement() {
     // upload video to backend
@@ -20,6 +26,7 @@
         vidURL: "https://via.placeholder.com/1200",
       },
     ];
+    isVideoModalOpen = false;
   }
   function addPhotoElement() {
     // upload photo
@@ -30,9 +37,10 @@
         id: nanoid(),
         elementType: "image",
         imgURL: "https://via.placeholder.com/1200",
-        altText: "",
+        altText: pictureAltText,
       },
     ];
+    isPictureModalOpen = false;
   }
   function addTextElement() {
     noteElements = [
@@ -84,13 +92,22 @@
       class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button
     >
     <h3 class="font-bold text-lg">Add Picture</h3>
-    <div class="py-4 flex gap-2 items-center">
+    <div class="py-4 flex flex-col gap-2">
       <input
         bind:value={picture}
         type="file"
         class="file-input file-input-bordered w-full rounded-2xl"
       />
-      <button on:click={addPhotoElement} class="btn rounded-2xl">
+      <input
+        type="text"
+        bind:value={pictureAltText}
+        class="input input-bordered rounded-2xl"
+        placeholder="Alt Text"
+      />
+      <button
+        on:click={addPhotoElement}
+        class="btn rounded-2xl mt-4 bg-[#4669C1] border-0"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -162,7 +179,7 @@
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
+              d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
             />
           </svg>
         </button>
@@ -228,11 +245,20 @@
           >
         </div>
       {/each}
+      {#if noteElements.length === 0}
+        <p
+          class="text-gray-500 border p-10 flex items-center justify-center rounded-2xl border-dashed opacity-80"
+        >
+          Add a note element to get started
+        </p>
+      {/if}
     </div>
     <div class="modal-action">
-      <button on:click={() => (isModalOpen = false)} class="btn rounded-2xl"
-        >Close</button
+      <button
+        on:click={() => (isModalOpen = false)}
+        class="btn btn-outline rounded-2xl">Close</button
       >
+      <button on:click={saveNote} class="btn rounded-2xl">Save Note</button>
     </div>
   </div>
 </div>

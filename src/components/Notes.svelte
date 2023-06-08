@@ -12,6 +12,14 @@
 <div
   class="flex w-full flex-col p-2 max-w-2xl xl:max-w-none xl:px-48 col-span-3"
 >
+  <div class="flex gap-3 divider items-center my-8">
+    <div class="flex flex-col items-center">
+      <b>{doctorName},</b>
+      <span class="text-xs text-right opacity-50"
+        >{moment(createdAt).format("MMMM Do YYYY, h:mm a")}</span
+      >
+    </div>
+  </div>
   {#each notes as note}
     {#if note.elementType === "text"}
       <NotesTextCard textContent={note.textContent} />
@@ -23,17 +31,4 @@
       <NotesVideoCard />
     {/if}
   {/each}
-  <div class="flex gap-3 items-center my-8 mb-0">
-    <div class="border w-full" />
-
-    <div class="flex items-center gap-3 w-full last:mb-10">
-      <div class="flex flex-col items-end ml-auto">
-        <b>{doctorName},</b>
-        <span class="text-xs text-right opacity-50"
-          >{moment(createdAt).format("MMMM Do YYYY, h:mm a")}</span
-        >
-      </div>
-      <img src={doctorImage} class="w-10 h-10 rounded-full" alt="" />
-    </div>
-  </div>
 </div>

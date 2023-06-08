@@ -11,11 +11,11 @@
   <div class="flex flex-col border-t-2">
     <div class="p-5 flex justify-between border-b-2">
       <Label styleClass="opacity-50">Age</Label>
-      <Label>{age}</Label>
+      <Label>{age ?? "-"}</Label>
     </div>
     <div class="p-5 flex justify-between border-b-2">
       <Label styleClass="opacity-50">Gender</Label>
-      <Label>{gender}</Label>
+      <Label>{gender ?? "-"}</Label>
     </div>
   </div>
 </div>

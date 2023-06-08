@@ -1,15 +1,11 @@
 <script>
-  import PatientSurgeryButton from "../components/design/buttons/PatientSurgeryButton.svelte";
   import LayoutForPatientNotes from "../components/LayoutForPatientNotes.svelte";
-  import logo from "../assets/logoblack.png";
-  import Label from "../components/design/titles/Label.svelte";
-  import Heading2 from "../components/design/titles/Heading2.svelte";
-  import PatientDetailsTable from "../components/design/tables/PatientDetailsTable.svelte";
   import Notes from "../components/Notes.svelte";
   import NotesNav from "../components/NotesNav.svelte";
   import NotesDetailsBar from "../components/NotesDetailsBar.svelte";
   import AddNoteModal from "../components/AddNoteModal.svelte";
   let isAddNoteModalOpen = false;
+  export let params = {};
   let data = {
     surgeries: [
       {
@@ -23,14 +19,14 @@
     ],
     currentSurgeryDetail: {
       surgeryName: "Name",
-      surgeryId: "1",
+      surgeryId: "2",
       surgeryDate: "",
       organizationName: "Organization Name",
       surgicalTeamName: [
         {
-          doctorName: "Dr. John Doe",
-          doctorRole: "Surgeon",
-          doctorId: "1",
+          doctorName: "Dr. John Doe1",
+          doctorRole: "Surgeon1",
+          doctorId: "11",
         },
       ],
     },
@@ -93,6 +89,7 @@
   <AddNoteModal bind:isModalOpen={isAddNoteModalOpen} />
   <div class="xl:grid xl:grid-cols-5 h-full">
     <NotesNav
+      patientId={params.pid}
       currentSurgeryDetail={data.currentSurgeryDetail}
       surgeries={data.surgeries}
     />
@@ -129,8 +126,10 @@
         />
       {/each}
     </div>
-    <div class="relative pt-10">
-      <NotesDetailsBar />
+    <div class="relative">
+      <NotesDetailsBar
+        surgicalTeamName={data.currentSurgeryDetail.surgicalTeamName}
+      />
     </div>
   </div>
 </LayoutForPatientNotes>
