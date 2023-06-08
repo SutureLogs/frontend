@@ -1,46 +1,112 @@
 <script>
   import { nanoid } from "nanoid";
+  import axios from "axios";
+  import { store } from "../stores/store";
+  import toast from "svelte-french-toast";
+  import Loading from "./Loading.svelte";
+  let BASEURL = import.meta.env.VITE_BASEURL;
+
+  export let noteElements = [];
   export let isModalOpen = false;
+  export let surgeryId = "";
+  export let refreshData;
   let isVideoModalOpen = false;
   let isPictureModalOpen = false;
-  export let noteElements = [];
+  let loading = false;
+
   let vidURL = "";
   let imgURL = "";
   let video;
   let picture;
   let pictureAltText = "";
 
-  function saveNote() {
-    // upload note to backend
-    isModalOpen = false;
+  async function saveNote() {
+    if (noteElements.length === 0) {
+      return toast.error("Please add some content to the note");
+    }
+    const response = await axios.post(
+      BASEURL + "/surgery/add-note",
+      {
+        id: surgeryId,
+        note: noteElements,
+      },
+      {
+        headers: {
+          token: $store.jwt,
+        },
+      }
+    );
+    if (response.data.status === "success") {
+      toast.success("Note added successfully");
+      noteElements = [];
+      refreshData();
+      isModalOpen = false;
+    } else {
+      toast.error("Could not add note");
+    }
   }
 
-  function addVideoElement() {
-    // upload video to backend
-    // get video url
-    noteElements = [
-      ...noteElements,
-      {
-        id: nanoid(),
-        elementType: "video",
-        vidURL: "https://via.placeholder.com/1200",
-      },
-    ];
-    isVideoModalOpen = false;
+  async function addVideoElement() {
+    if (video) {
+      const fd = new FormData();
+      console.log(video[0]);
+      fd.append("notesVideo", video[0]);
+      const response = await axios.post(BASEURL + "/surgery/upload-video", fd, {
+        headers: {
+          token: $store.jwt,
+        },
+      });
+      if (response.data.status === "success") {
+        vidURL = response.data.videoLink;
+      } else {
+        isVideoModalOpen = false;
+        return toast.error("Could not upload video");
+      }
+      noteElements = [
+        ...noteElements,
+        {
+          id: nanoid(),
+          elementType: "video",
+          vidURL: vidURL,
+        },
+      ];
+      isVideoModalOpen = false;
+    } else {
+      return toast.error("Please select a video");
+    }
   }
-  function addPhotoElement() {
-    // upload photo
-    // get photo url
-    noteElements = [
-      ...noteElements,
-      {
-        id: nanoid(),
-        elementType: "image",
-        imgURL: "https://via.placeholder.com/1200",
-        altText: pictureAltText,
-      },
-    ];
-    isPictureModalOpen = false;
+  async function addPhotoElement() {
+    if (picture) {
+      const fd = new FormData();
+      fd.append("notesPicture", picture[0]);
+      const response = await axios.post(
+        BASEURL + "/surgery/upload-picture",
+        fd,
+        {
+          headers: {
+            token: $store.jwt,
+          },
+        }
+      );
+      if (response.data.status === "success") {
+        imgURL = response.data.pictureLink;
+      } else {
+        isPictureModalOpen = false;
+        return toast.error("Could not upload picture");
+      }
+      noteElements = [
+        ...noteElements,
+        {
+          id: nanoid(),
+          elementType: "image",
+          imgURL: imgURL,
+          altText: pictureAltText,
+        },
+      ];
+      isPictureModalOpen = false;
+    } else {
+      return toast.error("Please select a picture");
+    }
   }
   function addTextElement() {
     noteElements = [
@@ -61,26 +127,30 @@
     <h3 class="font-bold text-lg">Add Video</h3>
     <div class="py-4 flex gap-2 items-center">
       <input
-        bind:value={video}
+        bind:files={video}
         type="file"
         class="file-input file-input-bordered w-full rounded-2xl"
       />
-      <button on:click={addVideoElement} class="btn rounded-2xl">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-          />
-        </svg>
-      </button>
+      {#if loading}
+        <Loading />
+      {:else}
+        <button on:click={addVideoElement} class="btn rounded-2xl">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+            />
+          </svg>
+        </button>
+      {/if}
     </div>
   </div>
 </div>
@@ -94,7 +164,7 @@
     <h3 class="font-bold text-lg">Add Picture</h3>
     <div class="py-4 flex flex-col gap-2">
       <input
-        bind:value={picture}
+        bind:files={picture}
         type="file"
         class="file-input file-input-bordered w-full rounded-2xl"
       />
@@ -104,59 +174,29 @@
         class="input input-bordered rounded-2xl"
         placeholder="Alt Text"
       />
-      <button
-        on:click={addPhotoElement}
-        class="btn rounded-2xl mt-4 bg-[#4669C1] border-0"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
+      {#if loading}
+        <button
+          on:click={addPhotoElement}
+          class="btn rounded-2xl mt-4 bg-[#4669C1] border-0"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-          />
-        </svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<input type="checkbox" checked={isVideoModalOpen} class="modal-toggle" />
-<div class="modal z-50">
-  <div class="modal-box">
-    <button
-      on:click={() => (isVideoModalOpen = false)}
-      class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button
-    >
-    <h3 class="font-bold text-lg">Add Video</h3>
-    <div class="py-4 flex gap-2 items-center">
-      <input
-        bind:value={video}
-        type="file"
-        class="file-input file-input-bordered w-full rounded-2xl"
-      />
-      <button on:click={addVideoElement} class="btn rounded-2xl">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-          />
-        </svg>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+            />
+          </svg>
+        </button>
+      {:else}
+        <Loading />
+      {/if}
     </div>
   </div>
 </div>
@@ -228,11 +268,15 @@
           {/if}
           {#if element.elementType === "video"}
             <!-- svelte-ignore a11y-media-has-caption -->
-            <video src={element.vidURL} />
+            <video
+              autoplay
+              controls
+              src={BASEURL + "/surgery/video/" + element.vidURL}
+            />
           {/if}
           {#if element.elementType === "image"}
             <img
-              src={element.imgURL}
+              src={BASEURL + "/surgery/img/" + element.imgURL}
               class="w-full h-56 object-scale-down"
               alt=""
             />

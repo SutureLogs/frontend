@@ -144,12 +144,12 @@
         <Loading />
       </div>
     {:else}
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center max-w-4xl mx-auto">
         <Heading2>Profile</Heading2>
         {#if $store.doctorID === params.id || params.id === null}
           <button
             on:click={() => (isSettingModalOpen = true)}
-            class="btn rounded-full bg-primary gap-2"
+            class="btn rounded-full bg-primary border-0 gap-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -176,7 +176,9 @@
       </div>
       <div class="flex flex-col h-full items-center mt-10">
         <div class="max-w-4xl w-full">
-          <div class="flex items-center justify-between gap-3 border-b-2 pb-7">
+          <div
+            class="flex items-center justify-between gap-3 border-b-2 border-t-2 py-7"
+          >
             <div class="flex flex-col">
               <Heading2>{data.doctorFullName}</Heading2>
               <Paragraph>{data.doctorQualification}</Paragraph>

@@ -4,6 +4,7 @@
   export let surgeries = [];
   export let currentSurgeryDetail = {};
   export let patientId = "";
+  console.log(surgeries, "from notes nav");
 </script>
 
 <div

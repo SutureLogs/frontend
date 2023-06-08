@@ -16,5 +16,5 @@
     : 'hover:border-l-[10px] hover:border-gray-300 opacity-25  '}"
 >
   <Label styleClass="opacity-50">Surgery {index}</Label>
-  <h1 class="text-xl font-semibold">Heart Surgery</h1>
+  <h1 class="text-lg font-semibold">{surgeryName}</h1>
 </div>

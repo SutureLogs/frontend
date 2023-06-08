@@ -30,13 +30,17 @@
 
   <Label styleClass="text-primary my-3 mx-5 mt-10">Surgical Team</Label>
   <div class="flex flex-col">
-    {#each surgicalTeamName as doctor}
-      <NotesSideBarDoctorCard
-        doctorId={doctor.doctorId}
-        doctorName={doctor.doctorName}
-        doctorRole={doctor.doctorRole}
-      />
-    {/each}
+    {#if surgicalTeamName}
+      {#each surgicalTeamName as doctor}
+        <NotesSideBarDoctorCard
+          doctorId={doctor.doctorId}
+          doctorName={doctor.doctorName}
+          doctorRole={doctor.doctorRole}
+        />
+      {/each}
+    {:else}
+      <Label styleClass="mx-5">No doctors added</Label>
+    {/if}
   </div>
   <PatientDetailsTable
     styleClass=" mt-10"

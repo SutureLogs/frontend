@@ -53,7 +53,6 @@ const routes = {
   "/discuss/:id": LogDiscuss,
   "/patient/:pid/:sid": PatientNotes,
   "/edit/:id": LogEdit,
-  "/patient/:id": Patient,
   "/": Landing,
   "*": Broken,
 };

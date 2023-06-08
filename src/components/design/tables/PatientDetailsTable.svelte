@@ -1,6 +1,6 @@
 <script>
   import Label from "../titles/Label.svelte";
-  export let age = 23;
+  export let age = 0;
   export let gender = "Male";
   export let styleClass = "";
   export let labelStyle = "";
