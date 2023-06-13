@@ -176,17 +176,52 @@
       </div>
       <div class="flex flex-col h-full items-center mt-10">
         <div class="max-w-4xl w-full">
-          <div class="flex items-center justify-between gap-3 border-b-2 pb-7">
-            <div class="flex flex-col">
-              <Heading2>{data.doctorFullName}</Heading2>
-              <Paragraph>{data.doctorQualification}</Paragraph>
-              <Paragraph>@ {data.doctorOrganisation}</Paragraph>
-            </div>
+          <div
+            class="flex flex-col md:flex-row items-center gap-6 border-b-2 border-t-2 py-7"
+          >
             <img
               src={BASEURL + "/surgery/img/" + data.doctorImg}
               class="rounded-full object-cover w-24 h-24"
               alt=""
             />
+            <div class="flex flex-col">
+              <div class="flex items-center gap-1">
+                <Heading2>{data.doctorFullName}</Heading2>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.883l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+
+              <Paragraph>{data.doctorQualification}</Paragraph>
+              <Paragraph>@ {data.doctorOrganisation}</Paragraph>
+            </div>
+            <div class="md:ml-auto md:flex">
+              <div class="stats stats-vertical md:stats-horizontal shadow">
+                <div class="stat w-full">
+                  <div class="stat-title text-sm">Total Surgeries</div>
+                  <div class="stat-value text-xl">31K</div>
+                </div>
+
+                <div class="stat w-full">
+                  <div class="stat-title text-sm">Total Likes</div>
+                  <div class="stat-value text-xl">4,200</div>
+                </div>
+
+                <div class="stat">
+                  <div class="stat-title text-sm">Total Views</div>
+                  <div class="stat-value text-xl">1,200</div>
+                </div>
+              </div>
+            </div>
           </div>
           <Label styleClass="mt-10 text-primary">Surgeries on SutureLogs</Label>
           {#if data.surgeries.length === 0}
@@ -197,7 +232,7 @@
               <Paragraph>No surgeries found on SutureLogs</Paragraph>
             </div>
           {/if}
-          <div class="grid grid-cols-2 gap-10 mt-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-4">
             {#each data.surgeries as surgery}
               <PortfolioCard
                 editable={false}
