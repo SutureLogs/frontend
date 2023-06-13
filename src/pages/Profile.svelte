@@ -177,10 +177,6 @@
       <div class="flex flex-col h-full items-center mt-10">
         <div class="max-w-4xl w-full">
           <div
-<<<<<<< HEAD
-            class="flex flex-col md:flex-row items-center gap-6 border-b-2 border-t-2 py-7"
-          >
-=======
             class="flex items-center justify-between gap-3 border-b-2 border-t-2 py-7"
           >
             <div class="flex flex-col">
@@ -188,7 +184,6 @@
               <Paragraph>{data.doctorQualification}</Paragraph>
               <Paragraph>@ {data.doctorOrganisation}</Paragraph>
             </div>
->>>>>>> d8f8d23032b1dcc577c5853ab5e0f1763e3a31e3
             <img
               src={BASEURL + "/surgery/img/" + data.doctorImg}
               class="rounded-full object-cover w-24 h-24"
