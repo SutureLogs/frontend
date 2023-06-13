@@ -179,11 +179,6 @@
           <div
             class="flex items-center justify-between gap-3 border-b-2 border-t-2 py-7"
           >
-            <div class="flex flex-col">
-              <Heading2>{data.doctorFullName}</Heading2>
-              <Paragraph>{data.doctorQualification}</Paragraph>
-              <Paragraph>@ {data.doctorOrganisation}</Paragraph>
-            </div>
             <img
               src={BASEURL + "/surgery/img/" + data.doctorImg}
               class="rounded-full object-cover w-24 h-24"
