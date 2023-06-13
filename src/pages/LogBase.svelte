@@ -16,8 +16,8 @@
   import { onMount } from "svelte";
   import moment from "moment";
   import Loading from "../components/Loading.svelte";
-  import LinkButton from "../components/design/buttons/LinkButton.svelte";
   import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
+  import LogHeader from "../components/LogHeader.svelte";
   let loading = false;
   onMount(async () => {
     await dataload();
@@ -39,7 +39,7 @@
   let BASEURL = import.meta.env.VITE_BASEURL;
 
   let data = {
-    likeCount: 0,
+    likesCount: 0,
     isLiked: false,
     orgName: "Org Name",
     surgeonName: "Surgeon Name",
@@ -95,15 +95,14 @@
             <Label>{moment(data.date).format("DD MMMM, YYYY")}</Label>
           </div>
         </div>
-        <div class="bg-slate-100 p-10">
-          <Label>{data.orgName}</Label>
-          <Heading2 styleClass="mt-2">{data.surgeryName}</Heading2>
-          <div class="flex gap-3 items-center mt-3">
-            <Subheading>{data.surgeonName}</Subheading>
-            <div class="w-2 h-2 bg-primary rounded-full" />
-            <Subheading>{data.surgeonTitle}</Subheading>
-          </div>
-        </div>
+        <LogHeader
+          bind:isLiked={data.isLiked}
+          bind:likeCount={data.likesCount}
+          orgName={data.orgName}
+          surgeonName={data.surgeonName}
+          surgeonTitle={data.surgeonTitle}
+          surgeryName={data.surgeryName}
+        />
         <PatientDetailsTable styleClass="p-10" {...data.patientDetails} />
         <SurgeryDetailsTable
           styleClass="p-10"

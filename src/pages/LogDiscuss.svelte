@@ -20,6 +20,7 @@
   import empty from "../assets/icons/empty.png";
   import moment from "moment";
   import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
+  import LogHeader from "../components/LogHeader.svelte";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
   let loading = false;
@@ -45,6 +46,8 @@
   }
 
   let data = {
+    isLiked: true,
+    likesCount: 0,
     date: "22/3/12",
     orgName: "Org Name",
     surgeonName: "Surgeon Name",
@@ -140,15 +143,14 @@
             <Label>{moment(data.date).format("DD MMMM, YYYY")}</Label>
           </div>
         </div>
-        <div class="bg-slate-100 p-10">
-          <Label>{data.orgName}</Label>
-          <Heading2 styleClass="mt-2">{data.surgeryName}</Heading2>
-          <div class="flex gap-3 items-center mt-3">
-            <Subheading>{data.surgeonName}</Subheading>
-            <div class="w-2 h-2 bg-primary rounded-full" />
-            <Subheading>{data.surgeonTitle}</Subheading>
-          </div>
-        </div>
+        <LogHeader
+          bind:isLiked={data.isLiked}
+          bind:likeCount={data.likesCount}
+          orgName={data.orgName}
+          surgeonName={data.surgeonName}
+          surgeonTitle={data.surgeonTitle}
+          surgeryName={data.surgeryName}
+        />
         <!-- svelte-ignore a11y-media-has-caption -->
         <div class="p-10 pt-5">
           <video

@@ -17,6 +17,7 @@
   import VideoPlayer from "../components/design/videoplayer/VideoPlayer.svelte";
   import FullTranscriptModal from "../components/modals/FullTranscriptModal.svelte";
   import SectionModal from "../components/modals/SectionModal.svelte";
+  import LogHeader from "../components/LogHeader.svelte";
   let BASEURL = import.meta.env.VITE_BASEURL;
 
   export let params;
@@ -45,6 +46,8 @@
   let currentVital = 0;
   let currentSection = 0;
   let data = {
+    likesCount: 0,
+    isLiked: false,
     orgName: "Org Name",
     surgeonName: "Surgeon Name",
     surgeonTitle: "Surgeon Title",
@@ -171,15 +174,14 @@
             <Label>{moment(data.date).format("DD MMMM, YYYY")}</Label>
           </div>
         </div>
-        <div class="bg-slate-100 p-10">
-          <Label>{data.orgName}</Label>
-          <Heading2 styleClass="mt-2">{data.surgeryName}</Heading2>
-          <div class="flex gap-3 items-center mt-3">
-            <Subheading>{data.surgeonName}</Subheading>
-            <div class="w-2 h-2 bg-primary rounded-full" />
-            <Subheading>{data.surgeonTitle}</Subheading>
-          </div>
-        </div>
+        <LogHeader
+          bind:isLiked={data.isLiked}
+          bind:likeCount={data.likesCount}
+          orgName={data.orgName}
+          surgeonName={data.surgeonName}
+          surgeonTitle={data.surgeonTitle}
+          surgeryName={data.surgeryName}
+        />
         <!-- svelte-ignore a11y-media-has-caption -->
         <div class="p-10 pt-5 flex flex-col relative">
           <div class="flex gap-4 items-center justify-end cursor-pointer pb-4">
@@ -248,16 +250,18 @@
               {/if}
             </div>
           </div>
-          <VideoPlayer
-            blurSurgeryFilter={$store.blurSurgeryFilter}
-            bind:isPaused
-            bind:time
-            videoLink={data.videoLink}
-            {isSectionsVisible}
-            sectionsTitle={data.sectionsInVideo
-              ? data.sectionsInVideo[currentSection].title
-              : ""}
-          />
+          <div>
+            <VideoPlayer
+              blurSurgeryFilter={$store.blurSurgeryFilter}
+              bind:isPaused
+              bind:time
+              videoLink={data.videoLink}
+              {isSectionsVisible}
+              sectionsTitle={data.sectionsInVideo
+                ? data.sectionsInVideo[currentSection].title
+                : ""}
+            />
+          </div>
 
           <div class=" cursor-pointer mt-7">
             {#if data.transcript.length === 0}

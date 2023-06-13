@@ -2,7 +2,9 @@
   import { push } from "svelte-spa-router";
 </script>
 
-<button class="btn btn-circle btn-sm px-0 m-0" on:click={() => push("/browse")}
+<button
+  class="btn btn-circle btn-sm px-0 m-0 my-4"
+  on:click={() => push("/browse")}
   ><svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

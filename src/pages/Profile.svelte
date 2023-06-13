@@ -177,7 +177,7 @@
       <div class="flex flex-col h-full items-center mt-10">
         <div class="max-w-4xl w-full">
           <div
-            class="flex items-center justify-between gap-3 border-b-2 border-t-2 py-7"
+            class="flex flex-col md:flex-row items-center justify-between gap-3 border-b-2 border-t-2 py-7"
           >
             <img
               src={BASEURL + "/surgery/img/" + data.doctorImg}
