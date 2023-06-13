@@ -23,6 +23,7 @@
   import moment from "moment";
   import SurgeryTeamTableForEdit from "../components/design/tables/SurgeryTeamTableForEdit.svelte";
   import Heading2 from "../components/design/titles/Heading2.svelte";
+  import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
 
@@ -110,13 +111,7 @@
       <div
         class="p-10 flex flex-col border-b-2 md:flex-row justify-between items-center"
       >
-        <LinkIconButton
-          buttonText={"Go back to browse"}
-          onClick={() => {
-            push("/browse");
-          }}
-          img={left}
-        />
+        <GoBackToBrowseButton />
       </div>
 
       <div class="flex flex-col gap-5 p-10 pb-4">

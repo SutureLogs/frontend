@@ -24,6 +24,7 @@
     if (noteElements.length === 0) {
       return toast.error("Please add some content to the note");
     }
+    loading = true;
     const response = await axios.post(
       BASEURL + "/surgery/add-note",
       {
@@ -36,6 +37,7 @@
         },
       }
     );
+    loading = false;
     if (response.data.status === "success") {
       toast.success("Note added successfully");
       noteElements = [];
@@ -49,13 +51,14 @@
   async function addVideoElement() {
     if (video) {
       const fd = new FormData();
-      console.log(video[0]);
       fd.append("notesVideo", video[0]);
+      loading = true;
       const response = await axios.post(BASEURL + "/surgery/upload-video", fd, {
         headers: {
           token: $store.jwt,
         },
       });
+      loading = false;
       if (response.data.status === "success") {
         vidURL = response.data.videoLink;
       } else {
@@ -79,6 +82,7 @@
     if (picture) {
       const fd = new FormData();
       fd.append("notesPicture", picture[0]);
+      loading = true;
       const response = await axios.post(
         BASEURL + "/surgery/upload-picture",
         fd,
@@ -88,6 +92,7 @@
           },
         }
       );
+      loading = false;
       if (response.data.status === "success") {
         imgURL = response.data.pictureLink;
       } else {
@@ -114,7 +119,6 @@
       { id: nanoid(), elementType: "text", textContent: "" },
     ];
   }
-  $: console.log(noteElements);
 </script>
 
 <input type="checkbox" checked={isVideoModalOpen} class="modal-toggle" />
@@ -175,6 +179,8 @@
         placeholder="Alt Text"
       />
       {#if loading}
+        <Loading />
+      {:else}
         <button
           on:click={addPhotoElement}
           class="btn rounded-2xl mt-4 bg-[#4669C1] border-0"
@@ -194,8 +200,6 @@
             />
           </svg>
         </button>
-      {:else}
-        <Loading />
       {/if}
     </div>
   </div>
@@ -302,7 +306,11 @@
         on:click={() => (isModalOpen = false)}
         class="btn btn-outline rounded-2xl">Close</button
       >
-      <button on:click={saveNote} class="btn rounded-2xl">Save Note</button>
+      {#if loading}
+        <Loading />
+      {:else}
+        <button on:click={saveNote} class="btn rounded-2xl">Save Note</button>
+      {/if}
     </div>
   </div>
 </div>

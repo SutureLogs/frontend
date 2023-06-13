@@ -5,5 +5,5 @@
 </script>
 
 <button on:click={onClick} class="btn rounded-full {styleClass}">
-  <img src={icon} class="w-5 h-5" alt="" />
+  <img src={icon} class="w-4 h-4" alt="" />
 </button>

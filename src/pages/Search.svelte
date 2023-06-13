@@ -1,14 +1,9 @@
 <script>
   // @ts-nocheck
-
   import { onMount } from "svelte";
-
-  // @ts-nocheck
-
   import LayoutWithNav from "../components/LayoutWithNav.svelte";
   import SearchCard from "../components/design/cards/SearchCard.svelte";
   import SearchInput from "../components/design/inputs/SearchInput.svelte";
-
   import axios from "axios";
   import { store } from "../stores/store";
   import { toast } from "svelte-french-toast";
@@ -36,7 +31,6 @@
         },
       }
     );
-
     data.searchResults = response.data.surgeries;
     loading = false;
   }
