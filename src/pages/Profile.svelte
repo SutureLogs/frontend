@@ -144,12 +144,12 @@
         <Loading />
       </div>
     {:else}
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center max-w-4xl mx-auto">
         <Heading2>Profile</Heading2>
         {#if $store.doctorID === params.id || params.id === null}
           <button
             on:click={() => (isSettingModalOpen = true)}
-            class="btn rounded-full bg-primary gap-2"
+            class="btn rounded-full bg-primary border-0 gap-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -177,8 +177,18 @@
       <div class="flex flex-col h-full items-center mt-10">
         <div class="max-w-4xl w-full">
           <div
+<<<<<<< HEAD
             class="flex flex-col md:flex-row items-center gap-6 border-b-2 border-t-2 py-7"
           >
+=======
+            class="flex items-center justify-between gap-3 border-b-2 border-t-2 py-7"
+          >
+            <div class="flex flex-col">
+              <Heading2>{data.doctorFullName}</Heading2>
+              <Paragraph>{data.doctorQualification}</Paragraph>
+              <Paragraph>@ {data.doctorOrganisation}</Paragraph>
+            </div>
+>>>>>>> d8f8d23032b1dcc577c5853ab5e0f1763e3a31e3
             <img
               src={BASEURL + "/surgery/img/" + data.doctorImg}
               class="rounded-full object-cover w-24 h-24"

@@ -19,6 +19,7 @@
   import axios from "axios";
   import empty from "../assets/icons/empty.png";
   import moment from "moment";
+  import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
   let loading = false;
@@ -133,13 +134,7 @@
         <div
           class="p-10 flex flex-col md:flex-row justify-between items-center"
         >
-          <LinkIconButton
-            buttonText={"Go back to browse"}
-            onClick={() => {
-              push("/browse");
-            }}
-            img={left}
-          />
+          <GoBackToBrowseButton />
           <div class="flex gap-2 items-center">
             <Label styleClass="opacity-50">Conducted on</Label>
             <Label>{moment(data.date).format("DD MMMM, YYYY")}</Label>
@@ -216,7 +211,7 @@
           <Label styleClass="text-primary">Discussions</Label>
           <IconButton
             icon={plus}
-            styleClass="btn-sm"
+            styleClass="btn-xs"
             onClick={() => (isAddModalOpen = true)}
           />
         </div>

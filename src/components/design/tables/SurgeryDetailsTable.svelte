@@ -17,12 +17,12 @@
   <Label styleClass="text-primary border-b-2 pb-3">Surgery DETAILS</Label>
   <div class="flex flex-col">
     <div class="p-5 flex justify-between border-b-2">
-      <Label styleClass="opacity-50">duration</Label>
+      <Label styleClass="opacity-75">duration</Label>
       <Label>{duration} mins</Label>
     </div>
     {#each team as member}
       <div class="p-5 flex justify-between items-center border-b-2">
-        <Label styleClass="opacity-50">{member.role}</Label>
+        <Label styleClass="opacity-75">{member.role}</Label>
         <LinkButton
           styleClass="text-primary py-0"
           buttonText={member.doctorName}

@@ -1,7 +1,9 @@
 <script>
+  import left from "../assets/icons/left.png";
+  import brokenlink from "../assets/icons/brokenlink.png";
+  import right from "../assets/icons/right.png";
   import LayoutWithLogNav from "../components/LayoutWithLogNav.svelte";
   import LinkIconButton from "../components/design/buttons/LinkIconButton.svelte";
-  import left from "../assets/icons/left.png";
   import Label from "../components/design/titles/Label.svelte";
   import Heading2 from "../components/design/titles/Heading2.svelte";
   import Subheading from "../components/design/titles/Subheading.svelte";
@@ -9,13 +11,13 @@
   import SurgeryDetailsTable from "../components/design/tables/SurgeryDetailsTable.svelte";
   import PatientHistoryCard from "../components/design/cards/PatientHistoryCard.svelte";
   import { push } from "svelte-spa-router";
-  import NotesDetailsTable from "../components/design/tables/NotesDetailsTable.svelte";
   import axios from "axios";
   import { store } from "../stores/store";
   import { onMount } from "svelte";
   import moment from "moment";
   import Loading from "../components/Loading.svelte";
-  import brokenlink from "../assets/icons/brokenlink.png";
+  import LinkButton from "../components/design/buttons/LinkButton.svelte";
+  import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
   let loading = false;
   onMount(async () => {
     await dataload();
@@ -73,19 +75,6 @@
         },
       ],
     },
-    notes: [
-      {
-        doctorName: "Yajat",
-        doctorId: "yajat",
-        note: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
-      },
-
-      {
-        doctorName: "Danny Boi",
-        doctorId: "danyy",
-        note: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, provident ab molestiae magni aliquid, unde voluptates quod ad adipisci eos ipsam animi officia. Sint nam ipsa consequatur illo dolor obcaecati!",
-      },
-    ],
   };
 
   export let params = {};
@@ -100,13 +89,7 @@
         <div
           class="p-10 flex flex-col md:flex-row justify-between items-center"
         >
-          <LinkIconButton
-            buttonText={"Go back to browse"}
-            onClick={() => {
-              push("/browse");
-            }}
-            img={left}
-          />
+          <GoBackToBrowseButton />
           <div class="flex gap-2 items-center">
             <Label styleClass="opacity-50">Conducted on</Label>
             <Label>{moment(data.date).format("DD MMMM, YYYY")}</Label>
@@ -127,19 +110,38 @@
           duration={data.surgeryDetails.surgeryDurationInMins}
           team={data.surgeryDetails.team}
         />
-        {#if data.notes && data.notes.length > 0}
-          <NotesDetailsTable styleClass="p-10" data={data.notes} />
-        {:else}
-          <div class="p-10">
-            <Label styleClass="text-primary border-b-2 pb-3">Notes</Label>
-            <div class="text-center py-5 opacity-50">
-              <Label>No notes added yet.</Label>
-            </div>
-          </div>
-        {/if}
       </div>
       <div class="py-12 px-6">
-        <Label styleClass="text-primary">Patient history</Label>
+        <div class="flex justify-between items-center">
+          <Label styleClass="text-primary m-0 p-0 pt-1">Patient history</Label>
+          <div class="flex gap-1 items-center group">
+            {#if data.patientDetails && data.patientDetails.patientId}
+              <button
+                on:click={() =>
+                  push(
+                    `/patient/${data.patientDetails.patientId}/${params.id}`
+                  )}
+                class="btn btn-xs text-xs gap-1 rounded-xl"
+              >
+                <div class="text-[10px]">View All Notes</div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-4 h-4 transition-all"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                  />
+                </svg>
+              </button>
+            {/if}
+          </div>
+        </div>
         <div class="flex flex-col gap-3 h-full max-h-screen">
           {#if data.patientHistory.length == 0}
             <div class="flex h-full justify-center items-center gap-3 flex-col">
