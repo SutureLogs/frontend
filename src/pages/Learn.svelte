@@ -3,9 +3,8 @@
 
   import { push } from "svelte-spa-router";
   import LayoutWithLogNav from "../components/LayoutWithLogNav.svelte";
-  import LinkIconButton from "../components/design/buttons/LinkIconButton.svelte";
   import Heading2 from "../components/design/titles/Heading2.svelte";
-  import left from "../assets/icons/left.png";
+  import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
   export let params = {};
 </script>
 
@@ -15,14 +14,8 @@
   >
     <div class="flex flex-col h-full items-center mt-10 w-full">
       <div class="max-w-4xl w-full">
-        <div class="p-2 flex flex-col md:flex-row justify-between items-center">
-          <LinkIconButton
-            buttonText={"Go back to browse"}
-            onClick={() => {
-              push("/browse");
-            }}
-            img={left}
-          />
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <GoBackToBrowseButton />
         </div>
         <Heading2 styleClass="mt-10">Learn</Heading2>
         <!-- svelte-ignore a11y-click-events-have-key-events -->

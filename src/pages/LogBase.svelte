@@ -17,6 +17,7 @@
   import moment from "moment";
   import Loading from "../components/Loading.svelte";
   import LinkButton from "../components/design/buttons/LinkButton.svelte";
+  import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
   let loading = false;
   onMount(async () => {
     await dataload();
@@ -88,13 +89,7 @@
         <div
           class="p-10 flex flex-col md:flex-row justify-between items-center"
         >
-          <LinkIconButton
-            buttonText={"Go back to browse"}
-            onClick={() => {
-              push("/browse");
-            }}
-            img={left}
-          />
+          <GoBackToBrowseButton />
           <div class="flex gap-2 items-center">
             <Label styleClass="opacity-50">Conducted on</Label>
             <Label>{moment(data.date).format("DD MMMM, YYYY")}</Label>
@@ -121,31 +116,29 @@
           <Label styleClass="text-primary m-0 p-0 pt-1">Patient history</Label>
           <div class="flex gap-1 items-center group">
             {#if data.patientDetails && data.patientDetails.patientId}
-              <LinkButton
-                buttonText="View Notes"
-                onClick={() => {
+              <button
+                on:click={() =>
                   push(
-                    "/patient/" +
-                      data.patientDetails.patientId +
-                      "/" +
-                      params.id
-                  );
-                }}
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-4 h-4 text-primary group-hover:text-black transition-all"
+                    `/patient/${data.patientDetails.patientId}/${params.id}`
+                  )}
+                class="btn btn-xs text-xs gap-1 rounded-xl"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                />
-              </svg>
+                <div class="text-[10px]">View All Notes</div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-4 h-4 transition-all"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                  />
+                </svg>
+              </button>
             {/if}
           </div>
         </div>

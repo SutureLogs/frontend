@@ -10,6 +10,7 @@
   import { onMount } from "svelte";
   import Loading from "../components/Loading.svelte";
   import { store } from "../stores/store";
+  import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
   let currentQuestion = 0;
   let displayAnswer = false;
   let showResults = false;
@@ -101,16 +102,8 @@
     <div class="flex flex-col gap-2 w-full h-full items-center justify-center">
       <div class="flex flex-col h-full items-center mt-10 w-full">
         <div class="max-w-4xl w-full p-5">
-          <div
-            class="p-2 flex flex-col md:flex-row justify-between items-center"
-          >
-            <LinkIconButton
-              buttonText={"Go back to learn menu"}
-              onClick={() => {
-                pop();
-              }}
-              img={left}
-            />
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <GoBackToBrowseButton />
           </div>
           <Heading2 styleClass="mt-10">Quiz</Heading2>
           {#if !showResults}

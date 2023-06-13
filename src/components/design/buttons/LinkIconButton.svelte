@@ -6,7 +6,7 @@
 </script>
 
 <button
-  class={`label-text-alt flex items-center gap-3 uppercase hover:text-black transition-all  py-2 font-bold text-[#4669C1] tracking-widest  ${styleClass}`}
+  class={`label-text-alt border px-2 rounded flex items-center gap-3 uppercase hover:text-black transition-all  py-2 font-bold text-[#4669C1] tracking-widest  ${styleClass}`}
   on:click={onClick}
 >
   <img src={img} class="w-4 h-4" alt="" />
