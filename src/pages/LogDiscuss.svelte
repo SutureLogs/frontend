@@ -150,6 +150,7 @@
           surgeonName={data.surgeonName}
           surgeonTitle={data.surgeonTitle}
           surgeryName={data.surgeryName}
+          surgeryId={params.id}
         />
         <!-- svelte-ignore a11y-media-has-caption -->
         <div class="p-10 pt-5">

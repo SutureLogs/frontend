@@ -1,7 +1,10 @@
 <script>
+  import axios from "axios";
   import Heading2 from "./design/titles/Heading2.svelte";
   import Label from "./design/titles/Label.svelte";
   import Subheading from "./design/titles/Subheading.svelte";
+  import { store } from "../stores/store";
+  let BASEURL = import.meta.env.VITE_BASEURL;
 
   export let orgName = "";
   export let surgeryName = "";
@@ -9,13 +12,37 @@
   export let surgeonTitle = "";
   export let isLiked = false;
   export let likeCount = 0;
+  export let surgeryId = "";
 
   async function toggleLike() {
     isLiked = !isLiked;
     // TODO: send request to server to toggle like
+
     if (isLiked) {
+      await axios.post(
+        BASEURL + "/surgery/add-like",
+        {
+          surgeryid: surgeryId,
+        },
+        {
+          headers: {
+            token: $store.jwt,
+          },
+        }
+      );
       likeCount += 1;
     } else {
+      await axios.post(
+        BASEURL + "/surgery/remove-like",
+        {
+          surgeryid: surgeryId,
+        },
+        {
+          headers: {
+            token: $store.jwt,
+          },
+        }
+      );
       likeCount -= 1;
     }
   }

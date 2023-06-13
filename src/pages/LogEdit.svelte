@@ -108,13 +108,8 @@
     </div>
   {:else}
     <div class="">
-      <div
-        class="p-10 flex flex-col border-b-2 md:flex-row justify-between items-center"
-      >
-        <GoBackToBrowseButton />
-      </div>
-
       <div class="flex flex-col gap-5 p-10 pb-4">
+        <GoBackToBrowseButton />
         <Heading2 styleClass="text-lg py-0 flex gap-3 items-center">
           Edit this surgery log</Heading2
         >
@@ -144,7 +139,7 @@
             bind:value={surgeryData.surgeryVisibility}
             label="Visibility"
             styleClass="flex-1"
-            options={["Private", "Public"]}
+            options={["private", "public", "organisation"]}
           />
         </div>
       </div>

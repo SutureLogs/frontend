@@ -115,7 +115,7 @@
           bind:value={data.surgeryVisibility}
           label="Visibility"
           styleClass="flex-1"
-          options={["Private", "Public"]}
+          options={["private", "public", "organisation"]}
         />
       </div>
     </div>

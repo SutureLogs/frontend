@@ -102,6 +102,7 @@
           surgeonName={data.surgeonName}
           surgeonTitle={data.surgeonTitle}
           surgeryName={data.surgeryName}
+          surgeryId={params.id}
         />
         <PatientDetailsTable styleClass="p-10" {...data.patientDetails} />
         <SurgeryDetailsTable

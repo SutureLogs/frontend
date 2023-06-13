@@ -11,6 +11,7 @@
   import { onMount } from "svelte";
   import Loading from "../components/Loading.svelte";
   import { pop } from "svelte-spa-router";
+  import GoBack from "../components/design/buttons/GoBack.svelte";
   let isAddNoteModalOpen = false;
   let loading = true;
   let BASEURL = import.meta.env.VITE_BASEURL;
@@ -128,12 +129,7 @@
       <div class="flex flex-col xl:col-start-2 xl:col-span-3 xl:border-r-2">
         {#if data.notes}
           <div class="flex w-full justify-between xl:px-48 pt-10 px-3">
-            <LinkIconButton
-              buttonText="Go back"
-              img={left}
-              onClick={() => pop()}
-              styleClass="p-0 m-0"
-            />
+            <GoBack />
             <button
               on:click={() => (isAddNoteModalOpen = true)}
               class="btn flex gap-3 items-center rounded-2xl bg-primary border-0"
