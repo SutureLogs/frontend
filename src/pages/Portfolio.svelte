@@ -73,6 +73,7 @@
                 surgeryName={surgery.surgeryName}
                 img={surgery.surgeryImage}
                 logID={surgery.logId}
+                visibility={surgery.surgeryVisibility}
               />
             {/each}
           </div>

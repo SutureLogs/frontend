@@ -6,7 +6,7 @@
   export let label = "";
 </script>
 
-<div class="flex flex-col gap-3 {styleClass}">
+<div class="flex flex-col gap-2 {styleClass}">
   <Label styleClass="text-primary">{label}</Label>
   <input
     type="date"

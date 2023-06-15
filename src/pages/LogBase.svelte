@@ -10,7 +10,7 @@
   import PatientDetailsTable from "../components/design/tables/PatientDetailsTable.svelte";
   import SurgeryDetailsTable from "../components/design/tables/SurgeryDetailsTable.svelte";
   import PatientHistoryCard from "../components/design/cards/PatientHistoryCard.svelte";
-  import { push } from "svelte-spa-router";
+  import { pop, push } from "svelte-spa-router";
   import axios from "axios";
   import { store } from "../stores/store";
   import { onMount } from "svelte";
@@ -18,6 +18,7 @@
   import Loading from "../components/Loading.svelte";
   import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
   import LogHeader from "../components/LogHeader.svelte";
+  import toast from "svelte-french-toast";
   let loading = false;
   onMount(async () => {
     await dataload();
@@ -32,6 +33,11 @@
         },
       }
     );
+    if (response.data.message === "Not allowed") {
+      toast.error("You are not allowed to view this log");
+      pop();
+      return;
+    }
     loading = false;
     data = response.data.surgery;
   }

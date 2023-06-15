@@ -8,6 +8,7 @@
   export let orgName;
   export let logID;
   export let likesCount;
+  export let videoLink;
   let BASEURL = import.meta.env.VITE_BASEURL;
 
   let isVideoVisible = false;
@@ -42,7 +43,7 @@
       muted
       loop
       class="rounded-lg"
-      src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      src={BASEURL + "/surgery/video/" + videoLink}
     />
   {:else}
     <img
@@ -70,7 +71,9 @@
   </div>
   <div class="flex items-center gap-2 mt-2">
     <img
-      src={BASEURL + "/surgery/img/" + doctorImage}
+      src={doctorImage
+        ? BASEURL + "/surgery/img/" + doctorImage
+        : `https://api.dicebear.com/6.x/initials/svg?seed=${doctorName}`}
       class="w-10 h-10 rounded-full object-cover"
       alt=""
     />

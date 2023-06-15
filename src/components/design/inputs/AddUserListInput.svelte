@@ -1,7 +1,18 @@
 <script>
+  import axios from "axios";
+  import toast from "svelte-french-toast";
+
+  let BASEURL = import.meta.env.VITE_BASEURL;
   export let items = [];
-  export function addItem(item) {
+  export async function addItem(item) {
     if (!item) return;
+    const response = await axios.get(
+      BASEURL + `/doctor/username-exists?username=${item}`
+    );
+    if (response.data.exists === false) {
+      toast.error("Username does not exist");
+      return;
+    }
     items = [...items, item];
     newitem = "";
   }
@@ -26,7 +37,7 @@
   >
   <div class="flex gap-2 flex-wrap items-center">
     {#each items as i}
-      <div class="px-5 py-2 rounded-full border flex gap-2 items-center">
+      <div class="px-5 py-2 rounded-xl border flex gap-2 items-center">
         {i}
         <button
           on:click={() => removeItem(i)}

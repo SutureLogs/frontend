@@ -38,6 +38,11 @@
         },
       }
     );
+    if (response.data.message === "Not allowed") {
+      toast.error("You are not allowed to view this log");
+      pop();
+      return;
+    }
     loading = false;
     console.log(res.data);
     data = res.data.surgery;

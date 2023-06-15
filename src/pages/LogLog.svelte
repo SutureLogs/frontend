@@ -1,5 +1,5 @@
 <script>
-  import { push } from "svelte-spa-router";
+  import { pop, push } from "svelte-spa-router";
   import LayoutWithLogNav from "../components/LayoutWithLogNav.svelte";
   import LinkIconButton from "../components/design/buttons/LinkIconButton.svelte";
   import Label from "../components/design/titles/Label.svelte";
@@ -18,6 +18,7 @@
   import FullTranscriptModal from "../components/modals/FullTranscriptModal.svelte";
   import SectionModal from "../components/modals/SectionModal.svelte";
   import LogHeader from "../components/LogHeader.svelte";
+  import toast from "svelte-french-toast";
   let BASEURL = import.meta.env.VITE_BASEURL;
 
   export let params;
@@ -32,8 +33,12 @@
         },
       }
     );
+    if (response.data.message === "Not allowed") {
+      toast.error("You are not allowed to view this log");
+      pop();
+      return;
+    }
     loading = false;
-    console.log(response.data);
     data = response.data.surgery;
   }
   onMount(async () => {

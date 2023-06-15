@@ -6,7 +6,7 @@
   import { replace } from "svelte-spa-router";
   import toast from "svelte-french-toast";
 
-  onMount(() => {
+  onMount(async () => {
     if (!$store.jwt) {
       toast.error("You must be logged in to access this page");
       replace("/auth");

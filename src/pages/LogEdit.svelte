@@ -24,6 +24,7 @@
   import SurgeryTeamTableForEdit from "../components/design/tables/SurgeryTeamTableForEdit.svelte";
   import Heading2 from "../components/design/titles/Heading2.svelte";
   import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
+  import AddUserListInput from "../components/design/inputs/AddUserListInput.svelte";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
 
@@ -125,7 +126,7 @@
         <div class="flex gap-3 flex-wrap">
           <ListInput
             bind:value={surgeryData.surgeryOrg}
-            label="Organization"
+            label="Organisation"
             options={surgeryData.availableOrgs}
             styleClass="flex-1"
             isDisabled={true}
@@ -142,6 +143,13 @@
             options={["private", "public", "organisation"]}
           />
         </div>
+        {#if surgeryData.surgeryVisibility === "private"}
+          <AddUserListInput
+            label="Private List"
+            actionText="Add Username"
+            bind:items={surgeryData.privateList}
+          />
+        {/if}
       </div>
       <div class="flex px-10">
         {#if surgeryData.surgeryVisibility == "Private"}
@@ -158,23 +166,6 @@
         >
         <Label styleClass="py-4 text-primary">Surgery Team</Label>
         <SurgeryTeamTableForEdit bind:data={surgeryData.surgeryTeam} />
-
-        <Label styleClass="text-lg pt-14 pb-5 flex gap-3 items-center">
-          Notes Details</Label
-        >
-
-        <NotesDetailsTable bind:data={surgeryData.notes} editable={true} />
-        {#if surgeryData.notes.length === 0}
-          <div class="text-center text-gray-500">
-            No notes have been added yet.
-          </div>
-        {/if}
-        <TextArea
-          label="Add a new note"
-          placeholderText="Use this space to add a note about the surgery or patient development that you want to share with other doctors. Eg. Patient is allergic to penicillin. or Eg. Use of a specific drug is contraindicated in this patient."
-          styleClass="mt-10"
-          bind:value={newNote}
-        />
 
         <Button
           buttonText="Edit logs"

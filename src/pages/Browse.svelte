@@ -86,6 +86,7 @@
           surgeryImage: item.thumbnailLink,
           orgName: item.belongsTo.organisation,
           likesCount: item.likesCount,
+          videoLink: item.videoLink,
           logID: item._id,
         };
       });
@@ -101,6 +102,7 @@
           surgeryImage: item.thumbnailLink,
           orgName: item.belongsTo.organisation,
           likesCount: item.likesCount,
+          videoLink: item.videoLink,
           logID: item._id,
         };
       });

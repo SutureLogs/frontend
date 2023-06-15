@@ -5,6 +5,7 @@
   export let logID = "";
   export let styleClass = "";
   export let surgeryName = "";
+  export let visibility = "";
   export let editable = true;
   let BASEURL = import.meta.env.VITE_BASEURL;
 </script>
@@ -46,7 +47,6 @@
         </div>
       {/if}
     </div>
-
     <img
       class="aspect-video w-full h-full object-cover rounded-xl"
       src={BASEURL + "/surgery/img/" + img}
@@ -54,7 +54,10 @@
       srcset=""
     />
   </div>
-  <Subheading styleClass="mt-3">
-    {surgeryName}
-  </Subheading>
+  <div class="flex flex-col">
+    <Subheading styleClass="mt-3">
+      {surgeryName}
+    </Subheading>
+    <div class="badge badge-outline mt-1">{visibility}</div>
+  </div>
 </div>
