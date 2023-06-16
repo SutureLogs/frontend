@@ -100,7 +100,7 @@
   };
   let isViewFullModalOpen = false;
   let isSectionsModalVisible = false;
-  let isSectionsVisible = true;
+  let isSectionsVisible = false;
 
   $: {
     if (data.videoTimestamps) {
@@ -263,7 +263,8 @@
               bind:time
               videoLink={data.videoLink}
               {isSectionsVisible}
-              sectionsTitle={data.sectionsInVideo
+              sectionsTitle={data.sectionsInVideo &&
+              data.sectionsInVideo.length > 0
                 ? data.sectionsInVideo[currentSection].title
                 : ""}
             />

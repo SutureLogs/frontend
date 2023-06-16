@@ -110,7 +110,16 @@
           surgeryName={data.surgeryName}
           surgeryId={params.id}
         />
-        <PatientDetailsTable styleClass="p-10" {...data.patientDetails} />
+        {#if "summary" in data && data.summary !== ""}
+          <div class="p-10 flex gap-2 flex-col">
+            <Label styleClass="text-primary  pb-3 border-b-2 -pb-4"
+              >SURGERY DESCRIPTION</Label
+            >
+            {data.summary}
+          </div>
+        {/if}
+
+        <PatientDetailsTable styleClass="p-10 " {...data.patientDetails} />
         <SurgeryDetailsTable
           styleClass="p-10"
           duration={data.surgeryDetails.surgeryDurationInMins}

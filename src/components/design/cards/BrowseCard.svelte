@@ -9,6 +9,7 @@
   export let logID;
   export let likesCount;
   export let videoLink;
+  export let tags;
   let BASEURL = import.meta.env.VITE_BASEURL;
 
   let isVideoVisible = false;
@@ -69,6 +70,13 @@
       <div>{likesCount}</div>
     </div>
   </div>
+  {#if tags}
+    <div class="pb-2 flex gap-2 flex-wrap">
+      {#each tags as tag}
+        <div class="badge text-xs badge-outline">{tag}</div>
+      {/each}
+    </div>
+  {/if}
   <div class="flex items-center gap-2 mt-2">
     <img
       src={doctorImage

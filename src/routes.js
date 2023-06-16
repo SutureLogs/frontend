@@ -44,7 +44,7 @@ const routes = {
   "/profile/:id?": Profile,
   "/portfolio": Portfolio,
   "/create": CreateLog,
-  "/search/:searchText?": Search,
+  "/search/:mode?/:searchText?": Search,
   "/base/:id": LogBase,
   "/learn/:id": Learn,
   "/learn/quiz/:id": LearnQuiz,

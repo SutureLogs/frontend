@@ -17,6 +17,8 @@
   import { store } from "../stores/store";
   import { toast } from "svelte-french-toast";
   import { push } from "svelte-spa-router";
+  import Loading from "../components/Loading.svelte";
+  import moment from "moment";
 
   let surgeryVideoFile = null;
   let surgeryThumbnailFile = null;
@@ -46,7 +48,7 @@
 
   let data = {
     surgeryName: "",
-    surgeryDate: "",
+    surgeryDate: moment().format("YYYY-MM-DD"),
     surgeryOrg: "",
     availsurgeryOrg: [],
     surgeryVisibility: "",
@@ -82,7 +84,7 @@
   }
 </script>
 
-<LayoutWithNav bind:loading>
+<LayoutWithNav>
   <div class="p-10">
     <Heading2>Create a Log</Heading2>
     <Label styleClass="text-lg pt-10 pb-5 flex gap-3 items-center">
@@ -174,7 +176,16 @@
       styleClass={"py-2"}
       bind:value={data.surgeryNote}
     /> -->
-
-    <Button buttonText="Create Log" styleClass="my-2 mt-10" onClick={submit} />
+    {#if loading}
+      <div class="flex justify-center items-center">
+        <Loading />
+      </div>
+    {:else}
+      <Button
+        buttonText="Create Log"
+        styleClass="my-2 mt-10"
+        onClick={submit}
+      />
+    {/if}
   </div>
 </LayoutWithNav>

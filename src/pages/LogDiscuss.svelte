@@ -21,8 +21,10 @@
   import moment from "moment";
   import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
   import LogHeader from "../components/LogHeader.svelte";
+  import VideoPlayer from "../components/design/videoplayer/VideoPlayer.svelte";
 
   let BASEURL = import.meta.env.VITE_BASEURL;
+  console.log(BASEURL);
   let loading = false;
 
   onMount(async () => {
@@ -38,7 +40,7 @@
         },
       }
     );
-    if (response.data.message === "Not allowed") {
+    if (res.data.message === "Not allowed") {
       toast.error("You are not allowed to view this log");
       pop();
       return;
@@ -159,11 +161,6 @@
         />
         <!-- svelte-ignore a11y-media-has-caption -->
         <div class="p-10 pt-5">
-          <video
-            class="rounded-xl {$store.blurSurgeryFilter ? 'blur-lg' : ''} "
-            controls
-            src={BASEURL + "/surgery/video/" + data.videoLink}
-          />
           <div class="flex justify-end py-3">
             {#if !$store.blurSurgeryFilter}
               <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -212,6 +209,11 @@
               </div>
             {/if}
           </div>
+          <!-- svelte-ignore missing-declaration -->
+          <VideoPlayer
+            blurSurgeryFilter={$store.blurSurgeryFilter}
+            videoLink={data.videoLink}
+          />
         </div>
       </div>
       <div class="p-12 px-5 overflow-auto max-w-full border-l-2">

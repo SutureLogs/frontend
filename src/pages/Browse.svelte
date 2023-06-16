@@ -87,6 +87,7 @@
           orgName: item.belongsTo.organisation,
           likesCount: item.likesCount,
           videoLink: item.videoLink,
+          tags: item.tags,
           logID: item._id,
         };
       });
@@ -103,6 +104,7 @@
           orgName: item.belongsTo.organisation,
           likesCount: item.likesCount,
           videoLink: item.videoLink,
+          tags: item.tags,
           logID: item._id,
         };
       });
@@ -124,7 +126,7 @@
     <div
       class="flex md:justify-between justify-center items-center gap-3 p-5 border-b-2"
     >
-      <SearchInput />
+      <SearchInput showAI={false} />
       <div class="hidden md:block">
         <IconButton
           icon={plus}
