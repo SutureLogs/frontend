@@ -9,9 +9,7 @@
   export let createdAt = "2021-08-10T12:00:00.000Z";
 </script>
 
-<div
-  class="flex w-full flex-col p-2 max-w-2xl xl:max-w-none xl:px-48 col-span-3"
->
+<div class="flex w-full flex-col p-2 xl:px-48 col-span-3">
   <div class="flex gap-3 divider items-center my-8">
     <div class="flex flex-col items-center">
       <b>{doctorName},</b>

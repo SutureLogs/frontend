@@ -16,6 +16,7 @@
       doctorId: "1",
     },
   ];
+  console.log("broooo", surgicalTeamName);
 </script>
 
 <div class="hidden xl:flex flex-col gap-2 w-full pt-10">
@@ -36,6 +37,7 @@
           doctorId={doctor.doctorId}
           doctorName={doctor.doctorName}
           doctorRole={doctor.doctorRole}
+          doctorImg={doctor.doctorImg}
         />
       {/each}
     {:else}

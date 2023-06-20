@@ -40,6 +40,7 @@
   <!-- svelte-ignore a11y-media-has-caption -->
   {#if isVideoVisible}
     <video
+      preload="auto"
       autoplay
       muted
       loop

@@ -1,4 +1,6 @@
 <script>
+  import PoweredByAi from "../design/titles/PoweredByAI.svelte";
+
   export let isSectionsModalVisible = false;
   export let isSectionsVisible = false;
   export let sections = [
@@ -26,6 +28,7 @@
       <h3 class="font-bold text-lg">Sections in Video</h3>
       <input type="checkbox" bind:checked={isSectionsVisible} class="toggle" />
     </div>
+    <PoweredByAi />
     <div class="py-4">
       {#each sections as section, index}
         <!-- svelte-ignore a11y-click-events-have-key-events -->

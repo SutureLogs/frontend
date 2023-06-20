@@ -19,6 +19,7 @@
   import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
   import LogHeader from "../components/LogHeader.svelte";
   import toast from "svelte-french-toast";
+  import PoweredByAi from "../components/design/titles/PoweredByAI.svelte";
   let loading = false;
   onMount(async () => {
     await dataload();
@@ -112,9 +113,12 @@
         />
         {#if "summary" in data && data.summary !== ""}
           <div class="p-10 flex gap-2 flex-col">
-            <Label styleClass="text-primary  pb-3 border-b-2 -pb-4"
-              >SURGERY DESCRIPTION</Label
+            <div
+              class="flex justify-between items-center pb-3 border-b-2 -pb-4"
             >
+              <Label styleClass="text-primary  ">SURGERY DESCRIPTION</Label>
+              <PoweredByAi>Powered by AI</PoweredByAi>
+            </div>
             {data.summary}
           </div>
         {/if}

@@ -1,6 +1,6 @@
 <script>
   import axios from "axios";
-  import left from "../assets/icons/left.png";
+  import empty from "../assets/icons/empty.png";
   import LayoutForPatientNotes from "../components/LayoutForPatientNotes.svelte";
   import Notes from "../components/Notes.svelte";
   import NotesNav from "../components/NotesNav.svelte";
@@ -10,7 +10,6 @@
   import { store } from "../stores/store";
   import { onMount } from "svelte";
   import Loading from "../components/Loading.svelte";
-  import { pop } from "svelte-spa-router";
   import GoBack from "../components/design/buttons/GoBack.svelte";
   let isAddNoteModalOpen = false;
   let loading = true;
@@ -127,7 +126,7 @@
         surgeries={data.surgeries}
       />
       <div class="flex flex-col xl:col-start-2 xl:col-span-3 xl:border-r-2">
-        {#if data.notes}
+        {#if data.notes && data.notes.length > 0}
           <div class="flex w-full justify-between xl:px-48 pt-10 px-3">
             <GoBack />
             <button
@@ -159,8 +158,11 @@
             />
           {/each}
         {:else}
-          <div class="flex flex-col items-center justify-center gap-5">
-            <h1 class="text-2xl font-bold opacity-50">No notes found</h1>
+          <div
+            class="flex flex-col items-center justify-center h-full gap-3 opacity-50"
+          >
+            <img src={empty} alt="" />
+            <h1 class="text-2xl font-bold">No notes found</h1>
           </div>
         {/if}
       </div>
