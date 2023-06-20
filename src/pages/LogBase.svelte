@@ -74,11 +74,13 @@
           doctorId: "1",
           doctorName: "Dr. John Doe",
           role: "Surgeon",
+          doctorImage: "",
         },
         {
           doctorId: "13",
           doctorName: "Jane Doe",
           role: "Nurse",
+          doctorImage: "",
         },
       ],
     },
@@ -116,7 +118,7 @@
             <div
               class="flex justify-between items-center pb-3 border-b-2 -pb-4"
             >
-              <Label styleClass="text-primary  ">SURGERY DESCRIPTION</Label>
+              <Label styleClass="text-primary">SURGERY DESCRIPTION</Label>
               <PoweredByAi>Powered by AI</PoweredByAi>
             </div>
             {data.summary}
