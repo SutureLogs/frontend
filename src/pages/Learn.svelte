@@ -5,6 +5,7 @@
   import LayoutWithLogNav from "../components/LayoutWithLogNav.svelte";
   import Heading2 from "../components/design/titles/Heading2.svelte";
   import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
+  import PoweredByAi from "../components/design/titles/PoweredByAI.svelte";
   export let params = {};
 </script>
 
@@ -17,7 +18,10 @@
         <div class="flex flex-col md:flex-row justify-between items-center">
           <GoBackToBrowseButton />
         </div>
-        <Heading2 styleClass="mt-10">Learn</Heading2>
+        <div class="flex justify-between items-center mt-10">
+          <Heading2 styleClass="">Learn</Heading2>
+          <PoweredByAi />
+        </div>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
           on:click={() => {
