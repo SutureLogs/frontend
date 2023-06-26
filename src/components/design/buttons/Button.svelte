@@ -1,5 +1,4 @@
 <script>
-  // TODO: make this responsive
   export let styleClass = "";
   export let buttonText = "Placeholder";
   export let onClick = () => {};

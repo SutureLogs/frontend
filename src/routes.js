@@ -24,6 +24,7 @@ import { store } from "./stores/store";
 import { get } from "svelte/store";
 import AdminPatient from "./pages/AdminPatient.svelte";
 import PatientNotes from "./pages/PatientNotes.svelte";
+import LearnScenarios from "./pages/LearnScenarios.svelte";
 
 function isLoggedInMiddleWare() {
   return get(store).jwt ? true : false;
@@ -49,6 +50,7 @@ const routes = {
   "/learn/:id": Learn,
   "/learn/quiz/:id": LearnQuiz,
   "/learn/flash/:id": LearnFlash,
+  "/learn/scenario/:id": LearnScenarios,
   "/log/:id": LogLog,
   "/discuss/:id": LogDiscuss,
   "/patient/:pid/:sid": PatientNotes,

@@ -32,7 +32,10 @@
       },
     });
 
-    if (res) data = res.data;
+    if (res) {
+      data = res.data;
+      data.quiz = data.quiz.slice(0, 2);
+    }
     loading = false;
   }
 
@@ -103,7 +106,7 @@
       <div class="flex flex-col h-full items-center mt-10 w-full">
         <div class="max-w-4xl w-full p-5">
           <div class="flex flex-col md:flex-row justify-between items-center">
-            <GoBackToBrowseButton />
+            <GoBackToBrowseButton navLink={"/learn/" + params.id} />
           </div>
           <Heading2 styleClass="mt-10">Quiz</Heading2>
           {#if !showResults}

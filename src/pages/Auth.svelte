@@ -112,23 +112,30 @@
       </div>
       {#if mode === "login"}
         <div class="flex gap-3 mt-10 flex-col">
-          <TextInput
-            placeholderText="Johndoe..."
-            bind:value={username}
-            label="Username"
-          />
-          <PasswordInput
-            placeholderText="******"
-            bind:value={password}
-            label="Password"
-          />
-          <div class="py-4 w-full">
-            {#if loading}
-              <Button buttonText="Signing in..." />
-            {:else}
-              <Button buttonText="Sign in" onClick={() => login()} />
-            {/if}
-          </div>
+          <form on:submit|preventDefault={login} class="flex flex-col gap-3">
+            <TextInput
+              placeholderText="Johndoe..."
+              bind:value={username}
+              label="Username"
+            />
+            <PasswordInput
+              placeholderText="******"
+              bind:value={password}
+              label="Password"
+            />
+            <div class="py-4 w-full">
+              {#if loading}
+                <Button buttonText="Signing in..." />
+              {:else}
+                <button
+                  class={`btn m-0 bg-[#4669C1] border-0 w-full text-white`}
+                  type="submit"
+                >
+                  Sign in
+                </button>
+              {/if}
+            </div>
+          </form>
           <!-- <LinkButton
             styleClass="mb-5"
             onClick={() => (mode = "signup")}
@@ -144,6 +151,7 @@
               styleClass="mb-5"
               buttonText="New here?"
             />
+
             <LinkButton
               onClick={() => {
                 push("/admin/auth");
@@ -153,7 +161,7 @@
             />
           </div>
         </div>
-      {:else}
+        <!-- {:else}
         <div class="flex gap-3 mt-10 flex-col">
           <TextInput
             bind:value={username}
@@ -183,7 +191,7 @@
             onClick={() => (mode = "login")}
             buttonText="Already have an account?"
           />
-        </div>
+        </div> -->
       {/if}
     </div>
   </div>

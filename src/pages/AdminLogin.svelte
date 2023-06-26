@@ -114,23 +114,30 @@
       </div>
       {#if mode === "login"}
         <div class="flex gap-3 mt-10 flex-col">
-          <TextInput
-            placeholderText="Johndoe..."
-            bind:value={username}
-            label="Username"
-          />
-          <PasswordInput
-            placeholderText="******"
-            bind:value={password}
-            label="Password"
-          />
-          <div class="py-4 w-full">
-            {#if loading}
-              <Button buttonText="Signing in..." />
-            {:else}
-              <Button buttonText="Sign in" onClick={() => login()} />
-            {/if}
-          </div>
+          <form on:submit|preventDefault={login}>
+            <TextInput
+              placeholderText="Johndoe..."
+              bind:value={username}
+              label="Username"
+            />
+            <PasswordInput
+              placeholderText="******"
+              bind:value={password}
+              label="Password"
+            />
+            <div class="py-4 w-full">
+              {#if loading}
+                <Button buttonText="Signing in..." />
+              {:else}
+                <button
+                  class={`btn m-0 bg-[#4669C1] border-0 w-full text-white`}
+                  type="submit"
+                >
+                  Sign in
+                </button>
+              {/if}
+            </div>
+          </form>
 
           <div class="flex justify-between">
             <LinkButton
@@ -149,33 +156,40 @@
         </div>
       {:else}
         <div class="flex gap-3 mt-10 flex-col">
-          <TextInput
-            bind:value={username}
-            placeholderText="Johndoe..."
-            label="Username"
-          />
-          <TextInput
-            bind:value={orgName}
-            placeholderText="Jayadeva Hospital"
-            label="Organization Name"
-          />
-          <PasswordInput
-            bind:value={password}
-            placeholderText="******"
-            label="Password"
-          />
-          <PasswordInput
-            bind:value={retypedPassword}
-            placeholderText="******"
-            label="Confirm Password"
-          />
-          <div class="py-4 w-full">
-            {#if loading}
-              <Button buttonText="Signing up..." />
-            {:else}
-              <Button buttonText="Sign up" onClick={() => signup()} />
-            {/if}
-          </div>
+          <form on:submit={signup}>
+            <TextInput
+              bind:value={username}
+              placeholderText="Johndoe..."
+              label="Username"
+            />
+            <TextInput
+              bind:value={orgName}
+              placeholderText="Jayadeva Hospital"
+              label="Organization Name"
+            />
+            <PasswordInput
+              bind:value={password}
+              placeholderText="******"
+              label="Password"
+            />
+            <PasswordInput
+              bind:value={retypedPassword}
+              placeholderText="******"
+              label="Confirm Password"
+            />
+            <div class="py-4 w-full">
+              {#if loading}
+                <Button buttonText="Signing up..." />
+              {:else}
+                <button
+                  class={`btn m-0 bg-[#4669C1] border-0 w-full text-white`}
+                  type="submit"
+                >
+                  Sign up
+                </button>
+              {/if}
+            </div>
+          </form>
           <div class="flex justify-between">
             <LinkButton
               styleClass="mb-5"

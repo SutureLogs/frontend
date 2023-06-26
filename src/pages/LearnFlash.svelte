@@ -10,6 +10,7 @@
   import { onMount } from "svelte";
   import Loading from "../components/Loading.svelte";
   import { store } from "../stores/store";
+  import GoBackToBrowseButton from "../components/design/buttons/GoBackToBrowseButton.svelte";
 
   let loading = true;
 
@@ -60,6 +61,9 @@
     </div>
   {:else}
     <div class="p-10 h-full">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <GoBackToBrowseButton navLink={"/learn/" + params.id} />
+      </div>
       <Heading2>Flash Cards</Heading2>
       <div class="grid md:grid-cols-3 h-full">
         {#each data as { explanation, concept, flipped }}

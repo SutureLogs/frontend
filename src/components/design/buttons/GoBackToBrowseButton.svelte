@@ -1,10 +1,11 @@
 <script>
   import { push } from "svelte-spa-router";
+  export let navLink = "";
 </script>
 
 <button
   class="btn btn-circle btn-sm px-0 m-0 my-4"
-  on:click={() => push("/browse")}
+  on:click={() => push(`${navLink ? navLink : "/browse"}`)}
   ><svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
