@@ -163,6 +163,11 @@
           >
             <img src={empty} alt="" />
             <h1 class="text-2xl font-bold">No notes found</h1>
+            <button
+              class="my-3 btn btn-outline rounded-2xl"
+              on:click={() => (isAddNoteModalOpen = true)}
+              >Add a new note</button
+            >
           </div>
         {/if}
       </div>
